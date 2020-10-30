@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>我自情怀 君且随意</title>
+    <link>https://veixuan.github.io/</link>
+    <description>Recent content on 我自情怀 君且随意</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Sat, 31 Oct 2020 00:38:32 +0800</lastBuildDate><atom:link href="https://veixuan.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Struct比较</title>
+      <link>https://veixuan.github.io/golang/struct%E6%AF%94%E8%BE%83/</link>
+      <pubDate>Sat, 31 Oct 2020 00:38:32 +0800</pubDate>
+      
+      <guid>https://veixuan.github.io/golang/struct%E6%AF%94%E8%BE%83/</guid>
+      <description>&lt;p&gt;Struct比较&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>frida入门</title>
+      <link>https://veixuan.github.io/posts/frida/</link>
+      <pubDate>Sat, 22 Aug 2020 17:05:51 +0000</pubDate>
+      
+      <guid>https://veixuan.github.io/posts/frida/</guid>
+      <description>&lt;p&gt;搭建frida环境&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>golang plugin 基本使用</title>
+      <link>https://veixuan.github.io/golang/plugin/</link>
+      <pubDate>Sat, 22 Aug 2020 17:05:51 +0000</pubDate>
+      
+      <guid>https://veixuan.github.io/golang/plugin/</guid>
+      <description>&lt;p&gt;golang plugin 基本使用&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
