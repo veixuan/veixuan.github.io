@@ -103,8 +103,10 @@
     </a>
   </div>
   <div class="post-summary">
-    背景  很多app不是使用http、https等应用层协议，使用charles无法抓到包。
- 环境  小米mix 3，已root Android tcpdump https://www.androidtcpdump.com/android-tcpdump/downloads  安装 adb push tcpdump /sdcard/data/local/tmp chmod 777 /sdcard/data/local/tmp/tcpdump 执行抓包 tcpdump -i any -p -s 0 -w capture.pcap # &#34;-i any&#34;: listen on any network interface # &#34;-p&#34;: disable promiscuous mode (doesn&#39;t work anyway) # &#34;-s 0&#34;: capture the entire packet # &#34;-w&#34;: write packets to a file (rather than printing to stdout) 下载到本地 adb pull /storage/emulated/0/data/local/tmp/capture.pcap 使用wireshark 打开  
+    Android手机tcpdump抓包
+ 
+    <a href="/net/android_tcpdump%E6%8A%93%E5%8C%85/" class="summary-more">More</a>
+    
   </div>
   <hr class="summary-sep" />
 </article>
@@ -125,9 +127,10 @@
     </a>
   </div>
   <div class="post-summary">
-    内网穿透 什么是内网穿透  内网穿透 即内网映射或内网端口映射。可以将内网地址映射成公网地址，一般用于解决局域网无法公网访问问题。
-专业术语: NAT 穿透
- 名词解释  外网/公有ip由NIC（网络信息中心）或者ISP(网络服务提供商)分配的地址,是全球统一的可寻址地址 内网/私有ip 属于非注册地址，专门为组织机构内部使用。因特网分配编号委员会（IANA）保留了3块IP地址做为私有IP地址 10.0.0.0 ~ 10.255.255.255、172.16.0.0~ 172.16.255.255、192.168.0.0~192.168.255.255 nat 穿透 Network Address Translation 将内网地址转换到公网地址的一种技术，用于解决公网ip地址不足的问题  实现原理  公网服务器转发 p2p 穿透 (udp打洞) 公网+p2p 穿透    
+    内网穿透 内网穿透
+ 
+    <a href="/net/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" class="summary-more">More</a>
+    
   </div>
   <hr class="summary-sep" />
 </article>

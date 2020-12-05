@@ -13,9 +13,8 @@
       <pubDate>Sat, 28 Nov 2020 17:27:48 +0800</pubDate>
       
       <guid>https://veixuan.github.io/net/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/</guid>
-      <description>内网穿透 什么是内网穿透  内网穿透 即内网映射或内网端口映射。可以将内网地址映射成公网地址，一般用于解决局域网无法公网访问问题。
-专业术语: NAT 穿透
- 名词解释  外网/公有ip由NIC（网络信息中心）或者ISP(网络服务提供商)分配的地址,是全球统一的可寻址地址 内网/私有ip 属于非注册地址，专门为组织机构内部使用。因特网分配编号委员会（IANA）保留了3块IP地址做为私有IP地址 10.0.0.0 ~ 10.255.255.255、172.16.0.0~ 172.16.255.255、192.168.0.0~192.168.255.255 nat 穿透 Network Address Translation 将内网地址转换到公网地址的一种技术，用于解决公网ip地址不足的问题  实现原理  公网服务器转发 p2p 穿透 (udp打洞) 公网+p2p 穿透   </description>
+      <description>&lt;h1 id=&#34;内网穿透&#34;&gt;内网穿透&lt;/h1&gt;
+&lt;p&gt;内网穿透&lt;/p&gt;</description>
     </item>
     
   </channel>

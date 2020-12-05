@@ -105,8 +105,10 @@
     </a>
   </div>
   <div class="post-summary">
-    背景  很多app不是使用http、https等应用层协议，使用charles无法抓到包。
- 环境  小米mix 3，已root Android tcpdump https://www.androidtcpdump.com/android-tcpdump/downloads  安装 adb push tcpdump /sdcard/data/local/tmp chmod 777 /sdcard/data/local/tmp/tcpdump 执行抓包 tcpdump -i any -p -s 0 -w capture.pcap # &#34;-i any&#34;: listen on any network interface # &#34;-p&#34;: disable promiscuous mode (doesn&#39;t work anyway) # &#34;-s 0&#34;: capture the entire packet # &#34;-w&#34;: write packets to a file (rather than printing to stdout) 下载到本地 adb pull /storage/emulated/0/data/local/tmp/capture.pcap 使用wireshark 打开  
+    Android手机tcpdump抓包
+ 
+    <a href="/net/android_tcpdump%E6%8A%93%E5%8C%85/" class="summary-more">More</a>
+    
   </div>
   <hr class="summary-sep" />
 </article>
