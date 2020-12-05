@@ -3,8 +3,48 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://veixuan.github.io/net/android_tcpdump%E6%8A%93%E5%8C%85/</loc>
+    <lastmod>2020-12-05T00:41:48+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://veixuan.github.io/categories/</loc>
-    <lastmod>2020-10-31T00:38:32+08:00</lastmod>
+    <lastmod>2020-12-05T00:41:48+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://veixuan.github.io/tags/net/</loc>
+    <lastmod>2020-12-05T00:41:48+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://veixuan.github.io/categories/net/</loc>
+    <lastmod>2020-12-05T00:41:48+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://veixuan.github.io/net/</loc>
+    <lastmod>2020-12-05T00:41:48+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://veixuan.github.io/tags/</loc>
+    <lastmod>2020-12-05T00:41:48+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://veixuan.github.io/</loc>
+    <lastmod>2020-12-05T00:41:48+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://veixuan.github.io/net/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/</loc>
+    <lastmod>2020-11-28T17:27:48+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://veixuan.github.io/categories/%E7%BD%91%E7%BB%9C/</loc>
+    <lastmod>2020-11-28T17:27:48+08:00</lastmod>
   </url>
   
   <url>
@@ -19,16 +59,6 @@
   
   <url>
     <loc>https://veixuan.github.io/golang/struct%E6%AF%94%E8%BE%83/</loc>
-    <lastmod>2020-10-31T00:38:32+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://veixuan.github.io/tags/</loc>
-    <lastmod>2020-10-31T00:38:32+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://veixuan.github.io/</loc>
     <lastmod>2020-10-31T00:38:32+08:00</lastmod>
   </url>
   

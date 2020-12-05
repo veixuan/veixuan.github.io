@@ -88,6 +88,51 @@
 
  <article class="post">
   <div class="post-title">
+    <a href="https://veixuan.github.io/net/android_tcpdump%E6%8A%93%E5%8C%85/" title="Android_tcpdump抓包">
+      <div class="post-meta">
+        <h2>Android_tcpdump抓包</h2>
+        <time>
+          <i class="far fa-clock"></i>
+          Saturday, Dec 5, 2020 00:41
+        </time>
+         
+        <i class="far fa-folder"></i>
+        <a href="https://veixuan.github.io//categories/net">net</a>
+        
+      </div>
+    </a>
+  </div>
+  <div class="post-summary">
+    背景  很多app不是使用http、https等应用层协议，使用charles无法抓到包。
+ 环境  小米mix 3，已root Android tcpdump https://www.androidtcpdump.com/android-tcpdump/downloads  安装 adb push tcpdump /sdcard/data/local/tmp chmod 777 /sdcard/data/local/tmp/tcpdump 执行抓包 tcpdump -i any -p -s 0 -w capture.pcap # &#34;-i any&#34;: listen on any network interface # &#34;-p&#34;: disable promiscuous mode (doesn&#39;t work anyway) # &#34;-s 0&#34;: capture the entire packet # &#34;-w&#34;: write packets to a file (rather than printing to stdout) 下载到本地 adb pull /storage/emulated/0/data/local/tmp/capture.pcap 使用wireshark 打开  
+  </div>
+  <hr class="summary-sep" />
+</article>
+  <article class="post">
+  <div class="post-title">
+    <a href="https://veixuan.github.io/net/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" title="内网穿透">
+      <div class="post-meta">
+        <h2>内网穿透</h2>
+        <time>
+          <i class="far fa-clock"></i>
+          Saturday, Nov 28, 2020 17:27
+        </time>
+         
+        <i class="far fa-folder"></i>
+        <a href="https://veixuan.github.io//categories/%E7%BD%91%E7%BB%9C">网络</a>
+        
+      </div>
+    </a>
+  </div>
+  <div class="post-summary">
+    内网穿透 什么是内网穿透  内网穿透 即内网映射或内网端口映射。可以将内网地址映射成公网地址，一般用于解决局域网无法公网访问问题。
+专业术语: NAT 穿透
+ 名词解释  外网/公有ip由NIC（网络信息中心）或者ISP(网络服务提供商)分配的地址,是全球统一的可寻址地址 内网/私有ip 属于非注册地址，专门为组织机构内部使用。因特网分配编号委员会（IANA）保留了3块IP地址做为私有IP地址 10.0.0.0 ~ 10.255.255.255、172.16.0.0~ 172.16.255.255、192.168.0.0~192.168.255.255 nat 穿透 Network Address Translation 将内网地址转换到公网地址的一种技术，用于解决公网ip地址不足的问题  实现原理  公网服务器转发 p2p 穿透 (udp打洞) 公网+p2p 穿透    
+  </div>
+  <hr class="summary-sep" />
+</article>
+  <article class="post">
+  <div class="post-title">
     <a href="https://veixuan.github.io/golang/struct%E6%AF%94%E8%BE%83/" title="Struct比较">
       <div class="post-meta">
         <h2>Struct比较</h2>
@@ -134,33 +179,39 @@
   </div>
   <hr class="summary-sep" />
 </article>
-  <article class="post">
-  <div class="post-title">
-    <a href="https://veixuan.github.io/golang/plugin/" title="golang plugin 基本使用">
-      <div class="post-meta">
-        <h2>golang plugin 基本使用</h2>
-        <time>
-          <i class="far fa-clock"></i>
-          Saturday, Aug 22, 2020 17:05
-        </time>
-         
-        <i class="far fa-folder"></i>
-        <a href="https://veixuan.github.io//categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80">编程语言</a>
-        
-      </div>
-    </a>
-  </div>
-  <div class="post-summary">
-    golang plugin 基本使用
- 
-    <a href="/golang/plugin/" class="summary-more">More</a>
-    
-  </div>
-  <hr class="summary-sep" />
-</article>
  
 
  
+<nav aria-label="Page navigation">
+  <ul class="pagination justify-content-center">
+    
+    <li class="page-item disabled">
+      <a class="page-link" href="/" tabindex="-1">&laquo;&laquo;</a>
+    </li>
+    
+    <li class="page-item disabled">
+      <a class="page-link" href="">&laquo;</a>
+    </li>
+              
+    <li class="page-item active">
+      <a class="page-link" href="/">1</a>
+    </li>
+             
+    <li class="page-item ">
+      <a class="page-link" href="/page/2/">2</a>
+    </li>
+     
+    <li class="page-item ">
+      <a class="page-link" href="/page/2/">&raquo;</a>
+    </li>
+    
+    <li class="page-item ">
+      <a class="page-link" href="/page/2/" tabindex="-1">&raquo;&raquo;</a>
+    </li>
+    
+  </ul>
+</nav>
+
 
 
 
@@ -177,9 +228,21 @@
   <div class="widget-content">
     <ul class="widget__list">
       <li class="widget__item">
+        <a class="widget__link" href="/categories/net/">
+          <i class="far fa-folder"></i>
+          net
+        </a>
+      </li>
+      <li class="widget__item">
         <a class="widget__link" href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/">
           <i class="far fa-folder"></i>
           编程语言
+        </a>
+      </li>
+      <li class="widget__item">
+        <a class="widget__link" href="/categories/%E7%BD%91%E7%BB%9C/">
+          <i class="far fa-folder"></i>
+          网络
         </a>
       </li>
       <li class="widget__item">
@@ -200,6 +263,7 @@
   <div class="widget-content">
     <a href="/tags/frida/" class="badge badge-secondary">frida</a>
     <a href="/tags/golang/" class="badge badge-secondary">golang</a>
+    <a href="/tags/net/" class="badge badge-secondary">net</a>
   </div>
 </div>
 

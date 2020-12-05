@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>我自情怀 君且随意</title>
-    <link>https://veixuan.github.io/</link>
-    <description>Recent content on 我自情怀 君且随意</description>
+    <title>net on 我自情怀 君且随意</title>
+    <link>https://veixuan.github.io/tags/net/</link>
+    <description>Recent content in net on 我自情怀 君且随意</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Sat, 05 Dec 2020 00:41:48 +0800</lastBuildDate><atom:link href="https://veixuan.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 05 Dec 2020 00:41:48 +0800</lastBuildDate><atom:link href="https://veixuan.github.io/tags/net/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Android_tcpdump抓包</title>
       <link>https://veixuan.github.io/net/android_tcpdump%E6%8A%93%E5%8C%85/</link>
@@ -26,33 +26,6 @@
       <description>内网穿透 什么是内网穿透  内网穿透 即内网映射或内网端口映射。可以将内网地址映射成公网地址，一般用于解决局域网无法公网访问问题。
 专业术语: NAT 穿透
  名词解释  外网/公有ip由NIC（网络信息中心）或者ISP(网络服务提供商)分配的地址,是全球统一的可寻址地址 内网/私有ip 属于非注册地址，专门为组织机构内部使用。因特网分配编号委员会（IANA）保留了3块IP地址做为私有IP地址 10.0.0.0 ~ 10.255.255.255、172.16.0.0~ 172.16.255.255、192.168.0.0~192.168.255.255 nat 穿透 Network Address Translation 将内网地址转换到公网地址的一种技术，用于解决公网ip地址不足的问题  实现原理  公网服务器转发 p2p 穿透 (udp打洞) 公网+p2p 穿透   </description>
-    </item>
-    
-    <item>
-      <title>Struct比较</title>
-      <link>https://veixuan.github.io/golang/struct%E6%AF%94%E8%BE%83/</link>
-      <pubDate>Sat, 31 Oct 2020 00:38:32 +0800</pubDate>
-      
-      <guid>https://veixuan.github.io/golang/struct%E6%AF%94%E8%BE%83/</guid>
-      <description>&lt;p&gt;Struct比较&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>frida入门</title>
-      <link>https://veixuan.github.io/posts/frida/</link>
-      <pubDate>Sat, 22 Aug 2020 17:05:51 +0000</pubDate>
-      
-      <guid>https://veixuan.github.io/posts/frida/</guid>
-      <description>&lt;p&gt;搭建frida环境&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>golang plugin 基本使用</title>
-      <link>https://veixuan.github.io/golang/plugin/</link>
-      <pubDate>Sat, 22 Aug 2020 17:05:51 +0000</pubDate>
-      
-      <guid>https://veixuan.github.io/golang/plugin/</guid>
-      <description>&lt;p&gt;golang plugin 基本使用&lt;/p&gt;</description>
     </item>
     
   </channel>

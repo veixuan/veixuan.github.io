@@ -3,16 +3,16 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="description" content="我自情怀 'Struct比较'" />
-  <title>Struct比较  | 我自情怀 君且随意</title>
-  <meta property="og:title" content="Struct比较" />
+  <meta name="description" content="我自情怀 '内网穿透'" />
+  <title>内网穿透  | 我自情怀 君且随意</title>
+  <meta property="og:title" content="内网穿透" />
   
   <meta property="og:type" content="article" />
-  <meta property="article:published_time" content="2020-10-31"> 
-  <meta property="og:url" content="https://veixuan.github.io/golang/struct%E6%AF%94%E8%BE%83/" />
+  <meta property="article:published_time" content="2020-11-28"> 
+  <meta property="og:url" content="https://veixuan.github.io/net/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" />
   <meta property="og:site_name" content="我自情怀 君且随意" />
    <meta property="og:image" content="https://veixuan.github.io/images/thumbnail.png">  
-  <meta property="og:tags" content="golang" />
+  <meta property="og:tags" content="net" />
   
 
   
@@ -73,9 +73,9 @@
     <div class="container">
       <div class="title-message">
         
-        <a href="https://veixuan.github.io/golang/struct%E6%AF%94%E8%BE%83/">
+        <a href="https://veixuan.github.io/net/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/">
           <h1>
-            Struct比较
+            内网穿透
           </h1>
         </a>
         
@@ -88,7 +88,7 @@
         <div class="col-12 col-lg-8">
 
 <div class="post-title">
-  <a href="https://veixuan.github.io/golang/struct%E6%AF%94%E8%BE%83/">
+  <a href="https://veixuan.github.io/net/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/">
     <div class="post-meta">
       <time></time>
     </div>
@@ -96,49 +96,34 @@
 </div>
 <section class="post-content">
   
-  <p>Struct比较</p>
-<h1 id="struct-compare">struct compare</h1>
-<h2 id="哪些类型不能比较">哪些类型不能比较</h2>
-<ol>
-<li>slice</li>
-<li>map</li>
-<li>function</li>
-<li>以及包含了上述三种类型之一的struct</li>
-</ol>
-<h2 id="为什么这些类型不能比较">为什么这些类型不能比较</h2>
-<p>尝试比较</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">invalid operation: a1 <span style="color:#f92672">==</span> a2 <span style="color:#f92672">(</span>slice can only be compared to nil<span style="color:#f92672">)</span>
-invalid operation: a1 <span style="color:#f92672">==</span> a2 <span style="color:#f92672">(</span>map can only be compared to nil<span style="color:#f92672">)</span>
-invalid operation: a1 <span style="color:#f92672">==</span> a2 <span style="color:#f92672">(</span>func can only be compared to nil<span style="color:#f92672">)</span>
-</code></pre></div><p>从程序的实现角度来讲，类似于底层没有实现 <code>==</code> 操作符</p>
-<p>另一方面，这三种类型的相等 有歧义，所以未实现</p>
-<h2 id="interfacechannel-可比较">interface、channel 可比较</h2>
-<ol>
-<li>channel。只有在它们引用着相同的底层内部通道或者它们都为nil时比较结果才为true</li>
-<li>interface。只有这两个接口值的动态类型相同、动态类型为可比较类型、并且动态值相等 或者都为nil 才为true</li>
-</ol>
-<h2 id="如果要比较slicemap时如何比较">如果要比较slice、map时如何比较？</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">DeepEqual</span>
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">DeepEqual</span>(<span style="color:#a6e22e">x</span>, <span style="color:#a6e22e">y</span> <span style="color:#66d9ef">interface</span>{}) <span style="color:#66d9ef">bool</span> {
-	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">x</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#f92672">||</span> <span style="color:#a6e22e">y</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
-		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">x</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">y</span>
-	}
-	<span style="color:#a6e22e">v1</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">ValueOf</span>(<span style="color:#a6e22e">x</span>)
-	<span style="color:#a6e22e">v2</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">ValueOf</span>(<span style="color:#a6e22e">y</span>)
-	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">v1</span>.<span style="color:#a6e22e">Type</span>() <span style="color:#f92672">!=</span> <span style="color:#a6e22e">v2</span>.<span style="color:#a6e22e">Type</span>() {
-		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>
-	}
-	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">deepValueEqual</span>(<span style="color:#a6e22e">v1</span>, <span style="color:#a6e22e">v2</span>, make(<span style="color:#66d9ef">map</span>[<span style="color:#a6e22e">visit</span>]<span style="color:#66d9ef">bool</span>), <span style="color:#ae81ff">0</span>)
-}
-</code></pre></div><p>结论：如果struct中包含了 上述不能比较的类型，是不能直接比较的。</p>
+  <h1 id="内网穿透">内网穿透</h1>
+<h2 id="什么是内网穿透">什么是内网穿透</h2>
+<blockquote>
+<p>内网穿透 即内网映射或内网端口映射。可以将内网地址映射成公网地址，一般用于解决局域网无法公网访问问题。</p>
+<p>专业术语: NAT 穿透</p>
+</blockquote>
+<h2 id="名词解释">名词解释</h2>
+<ul>
+<li><input disabled="" type="checkbox"> 外网/公有ip由NIC（网络信息中心）或者ISP(网络服务提供商)分配的地址,是全球统一的可寻址地址</li>
+<li><input disabled="" type="checkbox"> 内网/私有ip  属于非注册地址，专门为组织机构内部使用。因特网分配编号委员会（IANA）保留了3块IP地址做为私有IP地址 10.0.0.0 ~ 10.255.255.255、172.16.0.0~ 172.16.255.255、192.168.0.0~192.168.255.255</li>
+<li><input disabled="" type="checkbox"> nat 穿透 <code>Network Address Translation</code> 将内网地址转换到公网地址的一种技术，用于解决公网ip地址不足的问题</li>
+</ul>
+<h2 id="实现原理">实现原理</h2>
+<ul>
+<li><input disabled="" type="checkbox"> 公网服务器转发</li>
+<li><input disabled="" type="checkbox"> p2p 穿透 (udp打洞)</li>
+<li><input disabled="" type="checkbox"> 公网+p2p 穿透</li>
+<li><input disabled="" type="checkbox"> </li>
+</ul>
+
 </section>
 <time>
   <i class="far fa-clock"></i>
-  Saturday, Oct 31, 2020 00:38
+  Saturday, Nov 28, 2020 17:27
 </time>
  
 <i class="far fa-folder"></i>
-<a href="https://veixuan.github.io//categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80">编程语言</a>
+<a href="https://veixuan.github.io//categories/%E7%BD%91%E7%BB%9C">网络</a>
  
 <div class="post-comment">
   <div id="disqus_thread"></div>
@@ -172,14 +157,14 @@ invalid operation: a1 <span style="color:#f92672">==</span> a2 <span style="colo
   <ul>
     
     <li>
-      <a href="https://veixuan.github.io/posts/frida/" rel="prev">
-        <span>frida入门</span>
+      <a href="https://veixuan.github.io/golang/struct%E6%AF%94%E8%BE%83/" rel="prev">
+        <span>Struct比较</span>
       </a>
     </li>
      
     <li>
-      <a href="https://veixuan.github.io/net/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" rel="next">
-        <span>内网穿透</span>
+      <a href="https://veixuan.github.io/net/android_tcpdump%E6%8A%93%E5%8C%85/" rel="next">
+        <span>Android_tcpdump抓包</span>
       </a>
     </li>
     
@@ -198,10 +183,9 @@ invalid operation: a1 <span style="color:#f92672">==</span> a2 <span style="colo
   <div class="widget-content">
     <nav id="TableOfContents">
   <ul>
-    <li><a href="#哪些类型不能比较">哪些类型不能比较</a></li>
-    <li><a href="#为什么这些类型不能比较">为什么这些类型不能比较</a></li>
-    <li><a href="#interfacechannel-可比较">interface、channel 可比较</a></li>
-    <li><a href="#如果要比较slicemap时如何比较">如果要比较slice、map时如何比较？</a></li>
+    <li><a href="#什么是内网穿透">什么是内网穿透</a></li>
+    <li><a href="#名词解释">名词解释</a></li>
+    <li><a href="#实现原理">实现原理</a></li>
   </ul>
 </nav>
   </div>
@@ -213,7 +197,7 @@ invalid operation: a1 <span style="color:#f92672">==</span> a2 <span style="colo
   </div>
   <div class="widget-content">
      
-    <a href="https://veixuan.github.io/tags/golang" class="badge badge-secondary">golang</a>
+    <a href="https://veixuan.github.io/tags/net" class="badge badge-secondary">net</a>
   </div>
 </div>
 
