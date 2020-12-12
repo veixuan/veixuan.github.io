@@ -99,10 +99,10 @@
   <p>使用<code>golang</code>进行<code>Android native</code> 开发</p>
 <h2 id="环境">环境</h2>
 <ul>
-<li><input disabled="" type="checkbox"> <code>android</code> 开发环境</li>
-<li><input disabled="" type="checkbox"> <code>Android ndk</code>开发环境</li>
-<li><input disabled="" type="checkbox"> <code>golang</code> 开发环境</li>
-<li><input disabled="" type="checkbox"> <code>jna</code> <a href="https://github.com/java-native-access/jna">https://github.com/java-native-access/jna</a></li>
+<li><input checked="" disabled="" type="checkbox"> <code>android</code> 开发环境</li>
+<li><input checked="" disabled="" type="checkbox"> <code>Android ndk</code>开发环境</li>
+<li><input checked="" disabled="" type="checkbox"> <code>golang</code> 开发环境</li>
+<li><input checked="" disabled="" type="checkbox"> <code>jna</code> <a href="https://github.com/java-native-access/jna">https://github.com/java-native-access/jna</a></li>
 </ul>
 <h2 id="golang-代码"><code>golang</code> 代码</h2>
 <blockquote>
@@ -133,12 +133,12 @@ export CC<span style="color:#f92672">=</span><span style="color:#e6db74">${</spa
 export CXX<span style="color:#f92672">=</span><span style="color:#e6db74">${</span>ndk_tool_path<span style="color:#e6db74">}</span>/armv7a-linux-androideabi28-clang++
 
 go build -ldflags <span style="color:#e6db74">&#34;-s -w&#34;</span>  -buildmode<span style="color:#f92672">=</span>c-shared -o libnpc.so cmd/npc/sdk.go
-</code></pre></div><p>这里生成的是<code>armeabi-v7a</code><strong>如果需要其他平台，修改<code>goarch</code>及对应的<code>cc</code>和<code>cxx</code>编译器</strong></p>
+</code></pre></div><p>这里生成的是<code>arm64</code><strong>如果需要其他平台，修改<code>goarch</code>及对应的<code>cc</code>和<code>cxx</code>编译器</strong></p>
+<h2 id="执行编译">执行编译</h2>
+<p>可以看到生成两个文件 <code>libnpc.h</code> 和 <code>libnpc.so</code>, 这个库文件有点大 12m</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">file libnpc.so
 libnpc.so: ELF 64-bit LSB shared object, ARM aarch64, version <span style="color:#ae81ff">1</span> <span style="color:#f92672">(</span>SYSV<span style="color:#f92672">)</span>, dynamically linked, Go BuildID<span style="color:#f92672">=</span>MDuIWOynaHxgCjOzC_U5/1ePM-5jyxRPWgmWfSKDo/kSP5ZQo9ATT4Whkh9Cyl/sYvwEF0pawhTir_lw0vB, stripped
-</code></pre></div><h2 id="执行编译">执行编译</h2>
-<p>可以看到生成两个文件 <code>libnpc.h</code> 和 <code>libnpc.so</code>, 这个库文件有点大 14m</p>
-<h2 id="android-使用"><code>Android</code> 使用</h2>
+</code></pre></div><h2 id="android-使用"><code>Android</code> 使用</h2>
 <p>创建<code>Android project</code></p>
 <ol>
 <li>更新依赖</li>
@@ -202,7 +202,9 @@ libnpc.so: ELF 64-bit LSB shared object, ARM aarch64, version <span style="color
 </span><span style="color:#75715e">     */</span>
     String <span style="color:#a6e22e">Logs</span><span style="color:#f92672">();</span>
 <span style="color:#f92672">}</span>
-</code></pre></div><p>最终的结构</p>
+</code></pre></div><ol start="6">
+<li>最终的结构</li>
+</ol>
 <pre><code>.
 ├── build.gradle
 ├── libs
