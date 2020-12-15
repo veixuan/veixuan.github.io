@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>net on 我自倾怀 君且随意</title>
+    <link>https://veixuan.github.io/tags/net.html</link>
+    <description>Recent content in net on 我自倾怀 君且随意</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 05 Dec 2020 00:41:48 +0800</lastBuildDate><atom:link href="https://veixuan.github.io/tags/net/atom.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Android_tcpdump抓包</title>
+      <link>https://veixuan.github.io/net/android_tcpdump%E6%8A%93%E5%8C%85.html</link>
+      <pubDate>Sat, 05 Dec 2020 00:41:48 +0800</pubDate>
+      
+      <guid>https://veixuan.github.io/net/android_tcpdump%E6%8A%93%E5%8C%85.html</guid>
+      <description>&lt;p&gt;&lt;code&gt;Android&lt;/code&gt;手机&lt;code&gt;tcpdump&lt;/code&gt;抓包&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Android_tcpdump抓包</title>
+      <link>https://veixuan.github.io/android_tcpdump%E6%8A%93%E5%8C%85.html</link>
+      <pubDate>Sat, 05 Dec 2020 00:41:48 +0800</pubDate>
+      
+      <guid>https://veixuan.github.io/android_tcpdump%E6%8A%93%E5%8C%85.html</guid>
+      <description>&lt;p&gt;&lt;code&gt;Android&lt;/code&gt;手机&lt;code&gt;tcpdump&lt;/code&gt;抓包&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
