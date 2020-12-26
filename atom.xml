@@ -6,19 +6,31 @@
     <description>Recent content on 我自倾怀 君且随意</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 26 Dec 2020 11:13:11 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 26 Dec 2020 21:40:56 +0800</lastBuildDate>
     
         <atom:link href="https://veixuan.github.io/atom.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Httpserver</title>
+      <title>golang使用websocket</title>
+      <link>https://veixuan.github.io/websocket.html</link>
+      <pubDate>Sat, 26 Dec 2020 21:40:56 +0800</pubDate>
+      
+      <guid>https://veixuan.github.io/websocket.html</guid>
+      
+        <description>&lt;p&gt;&lt;code&gt;golang&lt;/code&gt;中&lt;code&gt;websocket&lt;/code&gt;的基本使用&lt;/p&gt;
+&lt;h1 id=&#34;websocket-协议&#34;&gt;&lt;code&gt;websocket&lt;/code&gt; 协议&lt;/h1&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>golang http server的基本姿势</title>
       <link>https://veixuan.github.io/httpserver.html</link>
       <pubDate>Sat, 26 Dec 2020 11:13:11 +0800</pubDate>
       
       <guid>https://veixuan.github.io/httpserver.html</guid>
       
-        <description>&lt;p&gt;&lt;code&gt;golang&lt;/code&gt;中标准库&lt;code&gt;http server&lt;/code&gt;的使用和实现。&lt;/p&gt;
+        <description>&lt;p&gt;&lt;code&gt;golang&lt;/code&gt;中标准库&lt;code&gt;http server&lt;/code&gt;的使用和实现&lt;/p&gt;
 &lt;h1 id=&#34;基本姿势&#34;&gt;基本姿势&lt;/h1&gt;
 &lt;h2 id=&#34;最小化实现&#34;&gt;最小化实现&lt;/h2&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
@@ -147,10 +159,10 @@
 &lt;/div&gt;&lt;h1 id=&#34;实现原理&#34;&gt;实现原理&lt;/h1&gt;
 &lt;h2 id=&#34;概念&#34;&gt;概念&lt;/h2&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;Request&lt;/code&gt; http 请求&lt;/li&gt;
-&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;Response&lt;/code&gt; http 响应，是server端需要返回给客户端的信息&lt;/li&gt;
-&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;Handler&lt;/code&gt; 处理请求和生成返回信息的处理逻辑&lt;/li&gt;
-&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;ServeMux&lt;/code&gt; 多路复用器&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;Request&lt;/code&gt; http 请求&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;Response&lt;/code&gt; http 响应，是server端需要返回给客户端的信息&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;Handler&lt;/code&gt; 处理请求和生成返回信息的处理逻辑&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;ServeMux&lt;/code&gt; 多路复用器&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;处理流程&#34;&gt;处理流程&lt;/h2&gt;
 &lt;blockquote&gt;
@@ -750,72 +762,6 @@ libnpc.so: ELF 64-bit LSB shared object, ARM aarch64, version &lt;span style=&#3
 &lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;</description>
-      
-    </item>
-    
-    <item>
-      <title>Android_tcpdump抓包</title>
-      <link>https://veixuan.github.io/android_tcpdump%E6%8A%93%E5%8C%85.html</link>
-      <pubDate>Sat, 05 Dec 2020 00:41:48 +0800</pubDate>
-      
-      <guid>https://veixuan.github.io/android_tcpdump%E6%8A%93%E5%8C%85.html</guid>
-      
-        <description>&lt;p&gt;&lt;code&gt;Android&lt;/code&gt;手机&lt;code&gt;tcpdump&lt;/code&gt;抓包&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;很多app不是使用&lt;code&gt;http&lt;/code&gt;、&lt;code&gt;https&lt;/code&gt;等应用层协议，使用&lt;code&gt;charles&lt;/code&gt;无法抓到包。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&#34;环境&#34;&gt;环境&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 小米mix 3，已root&lt;/li&gt;
-&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; Android tcpdump &lt;a href=&#34;https://www.androidtcpdump.com/android-tcpdump/downloads&#34;&gt;https://www.androidtcpdump.com/android-tcpdump/downloads&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;安装&#34;&gt;安装&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;adb push tcpdump /sdcard/data/local/tmp
-chmod &lt;span style=&#34;color:#f60&#34;&gt;777&lt;/span&gt; /sdcard/data/local/tmp/tcpdump
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;执行抓包&#34;&gt;执行抓包&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;3
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;4
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;5
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;6
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;7
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;8
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;9
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;tcpdump -i any -p -s &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt; -w capture.pcap
-
- &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;# &amp;#34;-i any&amp;#34;: listen on any network interface&lt;/span&gt;
-
- &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;# &amp;#34;-p&amp;#34;: disable promiscuous mode (doesn&amp;#39;t work anyway)&lt;/span&gt;
-
- &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;# &amp;#34;-s 0&amp;#34;: capture the entire packet&lt;/span&gt;
-
- &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;# &amp;#34;-w&amp;#34;: write packets to a file (rather than printing to stdout)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;下载到本地&#34;&gt;下载到本地&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;adb pull /storage/emulated/0/data/local/tmp/capture.pcap
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;使用wireshark-打开&#34;&gt;使用&lt;code&gt;wireshark&lt;/code&gt; 打开&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.loli.net/2020/12/05/iyOwxFvGZqkA1p4.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;</description>
       
     </item>
     

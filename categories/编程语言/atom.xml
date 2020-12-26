@@ -26,12 +26,12 @@
     </item>
     
     <item>
-      <title>Struct比较</title>
-      <link>https://veixuan.github.io/golang/struct%E6%AF%94%E8%BE%83.html</link>
+      <title>go中struct能否比较么?</title>
+      <link>https://veixuan.github.io/struct%E6%AF%94%E8%BE%83.html</link>
       <pubDate>Sat, 31 Oct 2020 00:38:32 +0800</pubDate>
       
-      <guid>https://veixuan.github.io/golang/struct%E6%AF%94%E8%BE%83.html</guid>
-      <description>&lt;p&gt;Struct比较&lt;/p&gt;</description>
+      <guid>https://veixuan.github.io/struct%E6%AF%94%E8%BE%83.html</guid>
+      <description>&lt;p&gt;&lt;code&gt;Struct&lt;/code&gt;在&lt;code&gt;golang&lt;/code&gt;中能否比较?&lt;/p&gt;</description>
     </item>
     
   </channel>
