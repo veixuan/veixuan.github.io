@@ -6,10 +6,393 @@
     <description>Recent content on 我自倾怀 君且随意</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 12 Dec 2020 15:56:48 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 26 Dec 2020 11:13:11 +0800</lastBuildDate>
     
         <atom:link href="https://veixuan.github.io/atom.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Httpserver</title>
+      <link>https://veixuan.github.io/httpserver.html</link>
+      <pubDate>Sat, 26 Dec 2020 11:13:11 +0800</pubDate>
+      
+      <guid>https://veixuan.github.io/httpserver.html</guid>
+      
+        <description>&lt;p&gt;&lt;code&gt;golang&lt;/code&gt;中标准库&lt;code&gt;http server&lt;/code&gt;的使用和实现。&lt;/p&gt;
+&lt;h1 id=&#34;基本姿势&#34;&gt;基本姿势&lt;/h1&gt;
+&lt;h2 id=&#34;最小化实现&#34;&gt;最小化实现&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;3
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;4
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;5
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;Serve&lt;/span&gt;(addr &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;string&lt;/span&gt;) {
+	http.&lt;span style=&#34;color:#c0f&#34;&gt;HandleFunc&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;/now&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;func&lt;/span&gt;(writer http.ResponseWriter, request &lt;span style=&#34;color:#555&#34;&gt;*&lt;/span&gt;http.Request) {
+		writer.&lt;span style=&#34;color:#c0f&#34;&gt;Write&lt;/span&gt;([]&lt;span style=&#34;color:#366&#34;&gt;byte&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;Hi, now is &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;+&lt;/span&gt; time.&lt;span style=&#34;color:#c0f&#34;&gt;Now&lt;/span&gt;().&lt;span style=&#34;color:#c0f&#34;&gt;String&lt;/span&gt;()))
+	})
+	log.&lt;span style=&#34;color:#c0f&#34;&gt;Fatal&lt;/span&gt;(http.&lt;span style=&#34;color:#c0f&#34;&gt;ListenAndServe&lt;/span&gt;(addr, &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;nil&lt;/span&gt;))
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;自定义实现&#34;&gt;自定义实现&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 2
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 3
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 4
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 5
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 6
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 7
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 8
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 9
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;10
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;11
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;12
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;13
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;14
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;15
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;16
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;17
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;18
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;19
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;type&lt;/span&gt; IndexHandler &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;struct&lt;/span&gt;{}
+
+&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;func&lt;/span&gt; (i &lt;span style=&#34;color:#555&#34;&gt;*&lt;/span&gt;IndexHandler) &lt;span style=&#34;color:#c0f&#34;&gt;ServeHTTP&lt;/span&gt;(writer http.ResponseWriter, request &lt;span style=&#34;color:#555&#34;&gt;*&lt;/span&gt;http.Request) {
+	writer.&lt;span style=&#34;color:#c0f&#34;&gt;Write&lt;/span&gt;([]&lt;span style=&#34;color:#366&#34;&gt;byte&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;Hi, now is &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;+&lt;/span&gt; time.&lt;span style=&#34;color:#c0f&#34;&gt;Now&lt;/span&gt;().&lt;span style=&#34;color:#c0f&#34;&gt;String&lt;/span&gt;()))
+}
+
+&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;Serve&lt;/span&gt;(addr &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;string&lt;/span&gt;) {
+	mux &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; http.&lt;span style=&#34;color:#c0f&#34;&gt;NewServeMux&lt;/span&gt;()
+	mux.&lt;span style=&#34;color:#c0f&#34;&gt;Handle&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;/hello&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#555&#34;&gt;&amp;amp;&lt;/span&gt;IndexHandler{})
+	server &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;&amp;amp;&lt;/span&gt;http.Server{
+		Addr:              addr,
+		Handler:           mux,
+		TLSConfig:         &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;nil&lt;/span&gt;,
+		ReadTimeout:       time.Second,
+		ReadHeaderTimeout: time.Millisecond &lt;span style=&#34;color:#555&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#f60&#34;&gt;500&lt;/span&gt;,
+		WriteTimeout:      time.Millisecond &lt;span style=&#34;color:#555&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#f60&#34;&gt;500&lt;/span&gt;,
+	}
+	log.&lt;span style=&#34;color:#c0f&#34;&gt;Fatal&lt;/span&gt;(server.&lt;span style=&#34;color:#c0f&#34;&gt;ListenAndServe&lt;/span&gt;())
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;支持https&#34;&gt;支持&lt;code&gt;https&lt;/code&gt;&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 2
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 3
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 4
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 5
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 6
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 7
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 8
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 9
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;10
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 1. 生成服务端私钥  2048单位bit key的长度 
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;openssl genrsa &lt;span style=&#34;color:#555&#34;&gt;-&lt;/span&gt;out server.key &lt;span style=&#34;color:#f60&#34;&gt;2048&lt;/span&gt;
+&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 2. 根据私钥生成自签发的证书 
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;openssl req &lt;span style=&#34;color:#555&#34;&gt;-&lt;/span&gt;new &lt;span style=&#34;color:#555&#34;&gt;-&lt;/span&gt;x509 &lt;span style=&#34;color:#555&#34;&gt;-&lt;/span&gt;key server.key &lt;span style=&#34;color:#555&#34;&gt;-&lt;/span&gt;out server.crt &lt;span style=&#34;color:#555&#34;&gt;-&lt;/span&gt;days &lt;span style=&#34;color:#f60&#34;&gt;365&lt;/span&gt;
+&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 当前目录下生成 server.crt和server.key两个文件 
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;
+&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 修改http server 启动代码
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;log.&lt;span style=&#34;color:#c0f&#34;&gt;Fatal&lt;/span&gt;(server.&lt;span style=&#34;color:#c0f&#34;&gt;ListenAndServeTLS&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;server.crt&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;server.key&amp;#34;&lt;/span&gt;))
+
+&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 验证  -k 允许连接到 SSL 站点，而不校验证书 
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;curl &lt;span style=&#34;color:#555&#34;&gt;-&lt;/span&gt;k https:&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;//localhost:8000/hello
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;支持-http2&#34;&gt;支持 &lt;code&gt;http2&lt;/code&gt;&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;GO&lt;/code&gt;的&lt;code&gt;http&lt;/code&gt;库默认支持&lt;code&gt;HTTP/2&lt;/code&gt;协议，只要我们使用TLS则会默认启动HTTP/2特性&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;支持quic&#34;&gt;支持&lt;code&gt;quic&lt;/code&gt;&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 2
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 3
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 4
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 5
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 6
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 7
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 8
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 9
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 安装依赖 
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// go get -u -v github.com/lucas-clemente/quic-go
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;
+&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// brew install mkcert
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// mkcert -install 
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;Serve&lt;/span&gt;(addr &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;string&lt;/span&gt;) {
+	mux &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; http.&lt;span style=&#34;color:#c0f&#34;&gt;NewServeMux&lt;/span&gt;()
+	mux.&lt;span style=&#34;color:#c0f&#34;&gt;Handle&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;/hello&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#555&#34;&gt;&amp;amp;&lt;/span&gt;IndexHandler{})
+	log.&lt;span style=&#34;color:#c0f&#34;&gt;Fatal&lt;/span&gt;(http3.&lt;span style=&#34;color:#c0f&#34;&gt;ListenAndServe&lt;/span&gt;(addr, &lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;install.pem&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;install-key.pem&amp;#34;&lt;/span&gt;, mux))
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h1 id=&#34;实现原理&#34;&gt;实现原理&lt;/h1&gt;
+&lt;h2 id=&#34;概念&#34;&gt;概念&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;Request&lt;/code&gt; http 请求&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;Response&lt;/code&gt; http 响应，是server端需要返回给客户端的信息&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;Handler&lt;/code&gt; 处理请求和生成返回信息的处理逻辑&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;ServeMux&lt;/code&gt; 多路复用器&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;处理流程&#34;&gt;处理流程&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;后面再填坑&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&#34;常见实现&#34;&gt;常见实现&lt;/h1&gt;
+&lt;h2 id=&#34;获取url-query-参数&#34;&gt;获取&lt;code&gt;url query&lt;/code&gt; 参数&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// http://localhost:8000/hello?name=张三 
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	query &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; request.URL.&lt;span style=&#34;color:#c0f&#34;&gt;Query&lt;/span&gt;()
+	name &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; query.&lt;span style=&#34;color:#c0f&#34;&gt;Get&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;name&amp;#34;&lt;/span&gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;获取-url-path-参数&#34;&gt;获取 &lt;code&gt;url path&lt;/code&gt; 参数&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;3
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;4
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;5
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 可以考虑使用第三方的http router 库 
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 比如 
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 1. https://github.com/julienschmidt/httprouter
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 2. https://github.com/gorilla/mux 
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;
+&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 原生库实现起来比较trick 
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;获取-post参数&#34;&gt;获取 &lt;code&gt;post&lt;/code&gt;参数&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;	body, _ &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; ioutil.&lt;span style=&#34;color:#c0f&#34;&gt;ReadAll&lt;/span&gt;(request.Body)
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;静态文件服务器&#34;&gt;静态文件服务器&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;	fileServer &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; http.&lt;span style=&#34;color:#c0f&#34;&gt;FileServer&lt;/span&gt;(http.&lt;span style=&#34;color:#c0f&#34;&gt;Dir&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;./&amp;#34;&lt;/span&gt;))
+	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;go&lt;/span&gt; http.&lt;span style=&#34;color:#c0f&#34;&gt;ListenAndServe&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;:4000&amp;#34;&lt;/span&gt;, fileServer)
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;cors-&#34;&gt;&lt;code&gt;cors &lt;/code&gt;&lt;/h2&gt;
+&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;浏览器通过同源策略来防止恶意网站窃取数据&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;术语解释&#34;&gt;术语解释&lt;/h3&gt;
+&lt;p&gt;同源(&lt;code&gt;Same origin policy&lt;/code&gt;)协议、域名、端口都相同` &lt;strong&gt;也就是说非同源的资源之间不能相互通信&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;以 &lt;code&gt;http://example.com/hello&lt;/code&gt;为例&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;域名&lt;/th&gt;
+&lt;th&gt;是否同源&lt;/th&gt;
+&lt;th&gt;说明&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;http://example.com/world&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;同源&lt;/td&gt;
+&lt;td&gt;域名、端口、协议都相同，只是路径不同&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;https://example.com/world&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;不同源&lt;/td&gt;
+&lt;td&gt;协议不同，http协议与https协议&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;https://example.com:10086/world&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;不同源&lt;/td&gt;
+&lt;td&gt;端口不同&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;https://example001.com/world&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;不同源&lt;/td&gt;
+&lt;td&gt;域名不同&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id=&#34;问题&#34;&gt;问题&lt;/h3&gt;
+&lt;p&gt;同源策略的出发点是通过禁止非同源之间通信来避免恶意网站窃取数据，但是同时也会导致非同源之间的合理通信无法实施，比如 &lt;code&gt;ajax&lt;/code&gt;&lt;/p&gt;
+&lt;h3 id=&#34;解决方案&#34;&gt;解决方案&lt;/h3&gt;
+&lt;p&gt;&lt;code&gt;Cross-origin resource sharing &lt;/code&gt;跨域资源共享。浏览器和服务端之间共同完成。服务端实现&lt;code&gt;CORS接口&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 2
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 3
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 4
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 5
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 6
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 7
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 8
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 9
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 使用 https://github.com/rs/cors 
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	fileServer &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; http.&lt;span style=&#34;color:#c0f&#34;&gt;FileServer&lt;/span&gt;(http.&lt;span style=&#34;color:#c0f&#34;&gt;Dir&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;./&amp;#34;&lt;/span&gt;))
+
+	c &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; cors.&lt;span style=&#34;color:#c0f&#34;&gt;New&lt;/span&gt;(cors.Options{
+		AllowedOrigins:   []&lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;string&lt;/span&gt;{&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;http://foo.com&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;http://foo.com:8080&amp;#34;&lt;/span&gt;},
+		AllowCredentials: &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;true&lt;/span&gt;,
+		&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// Enable Debugging for testing, consider disabling in production
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		Debug: &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;true&lt;/span&gt;,
+	})
+	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;go&lt;/span&gt; http.&lt;span style=&#34;color:#c0f&#34;&gt;ListenAndServe&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;:4000&amp;#34;&lt;/span&gt;, c.&lt;span style=&#34;color:#c0f&#34;&gt;Handler&lt;/span&gt;(fileServer))
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;静态资源bind&#34;&gt;静态资源&lt;code&gt;bind&lt;/code&gt;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;go1.16 新版将集成原生支持&lt;/li&gt;
+&lt;li&gt;可以使用开源库 比如 &lt;code&gt;gobind&lt;/code&gt; 、&lt;code&gt;vfsgen&lt;/code&gt; 等&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;优雅退出&#34;&gt;优雅退出&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;1.8 之后，默认的&lt;code&gt;shutdown&lt;/code&gt;方法已实现优化退出&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 2
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 3
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 4
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 5
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 6
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 7
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 8
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 9
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;10
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;11
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;12
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;13
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;14
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;15
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;16
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;17
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;18
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;19
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;20
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;21
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;22
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;23
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;24
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;25
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;26
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;27
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;28
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;29
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;30
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;31
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;32
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;33
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;34
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;defer&lt;/span&gt; server.&lt;span style=&#34;color:#c0f&#34;&gt;Shutdown&lt;/span&gt;(context.&lt;span style=&#34;color:#c0f&#34;&gt;Background&lt;/span&gt;())
+
+&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;func&lt;/span&gt; (srv &lt;span style=&#34;color:#555&#34;&gt;*&lt;/span&gt;Server) &lt;span style=&#34;color:#c0f&#34;&gt;Shutdown&lt;/span&gt;(ctx context.Context) &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;error&lt;/span&gt; {
+  
+  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 1. 标记退出状态  cas实现 
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	srv.inShutdown.&lt;span style=&#34;color:#c0f&#34;&gt;setTrue&lt;/span&gt;()
+
+  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 2. 加锁 
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	srv.mu.&lt;span style=&#34;color:#c0f&#34;&gt;Lock&lt;/span&gt;()
+  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 3. 关闭 listener fd 新的连接无法建立 即不会接受新的请求 
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	lnerr &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; srv.&lt;span style=&#34;color:#c0f&#34;&gt;closeListenersLocked&lt;/span&gt;()
+  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 4. 把server 的done chan给close掉，通知等待的worekr退出
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	srv.&lt;span style=&#34;color:#c0f&#34;&gt;closeDoneChanLocked&lt;/span&gt;()
+  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 5. 执行回调方法，我们可以注册shutdown的回调方法
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;for&lt;/span&gt; _, f &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;range&lt;/span&gt; srv.onShutdown {
+		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;go&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;f&lt;/span&gt;()
+	}
+	srv.mu.&lt;span style=&#34;color:#c0f&#34;&gt;Unlock&lt;/span&gt;()
+
+  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 6. 500ms 轮询一次 
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	ticker &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; time.&lt;span style=&#34;color:#c0f&#34;&gt;NewTicker&lt;/span&gt;(shutdownPollInterval)
+	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;defer&lt;/span&gt; ticker.&lt;span style=&#34;color:#c0f&#34;&gt;Stop&lt;/span&gt;()
+	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;for&lt;/span&gt; {
+    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 已经没有空闲的连接了 
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; srv.&lt;span style=&#34;color:#c0f&#34;&gt;closeIdleConns&lt;/span&gt;() &lt;span style=&#34;color:#555&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; srv.&lt;span style=&#34;color:#c0f&#34;&gt;numListeners&lt;/span&gt;() &lt;span style=&#34;color:#555&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt; {
+			&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;return&lt;/span&gt; lnerr
+		}
+		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;select&lt;/span&gt; {
+		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;&amp;lt;-&lt;/span&gt;ctx.&lt;span style=&#34;color:#c0f&#34;&gt;Done&lt;/span&gt;():
+			&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;return&lt;/span&gt; ctx.&lt;span style=&#34;color:#c0f&#34;&gt;Err&lt;/span&gt;()
+		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;&amp;lt;-&lt;/span&gt;ticker.C:
+		}
+	}
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h1 id=&#34;性能分析&#34;&gt;性能分析&lt;/h1&gt;
+&lt;h2 id=&#34;集成-pprof&#34;&gt;集成 pprof&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;	_ &lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;net/http/pprof&amp;#34;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;集成-fgprof&#34;&gt;集成 fgprof&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;https://github.com/felixge/fgprof&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;默认的pprof只能分析&lt;code&gt;on-cpu&lt;/code&gt;，要分析&lt;code&gt;off-cpu&lt;/code&gt;可以使用上面的库&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;3
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;	mux.&lt;span style=&#34;color:#c0f&#34;&gt;Handle&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;/hello&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#555&#34;&gt;&amp;amp;&lt;/span&gt;HelloHandler{})
+	mux.&lt;span style=&#34;color:#c0f&#34;&gt;Handle&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;/debug/fgprof&amp;#34;&lt;/span&gt;, fgprof.&lt;span style=&#34;color:#c0f&#34;&gt;Handler&lt;/span&gt;())
+
+&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// go tool pprof --http=:6061 &amp;#39;http://localhost:8000/debug/fgprof?seconds=3&amp;#39;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
+      
+    </item>
     
     <item>
       <title>使用Golang进行Android Native开发</title>
@@ -433,78 +816,6 @@ chmod &lt;span style=&#34;color:#f60&#34;&gt;777&lt;/span&gt; /sdcard/data/local
 &lt;/div&gt;
 &lt;/div&gt;&lt;h2 id=&#34;使用wireshark-打开&#34;&gt;使用&lt;code&gt;wireshark&lt;/code&gt; 打开&lt;/h2&gt;
 &lt;p&gt;&lt;img src=&#34;https://i.loli.net/2020/12/05/iyOwxFvGZqkA1p4.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;</description>
-      
-    </item>
-    
-    <item>
-      <title>Struct比较</title>
-      <link>https://veixuan.github.io/struct%E6%AF%94%E8%BE%83.html</link>
-      <pubDate>Sat, 31 Oct 2020 00:38:32 +0800</pubDate>
-      
-      <guid>https://veixuan.github.io/struct%E6%AF%94%E8%BE%83.html</guid>
-      
-        <description>&lt;p&gt;Struct比较&lt;/p&gt;
-&lt;h1 id=&#34;struct-compare&#34;&gt;struct compare&lt;/h1&gt;
-&lt;h2 id=&#34;哪些类型不能比较&#34;&gt;哪些类型不能比较&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;slice&lt;/li&gt;
-&lt;li&gt;map&lt;/li&gt;
-&lt;li&gt;function&lt;/li&gt;
-&lt;li&gt;以及包含了上述三种类型之一的struct&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&#34;为什么这些类型不能比较&#34;&gt;为什么这些类型不能比较&lt;/h2&gt;
-&lt;p&gt;尝试比较&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;3
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;invalid operation: &lt;span style=&#34;color:#033&#34;&gt;a1&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;==&lt;/span&gt; a2 &lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;slice can only be compared to nil&lt;span style=&#34;color:#555&#34;&gt;)&lt;/span&gt;
-invalid operation: &lt;span style=&#34;color:#033&#34;&gt;a1&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;==&lt;/span&gt; a2 &lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;map can only be compared to nil&lt;span style=&#34;color:#555&#34;&gt;)&lt;/span&gt;
-invalid operation: &lt;span style=&#34;color:#033&#34;&gt;a1&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;==&lt;/span&gt; a2 &lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;func can only be compared to nil&lt;span style=&#34;color:#555&#34;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;从程序的实现角度来讲，类似于底层没有实现 &lt;code&gt;==&lt;/code&gt; 操作符&lt;/p&gt;
-&lt;p&gt;另一方面，这三种类型的相等 有歧义，所以未实现&lt;/p&gt;
-&lt;h2 id=&#34;interfacechannel-可比较&#34;&gt;interface、channel 可比较&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;channel。只有在它们引用着相同的底层内部通道或者它们都为nil时比较结果才为true&lt;/li&gt;
-&lt;li&gt;interface。只有这两个接口值的动态类型相同、动态类型为可比较类型、并且动态值相等 或者都为nil 才为true&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&#34;如果要比较slicemap时如何比较&#34;&gt;如果要比较slice、map时如何比较？&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 1
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 2
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 3
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 4
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 5
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 6
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 7
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 8
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 9
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;10
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;11
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;12
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;reflect.DeepEqual
-&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;DeepEqual&lt;/span&gt;(x, y &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;interface&lt;/span&gt;{}) &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;bool&lt;/span&gt; {
-	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; x &lt;span style=&#34;color:#555&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;nil&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;||&lt;/span&gt; y &lt;span style=&#34;color:#555&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;nil&lt;/span&gt; {
-		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;return&lt;/span&gt; x &lt;span style=&#34;color:#555&#34;&gt;==&lt;/span&gt; y
-	}
-	v1 &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;ValueOf&lt;/span&gt;(x)
-	v2 &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;ValueOf&lt;/span&gt;(y)
-	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; v1.&lt;span style=&#34;color:#c0f&#34;&gt;Type&lt;/span&gt;() &lt;span style=&#34;color:#555&#34;&gt;!=&lt;/span&gt; v2.&lt;span style=&#34;color:#c0f&#34;&gt;Type&lt;/span&gt;() {
-		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;false&lt;/span&gt;
-	}
-	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;deepValueEqual&lt;/span&gt;(v1, v2, &lt;span style=&#34;color:#366&#34;&gt;make&lt;/span&gt;(&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;map&lt;/span&gt;[visit]&lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;bool&lt;/span&gt;), &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt;)
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;结论：如果struct中包含了 上述不能比较的类型，是不能直接比较的。&lt;/p&gt;</description>
       
     </item>
     

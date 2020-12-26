@@ -6,7 +6,16 @@
     <description>Recent content in golang on 我自倾怀 君且随意</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 12 Dec 2020 15:56:48 +0800</lastBuildDate><atom:link href="https://veixuan.github.io/tags/golang/atom.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 26 Dec 2020 11:13:11 +0800</lastBuildDate><atom:link href="https://veixuan.github.io/tags/golang/atom.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Httpserver</title>
+      <link>https://veixuan.github.io/httpserver.html</link>
+      <pubDate>Sat, 26 Dec 2020 11:13:11 +0800</pubDate>
+      
+      <guid>https://veixuan.github.io/httpserver.html</guid>
+      <description>&lt;p&gt;&lt;code&gt;golang&lt;/code&gt;中标准库&lt;code&gt;http server&lt;/code&gt;的使用和实现。&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>Golang Native开发</title>
       <link>https://veixuan.github.io/android/golang-native%E5%BC%80%E5%8F%91.html</link>
@@ -23,15 +32,6 @@
       
       <guid>https://veixuan.github.io/golang-native%E5%BC%80%E5%8F%91.html</guid>
       <description>&lt;p&gt;使用&lt;code&gt;golang&lt;/code&gt;进行&lt;code&gt;Android native&lt;/code&gt; 开发&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Struct比较</title>
-      <link>https://veixuan.github.io/golang/struct%E6%AF%94%E8%BE%83.html</link>
-      <pubDate>Sat, 31 Oct 2020 00:38:32 +0800</pubDate>
-      
-      <guid>https://veixuan.github.io/golang/struct%E6%AF%94%E8%BE%83.html</guid>
-      <description>&lt;p&gt;Struct比较&lt;/p&gt;</description>
     </item>
     
   </channel>
