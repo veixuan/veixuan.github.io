@@ -6,7 +6,25 @@
     <description>Recent content in Posts on 我自倾怀 君且随意</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 26 Dec 2020 21:40:56 +0800</lastBuildDate><atom:link href="https://veixuan.github.io/posts/atom.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 27 Dec 2020 15:36:55 +0800</lastBuildDate><atom:link href="https://veixuan.github.io/posts/atom.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>边界检查消除优化</title>
+      <link>https://veixuan.github.io/%E8%BE%B9%E7%95%8C%E6%A3%80%E6%9F%A5%E6%B6%88%E9%99%A4%E4%BC%98%E5%8C%96.html</link>
+      <pubDate>Sun, 27 Dec 2020 15:36:55 +0800</pubDate>
+      
+      <guid>https://veixuan.github.io/%E8%BE%B9%E7%95%8C%E6%A3%80%E6%9F%A5%E6%B6%88%E9%99%A4%E4%BC%98%E5%8C%96.html</guid>
+      <description>&lt;p&gt;使用消除边界检查进行性能优化&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>双塔模型</title>
+      <link>https://veixuan.github.io/%E5%8F%8C%E5%A1%94%E6%A8%A1%E5%9E%8B.html</link>
+      <pubDate>Sun, 27 Dec 2020 12:16:01 +0800</pubDate>
+      
+      <guid>https://veixuan.github.io/%E5%8F%8C%E5%A1%94%E6%A8%A1%E5%9E%8B.html</guid>
+      <description>&lt;p&gt;双塔模型的概念。&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>golang使用websocket</title>
       <link>https://veixuan.github.io/websocket.html</link>
@@ -14,24 +32,6 @@
       
       <guid>https://veixuan.github.io/websocket.html</guid>
       <description>&lt;p&gt;&lt;code&gt;golang&lt;/code&gt;中&lt;code&gt;websocket&lt;/code&gt;的基本使用&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>golang http server的基本姿势</title>
-      <link>https://veixuan.github.io/httpserver.html</link>
-      <pubDate>Sat, 26 Dec 2020 11:13:11 +0800</pubDate>
-      
-      <guid>https://veixuan.github.io/httpserver.html</guid>
-      <description>&lt;p&gt;&lt;code&gt;golang&lt;/code&gt;中标准库&lt;code&gt;http server&lt;/code&gt;的使用和实现&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>使用Golang进行Android Native开发</title>
-      <link>https://veixuan.github.io/golang-native%E5%BC%80%E5%8F%91.html</link>
-      <pubDate>Sat, 12 Dec 2020 15:56:48 +0800</pubDate>
-      
-      <guid>https://veixuan.github.io/golang-native%E5%BC%80%E5%8F%91.html</guid>
-      <description>&lt;p&gt;使用&lt;code&gt;golang&lt;/code&gt;进行&lt;code&gt;Android native&lt;/code&gt; 开发&lt;/p&gt;</description>
     </item>
     
   </channel>

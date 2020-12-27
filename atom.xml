@@ -6,10 +6,284 @@
     <description>Recent content on 我自倾怀 君且随意</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 26 Dec 2020 21:40:56 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 27 Dec 2020 15:36:55 +0800</lastBuildDate>
     
         <atom:link href="https://veixuan.github.io/atom.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>边界检查消除优化</title>
+      <link>https://veixuan.github.io/%E8%BE%B9%E7%95%8C%E6%A3%80%E6%9F%A5%E6%B6%88%E9%99%A4%E4%BC%98%E5%8C%96.html</link>
+      <pubDate>Sun, 27 Dec 2020 15:36:55 +0800</pubDate>
+      
+      <guid>https://veixuan.github.io/%E8%BE%B9%E7%95%8C%E6%A3%80%E6%9F%A5%E6%B6%88%E9%99%A4%E4%BC%98%E5%8C%96.html</guid>
+      
+        <description>&lt;p&gt;使用消除边界检查进行性能优化&lt;/p&gt;
+&lt;h1 id=&#34;什么是边界检查&#34;&gt;什么是边界检查&lt;/h1&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;golang&lt;/code&gt;运行时会进行使用的下标是否越界，如果越界，就会发生panic，以防止破坏内存安全。&lt;/p&gt;
+&lt;p&gt;这样的检查称为边界检查，全称是&lt;code&gt;bounds check&lt;/code&gt;。目的是使得代码可以更安全的运行，同时也会导致性能受损。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&#34;边界检查消除&#34;&gt;边界检查消除&lt;/h1&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;bounds check elimination&lt;/code&gt;，简称 &lt;code&gt;bce&lt;/code&gt;,这个是编译器层的优化，同时，我们可以在代码层做一些优化来进行边界消除检查。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&#34;定位哪些需要做bce&#34;&gt;定位哪些需要做&lt;code&gt;bce&lt;/code&gt;&lt;/h1&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 2
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 3
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 4
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 5
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 6
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 7
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 8
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 9
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;f2&lt;/span&gt;(s []&lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;int&lt;/span&gt;) {
+	_ = s[&lt;span style=&#34;color:#f60&#34;&gt;2&lt;/span&gt;]  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 需要边界检查 
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	_ = s[&lt;span style=&#34;color:#f60&#34;&gt;1&lt;/span&gt;]  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 不需要  因为上一行的下标大于当前 
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	_ = s[&lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt;]  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 不需要  同理
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	_ = s[&lt;span style=&#34;color:#f60&#34;&gt;100&lt;/span&gt;] &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 需要边界检查 
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;}
+&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 编译 
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// go build -gcflags=&amp;#34;-d=ssa/check_bce/debug=1&amp;#34;
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;.&lt;span style=&#34;color:#555&#34;&gt;/&lt;/span&gt;main.&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;go&lt;/span&gt;:&lt;span style=&#34;color:#f60&#34;&gt;16&lt;/span&gt;:&lt;span style=&#34;color:#f60&#34;&gt;7&lt;/span&gt;: Found IsInBounds
+.&lt;span style=&#34;color:#555&#34;&gt;/&lt;/span&gt;main.&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;go&lt;/span&gt;:&lt;span style=&#34;color:#f60&#34;&gt;19&lt;/span&gt;:&lt;span style=&#34;color:#f60&#34;&gt;7&lt;/span&gt;: Found IsInBounds
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h1 id=&#34;ssa-是什么&#34;&gt;&lt;code&gt;ssa&lt;/code&gt; 是什么&lt;/h1&gt;
+&lt;blockquote&gt;
+&lt;p&gt;全称是 &lt;code&gt;static single-assignment&lt;/code&gt;  是一种IR中间表示代码，用于保证每个变量只被赋值一次，用于帮助编译器优化的算法&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&#34;什么情况下边界检查消除&#34;&gt;什么情况下边界检查消除&lt;/h1&gt;
+&lt;h2 id=&#34;重复检测&#34;&gt;重复检测&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 2
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 3
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 4
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 5
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 6
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 7
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 8
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 9
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;var&lt;/span&gt; s[]&lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;int&lt;/span&gt;
+
+_ = s[i] &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 插入边界检测
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;_ = s[i] &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 相同索引，不需要
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;
+_ = s[:i] &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 插入边界检测
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;_ = s[:i] &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 不需要
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;
+_ = s[i:] &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 插入边界检测
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;_ = s[i:] &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 不需要
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;常量大小&#34;&gt;常量大小&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;3
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;4
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;5
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 访问常量大小的数组 
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 计算索引的结果是一个固定常亮时 
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;
+&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;var&lt;/span&gt; arr[&lt;span style=&#34;color:#f60&#34;&gt;10&lt;/span&gt;]&lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;int&lt;/span&gt;
+_ = arr[i&lt;span style=&#34;color:#555&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span style=&#34;color:#f60&#34;&gt;5&lt;/span&gt;] &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 因为i&amp;amp;5 &amp;lt;= 5 &amp;lt; 17，边界检测消除
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;_ = arr[i&lt;span style=&#34;color:#555&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#f60&#34;&gt;5&lt;/span&gt;] &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 需要边界检查 
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;常量索引&#34;&gt;常量索引&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;var&lt;/span&gt; arr[&lt;span style=&#34;color:#f60&#34;&gt;10&lt;/span&gt;]&lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;int&lt;/span&gt;
+_ = arr[&lt;span style=&#34;color:#f60&#34;&gt;5&lt;/span&gt;]   &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 无需边界检查
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;迭代索引&#34;&gt;迭代索引&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;3
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;4
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;5
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;6
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;7
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-GO&#34; data-lang=&#34;GO&#34;&gt;	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt;; i &amp;lt; &lt;span style=&#34;color:#366&#34;&gt;len&lt;/span&gt;(s); i&lt;span style=&#34;color:#555&#34;&gt;++&lt;/span&gt; {
+		_ = s[i]   &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 无需边界检查 
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	}
+
+	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;range&lt;/span&gt; s {
+		_ = s[i] &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 无需边界检查
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	}
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;递减的索引&#34;&gt;递减的索引&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;3
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;_, _, _ = arr[&lt;span style=&#34;color:#f60&#34;&gt;3&lt;/span&gt;], arr[&lt;span style=&#34;color:#f60&#34;&gt;2&lt;/span&gt;], arr[&lt;span style=&#34;color:#f60&#34;&gt;1&lt;/span&gt;] &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 一个边界检测
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;
+_ = arr[&lt;span style=&#34;color:#f60&#34;&gt;3&lt;/span&gt;] &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 边界检查 
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;_, _, _ = arr[&lt;span style=&#34;color:#f60&#34;&gt;3&lt;/span&gt;], arr[&lt;span style=&#34;color:#f60&#34;&gt;2&lt;/span&gt;], arr[&lt;span style=&#34;color:#f60&#34;&gt;1&lt;/span&gt;]  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 无需边界检查 
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h1 id=&#34;人肉消除&#34;&gt;人肉消除&lt;/h1&gt;
+&lt;p&gt;参考  &lt;a href=&#34;https://gfw.go101.org/article/tips.html#make-use-of-bce&#34;&gt;https://gfw.go101.org/article/tips.html#make-use-of-bce&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 2
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 3
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 4
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 5
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 6
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 7
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 8
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 9
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;10
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;11
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;12
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;13
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;14
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;15
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;16
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;17
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;18
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;19
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;20
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;21
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;22
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;23
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;24
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;25
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;CounterSameByteOld&lt;/span&gt;(x, y &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;string&lt;/span&gt;) &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;int&lt;/span&gt; {
+	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#366&#34;&gt;len&lt;/span&gt;(x) &amp;gt; &lt;span style=&#34;color:#366&#34;&gt;len&lt;/span&gt;(y) {
+		x, y = y, x
+	}
+	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt;; i &amp;lt; &lt;span style=&#34;color:#366&#34;&gt;len&lt;/span&gt;(x); i&lt;span style=&#34;color:#555&#34;&gt;++&lt;/span&gt; {
+		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; x[i] &lt;span style=&#34;color:#555&#34;&gt;!=&lt;/span&gt; y[i] {
+			&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;return&lt;/span&gt; i
+		}
+	}
+	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#366&#34;&gt;len&lt;/span&gt;(x)
+}
+
+&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;CounterSameByteNew&lt;/span&gt;(x, y &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;string&lt;/span&gt;) &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;int&lt;/span&gt; {
+	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#366&#34;&gt;len&lt;/span&gt;(x) &amp;gt; &lt;span style=&#34;color:#366&#34;&gt;len&lt;/span&gt;(y) {
+		x, y = y, x
+	}
+	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#366&#34;&gt;len&lt;/span&gt;(x) &lt;span style=&#34;color:#555&#34;&gt;&amp;lt;=&lt;/span&gt; &lt;span style=&#34;color:#366&#34;&gt;len&lt;/span&gt;(y) { &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 插入判断
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt;; i &amp;lt; &lt;span style=&#34;color:#366&#34;&gt;len&lt;/span&gt;(x); i&lt;span style=&#34;color:#555&#34;&gt;++&lt;/span&gt; {
+			&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; x[i] &lt;span style=&#34;color:#555&#34;&gt;!=&lt;/span&gt; y[i] { &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 边界检查消除 这个编译器不够智能啊 。。
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;				&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;return&lt;/span&gt; i
+			}
+		}
+	}
+	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#366&#34;&gt;len&lt;/span&gt;(x)
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;实际&lt;code&gt;benchmark&lt;/code&gt;结果优化&lt;strong&gt;不明显&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 2
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 3
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 4
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 5
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 6
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 7
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 8
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 9
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;10
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;11
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;12
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;13
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;14
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;15
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;16
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;17
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;18
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;19
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;20
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;21
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;22
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;23
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;24
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;25
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;26
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;var&lt;/span&gt; (
+	x = strings.&lt;span style=&#34;color:#c0f&#34;&gt;Repeat&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;ancdefgklshjafklhjfhwksfalkjlkdjlkdfshal&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#f60&#34;&gt;100&lt;/span&gt;)
+	y = strings.&lt;span style=&#34;color:#c0f&#34;&gt;Repeat&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;ancdefgklshjafklhjfhwksfalkjlkdjlkdfshal&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#f60&#34;&gt;99&lt;/span&gt;)
+)
+
+&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;BenchmarkCounterSameByteOld&lt;/span&gt;(b &lt;span style=&#34;color:#555&#34;&gt;*&lt;/span&gt;testing.B) {
+	b.&lt;span style=&#34;color:#c0f&#34;&gt;ResetTimer&lt;/span&gt;()
+	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt;; i &amp;lt; b.N; i&lt;span style=&#34;color:#555&#34;&gt;++&lt;/span&gt; {
+		&lt;span style=&#34;color:#c0f&#34;&gt;CounterSameByteOld&lt;/span&gt;(x, y)
+	}
+}
+
+&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;BenchmarkCounterSameByteNew&lt;/span&gt;(b &lt;span style=&#34;color:#555&#34;&gt;*&lt;/span&gt;testing.B) {
+	b.&lt;span style=&#34;color:#c0f&#34;&gt;ResetTimer&lt;/span&gt;()
+	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt;; i &amp;lt; b.N; i&lt;span style=&#34;color:#555&#34;&gt;++&lt;/span&gt; {
+		&lt;span style=&#34;color:#c0f&#34;&gt;CounterSameByteNew&lt;/span&gt;(x, y)
+	}
+}
+
+&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// go test -bench . -benchmem  -benchtime=15s -run=none
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;goos: darwin
+goarch: amd64
+pkg: http_with_pprof
+cpu: &lt;span style=&#34;color:#c0f&#34;&gt;Intel&lt;/span&gt;(R) &lt;span style=&#34;color:#c0f&#34;&gt;Core&lt;/span&gt;(TM) i9&lt;span style=&#34;color:#555&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#f60&#34;&gt;9880&lt;/span&gt;H CPU &lt;span style=&#34;color:#a00;background-color:#faa&#34;&gt;@&lt;/span&gt; &lt;span style=&#34;color:#f60&#34;&gt;2.30&lt;/span&gt;GHz
+BenchmarkCounterSameByteOld&lt;span style=&#34;color:#555&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#f60&#34;&gt;16&lt;/span&gt;    	&lt;span style=&#34;color:#f60&#34;&gt;10079185&lt;/span&gt;	      &lt;span style=&#34;color:#f60&#34;&gt;1808&lt;/span&gt; ns&lt;span style=&#34;color:#555&#34;&gt;/&lt;/span&gt;op	       &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt; B&lt;span style=&#34;color:#555&#34;&gt;/&lt;/span&gt;op	       &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt; allocs&lt;span style=&#34;color:#555&#34;&gt;/&lt;/span&gt;op
+BenchmarkCounterSameByteNew&lt;span style=&#34;color:#555&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#f60&#34;&gt;16&lt;/span&gt;    	&lt;span style=&#34;color:#f60&#34;&gt;10117064&lt;/span&gt;	      &lt;span style=&#34;color:#f60&#34;&gt;1765&lt;/span&gt; ns&lt;span style=&#34;color:#555&#34;&gt;/&lt;/span&gt;op	       &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt; B&lt;span style=&#34;color:#555&#34;&gt;/&lt;/span&gt;op	       &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt; allocs&lt;span style=&#34;color:#555&#34;&gt;/&lt;/span&gt;op
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>双塔模型</title>
+      <link>https://veixuan.github.io/%E5%8F%8C%E5%A1%94%E6%A8%A1%E5%9E%8B.html</link>
+      <pubDate>Sun, 27 Dec 2020 12:16:01 +0800</pubDate>
+      
+      <guid>https://veixuan.github.io/%E5%8F%8C%E5%A1%94%E6%A8%A1%E5%9E%8B.html</guid>
+      
+        <description>&lt;p&gt;双塔模型的概念。&lt;/p&gt;</description>
+      
+    </item>
     
     <item>
       <title>golang使用websocket</title>
@@ -20,748 +294,6 @@
       
         <description>&lt;p&gt;&lt;code&gt;golang&lt;/code&gt;中&lt;code&gt;websocket&lt;/code&gt;的基本使用&lt;/p&gt;
 &lt;h1 id=&#34;websocket-协议&#34;&gt;&lt;code&gt;websocket&lt;/code&gt; 协议&lt;/h1&gt;</description>
-      
-    </item>
-    
-    <item>
-      <title>golang http server的基本姿势</title>
-      <link>https://veixuan.github.io/httpserver.html</link>
-      <pubDate>Sat, 26 Dec 2020 11:13:11 +0800</pubDate>
-      
-      <guid>https://veixuan.github.io/httpserver.html</guid>
-      
-        <description>&lt;p&gt;&lt;code&gt;golang&lt;/code&gt;中标准库&lt;code&gt;http server&lt;/code&gt;的使用和实现&lt;/p&gt;
-&lt;h1 id=&#34;基本姿势&#34;&gt;基本姿势&lt;/h1&gt;
-&lt;h2 id=&#34;最小化实现&#34;&gt;最小化实现&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;3
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;4
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;5
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;6
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;Serve&lt;/span&gt;(addr &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;string&lt;/span&gt;) {
-	http.&lt;span style=&#34;color:#c0f&#34;&gt;HandleFunc&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;/now&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;func&lt;/span&gt;(writer http.ResponseWriter, request &lt;span style=&#34;color:#555&#34;&gt;*&lt;/span&gt;http.Request) {
-		writer.&lt;span style=&#34;color:#c0f&#34;&gt;Write&lt;/span&gt;([]&lt;span style=&#34;color:#366&#34;&gt;byte&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;Hi, now is &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;+&lt;/span&gt; time.&lt;span style=&#34;color:#c0f&#34;&gt;Now&lt;/span&gt;().&lt;span style=&#34;color:#c0f&#34;&gt;String&lt;/span&gt;()))
-	})
-	log.&lt;span style=&#34;color:#c0f&#34;&gt;Fatal&lt;/span&gt;(http.&lt;span style=&#34;color:#c0f&#34;&gt;ListenAndServe&lt;/span&gt;(addr, &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;nil&lt;/span&gt;))
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;自定义实现&#34;&gt;自定义实现&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 1
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 2
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 3
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 4
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 5
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 6
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 7
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 8
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 9
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;10
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;11
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;12
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;13
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;14
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;15
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;16
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;17
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;18
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;19
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;type&lt;/span&gt; IndexHandler &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;struct&lt;/span&gt;{}
-
-&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;func&lt;/span&gt; (i &lt;span style=&#34;color:#555&#34;&gt;*&lt;/span&gt;IndexHandler) &lt;span style=&#34;color:#c0f&#34;&gt;ServeHTTP&lt;/span&gt;(writer http.ResponseWriter, request &lt;span style=&#34;color:#555&#34;&gt;*&lt;/span&gt;http.Request) {
-	writer.&lt;span style=&#34;color:#c0f&#34;&gt;Write&lt;/span&gt;([]&lt;span style=&#34;color:#366&#34;&gt;byte&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;Hi, now is &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;+&lt;/span&gt; time.&lt;span style=&#34;color:#c0f&#34;&gt;Now&lt;/span&gt;().&lt;span style=&#34;color:#c0f&#34;&gt;String&lt;/span&gt;()))
-}
-
-&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;Serve&lt;/span&gt;(addr &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;string&lt;/span&gt;) {
-	mux &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; http.&lt;span style=&#34;color:#c0f&#34;&gt;NewServeMux&lt;/span&gt;()
-	mux.&lt;span style=&#34;color:#c0f&#34;&gt;Handle&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;/hello&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#555&#34;&gt;&amp;amp;&lt;/span&gt;IndexHandler{})
-	server &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;&amp;amp;&lt;/span&gt;http.Server{
-		Addr:              addr,
-		Handler:           mux,
-		TLSConfig:         &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;nil&lt;/span&gt;,
-		ReadTimeout:       time.Second,
-		ReadHeaderTimeout: time.Millisecond &lt;span style=&#34;color:#555&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#f60&#34;&gt;500&lt;/span&gt;,
-		WriteTimeout:      time.Millisecond &lt;span style=&#34;color:#555&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#f60&#34;&gt;500&lt;/span&gt;,
-	}
-	log.&lt;span style=&#34;color:#c0f&#34;&gt;Fatal&lt;/span&gt;(server.&lt;span style=&#34;color:#c0f&#34;&gt;ListenAndServe&lt;/span&gt;())
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;支持https&#34;&gt;支持&lt;code&gt;https&lt;/code&gt;&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 1
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 2
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 3
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 4
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 5
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 6
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 7
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 8
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 9
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;10
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;11
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 1. 生成服务端私钥  2048单位bit key的长度 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;openssl genrsa &lt;span style=&#34;color:#555&#34;&gt;-&lt;/span&gt;out server.key &lt;span style=&#34;color:#f60&#34;&gt;2048&lt;/span&gt;
-&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 2. 根据私钥生成自签发的证书 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;openssl req &lt;span style=&#34;color:#555&#34;&gt;-&lt;/span&gt;new &lt;span style=&#34;color:#555&#34;&gt;-&lt;/span&gt;x509 &lt;span style=&#34;color:#555&#34;&gt;-&lt;/span&gt;key server.key &lt;span style=&#34;color:#555&#34;&gt;-&lt;/span&gt;out server.crt &lt;span style=&#34;color:#555&#34;&gt;-&lt;/span&gt;days &lt;span style=&#34;color:#f60&#34;&gt;365&lt;/span&gt;
-&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 当前目录下生成 server.crt和server.key两个文件 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;
-&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 修改http server 启动代码
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;log.&lt;span style=&#34;color:#c0f&#34;&gt;Fatal&lt;/span&gt;(server.&lt;span style=&#34;color:#c0f&#34;&gt;ListenAndServeTLS&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;server.crt&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;server.key&amp;#34;&lt;/span&gt;))
-
-&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 验证  -k 允许连接到 SSL 站点，而不校验证书 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;curl &lt;span style=&#34;color:#555&#34;&gt;-&lt;/span&gt;k https:&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;//localhost:8000/hello
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;支持-http2&#34;&gt;支持 &lt;code&gt;http2&lt;/code&gt;&lt;/h2&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;code&gt;GO&lt;/code&gt;的&lt;code&gt;http&lt;/code&gt;库默认支持&lt;code&gt;HTTP/2&lt;/code&gt;协议，只要我们使用TLS则会默认启动HTTP/2特性&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&#34;支持quic&#34;&gt;支持&lt;code&gt;quic&lt;/code&gt;&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 1
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 2
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 3
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 4
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 5
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 6
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 7
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 8
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 9
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;10
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 安装依赖 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// go get -u -v github.com/lucas-clemente/quic-go
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;
-&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// brew install mkcert
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// mkcert -install 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;Serve&lt;/span&gt;(addr &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;string&lt;/span&gt;) {
-	mux &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; http.&lt;span style=&#34;color:#c0f&#34;&gt;NewServeMux&lt;/span&gt;()
-	mux.&lt;span style=&#34;color:#c0f&#34;&gt;Handle&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;/hello&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#555&#34;&gt;&amp;amp;&lt;/span&gt;IndexHandler{})
-	log.&lt;span style=&#34;color:#c0f&#34;&gt;Fatal&lt;/span&gt;(http3.&lt;span style=&#34;color:#c0f&#34;&gt;ListenAndServe&lt;/span&gt;(addr, &lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;install.pem&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;install-key.pem&amp;#34;&lt;/span&gt;, mux))
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;h1 id=&#34;实现原理&#34;&gt;实现原理&lt;/h1&gt;
-&lt;h2 id=&#34;概念&#34;&gt;概念&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;Request&lt;/code&gt; http 请求&lt;/li&gt;
-&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;Response&lt;/code&gt; http 响应，是server端需要返回给客户端的信息&lt;/li&gt;
-&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;Handler&lt;/code&gt; 处理请求和生成返回信息的处理逻辑&lt;/li&gt;
-&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;ServeMux&lt;/code&gt; 多路复用器&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;处理流程&#34;&gt;处理流程&lt;/h2&gt;
-&lt;blockquote&gt;
-&lt;p&gt;后面再填坑&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h1 id=&#34;常见实现&#34;&gt;常见实现&lt;/h1&gt;
-&lt;h2 id=&#34;获取url-query-参数&#34;&gt;获取&lt;code&gt;url query&lt;/code&gt; 参数&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;3
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// http://localhost:8000/hello?name=张三 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	query &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; request.URL.&lt;span style=&#34;color:#c0f&#34;&gt;Query&lt;/span&gt;()
-	name &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; query.&lt;span style=&#34;color:#c0f&#34;&gt;Get&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;name&amp;#34;&lt;/span&gt;)
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;获取-url-path-参数&#34;&gt;获取 &lt;code&gt;url path&lt;/code&gt; 参数&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;3
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;4
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;5
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;6
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 可以考虑使用第三方的http router 库 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 比如 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 1. https://github.com/julienschmidt/httprouter
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 2. https://github.com/gorilla/mux 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;
-&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 原生库实现起来比较trick 
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;获取-post参数&#34;&gt;获取 &lt;code&gt;post&lt;/code&gt;参数&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;	body, _ &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; ioutil.&lt;span style=&#34;color:#c0f&#34;&gt;ReadAll&lt;/span&gt;(request.Body)
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;静态文件服务器&#34;&gt;静态文件服务器&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;	fileServer &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; http.&lt;span style=&#34;color:#c0f&#34;&gt;FileServer&lt;/span&gt;(http.&lt;span style=&#34;color:#c0f&#34;&gt;Dir&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;./&amp;#34;&lt;/span&gt;))
-	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;go&lt;/span&gt; http.&lt;span style=&#34;color:#c0f&#34;&gt;ListenAndServe&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;:4000&amp;#34;&lt;/span&gt;, fileServer)
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;cors-&#34;&gt;&lt;code&gt;cors &lt;/code&gt;&lt;/h2&gt;
-&lt;h3 id=&#34;背景&#34;&gt;背景&lt;/h3&gt;
-&lt;blockquote&gt;
-&lt;p&gt;浏览器通过同源策略来防止恶意网站窃取数据&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h3 id=&#34;术语解释&#34;&gt;术语解释&lt;/h3&gt;
-&lt;p&gt;同源(&lt;code&gt;Same origin policy&lt;/code&gt;)协议、域名、端口都相同` &lt;strong&gt;也就是说非同源的资源之间不能相互通信&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;以 &lt;code&gt;http://example.com/hello&lt;/code&gt;为例&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;域名&lt;/th&gt;
-&lt;th&gt;是否同源&lt;/th&gt;
-&lt;th&gt;说明&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;http://example.com/world&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;同源&lt;/td&gt;
-&lt;td&gt;域名、端口、协议都相同，只是路径不同&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;https://example.com/world&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;不同源&lt;/td&gt;
-&lt;td&gt;协议不同，http协议与https协议&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;https://example.com:10086/world&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;不同源&lt;/td&gt;
-&lt;td&gt;端口不同&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;https://example001.com/world&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;不同源&lt;/td&gt;
-&lt;td&gt;域名不同&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h3 id=&#34;问题&#34;&gt;问题&lt;/h3&gt;
-&lt;p&gt;同源策略的出发点是通过禁止非同源之间通信来避免恶意网站窃取数据，但是同时也会导致非同源之间的合理通信无法实施，比如 &lt;code&gt;ajax&lt;/code&gt;&lt;/p&gt;
-&lt;h3 id=&#34;解决方案&#34;&gt;解决方案&lt;/h3&gt;
-&lt;p&gt;&lt;code&gt;Cross-origin resource sharing &lt;/code&gt;跨域资源共享。浏览器和服务端之间共同完成。服务端实现&lt;code&gt;CORS接口&lt;/code&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 1
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 2
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 3
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 4
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 5
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 6
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 7
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 8
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 9
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;10
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 使用 https://github.com/rs/cors 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	fileServer &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; http.&lt;span style=&#34;color:#c0f&#34;&gt;FileServer&lt;/span&gt;(http.&lt;span style=&#34;color:#c0f&#34;&gt;Dir&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;./&amp;#34;&lt;/span&gt;))
-
-	c &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; cors.&lt;span style=&#34;color:#c0f&#34;&gt;New&lt;/span&gt;(cors.Options{
-		AllowedOrigins:   []&lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;string&lt;/span&gt;{&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;http://foo.com&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;http://foo.com:8080&amp;#34;&lt;/span&gt;},
-		AllowCredentials: &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;true&lt;/span&gt;,
-		&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// Enable Debugging for testing, consider disabling in production
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		Debug: &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;true&lt;/span&gt;,
-	})
-	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;go&lt;/span&gt; http.&lt;span style=&#34;color:#c0f&#34;&gt;ListenAndServe&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;:4000&amp;#34;&lt;/span&gt;, c.&lt;span style=&#34;color:#c0f&#34;&gt;Handler&lt;/span&gt;(fileServer))
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;静态资源bind&#34;&gt;静态资源&lt;code&gt;bind&lt;/code&gt;&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;go1.16 新版将集成原生支持&lt;/li&gt;
-&lt;li&gt;可以使用开源库 比如 &lt;code&gt;gobind&lt;/code&gt; 、&lt;code&gt;vfsgen&lt;/code&gt; 等&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;优雅退出&#34;&gt;优雅退出&lt;/h2&gt;
-&lt;blockquote&gt;
-&lt;p&gt;1.8 之后，默认的&lt;code&gt;shutdown&lt;/code&gt;方法已实现优化退出&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 1
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 2
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 3
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 4
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 5
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 6
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 7
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 8
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 9
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;10
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;11
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;12
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;13
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;14
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;15
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;16
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;17
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;18
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;19
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;20
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;21
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;22
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;23
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;24
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;25
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;26
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;27
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;28
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;29
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;30
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;31
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;32
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;33
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;34
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;defer&lt;/span&gt; server.&lt;span style=&#34;color:#c0f&#34;&gt;Shutdown&lt;/span&gt;(context.&lt;span style=&#34;color:#c0f&#34;&gt;Background&lt;/span&gt;())
-
-&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;func&lt;/span&gt; (srv &lt;span style=&#34;color:#555&#34;&gt;*&lt;/span&gt;Server) &lt;span style=&#34;color:#c0f&#34;&gt;Shutdown&lt;/span&gt;(ctx context.Context) &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;error&lt;/span&gt; {
-  
-  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 1. 标记退出状态  cas实现 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	srv.inShutdown.&lt;span style=&#34;color:#c0f&#34;&gt;setTrue&lt;/span&gt;()
-
-  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 2. 加锁 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	srv.mu.&lt;span style=&#34;color:#c0f&#34;&gt;Lock&lt;/span&gt;()
-  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 3. 关闭 listener fd 新的连接无法建立 即不会接受新的请求 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	lnerr &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; srv.&lt;span style=&#34;color:#c0f&#34;&gt;closeListenersLocked&lt;/span&gt;()
-  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 4. 把server 的done chan给close掉，通知等待的worekr退出
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	srv.&lt;span style=&#34;color:#c0f&#34;&gt;closeDoneChanLocked&lt;/span&gt;()
-  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 5. 执行回调方法，我们可以注册shutdown的回调方法
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;for&lt;/span&gt; _, f &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;range&lt;/span&gt; srv.onShutdown {
-		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;go&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;f&lt;/span&gt;()
-	}
-	srv.mu.&lt;span style=&#34;color:#c0f&#34;&gt;Unlock&lt;/span&gt;()
-
-  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 6. 500ms 轮询一次 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	ticker &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; time.&lt;span style=&#34;color:#c0f&#34;&gt;NewTicker&lt;/span&gt;(shutdownPollInterval)
-	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;defer&lt;/span&gt; ticker.&lt;span style=&#34;color:#c0f&#34;&gt;Stop&lt;/span&gt;()
-	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;for&lt;/span&gt; {
-    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 已经没有空闲的连接了 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; srv.&lt;span style=&#34;color:#c0f&#34;&gt;closeIdleConns&lt;/span&gt;() &lt;span style=&#34;color:#555&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; srv.&lt;span style=&#34;color:#c0f&#34;&gt;numListeners&lt;/span&gt;() &lt;span style=&#34;color:#555&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt; {
-			&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;return&lt;/span&gt; lnerr
-		}
-		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;select&lt;/span&gt; {
-		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;&amp;lt;-&lt;/span&gt;ctx.&lt;span style=&#34;color:#c0f&#34;&gt;Done&lt;/span&gt;():
-			&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;return&lt;/span&gt; ctx.&lt;span style=&#34;color:#c0f&#34;&gt;Err&lt;/span&gt;()
-		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;&amp;lt;-&lt;/span&gt;ticker.C:
-		}
-	}
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;h1 id=&#34;性能分析&#34;&gt;性能分析&lt;/h1&gt;
-&lt;h2 id=&#34;集成-pprof&#34;&gt;集成 pprof&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;	_ &lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;net/http/pprof&amp;#34;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;集成-fgprof&#34;&gt;集成 fgprof&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;https://github.com/felixge/fgprof&lt;/code&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;默认的pprof只能分析&lt;code&gt;on-cpu&lt;/code&gt;，要分析&lt;code&gt;off-cpu&lt;/code&gt;可以使用上面的库&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;3
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;4
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;	mux.&lt;span style=&#34;color:#c0f&#34;&gt;Handle&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;/hello&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#555&#34;&gt;&amp;amp;&lt;/span&gt;HelloHandler{})
-	mux.&lt;span style=&#34;color:#c0f&#34;&gt;Handle&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;/debug/fgprof&amp;#34;&lt;/span&gt;, fgprof.&lt;span style=&#34;color:#c0f&#34;&gt;Handler&lt;/span&gt;())
-
-&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// go tool pprof --http=:6061 &amp;#39;http://localhost:8000/debug/fgprof?seconds=3&amp;#39;
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;</description>
-      
-    </item>
-    
-    <item>
-      <title>使用Golang进行Android Native开发</title>
-      <link>https://veixuan.github.io/golang-native%E5%BC%80%E5%8F%91.html</link>
-      <pubDate>Sat, 12 Dec 2020 15:56:48 +0800</pubDate>
-      
-      <guid>https://veixuan.github.io/golang-native%E5%BC%80%E5%8F%91.html</guid>
-      
-        <description>&lt;p&gt;使用&lt;code&gt;golang&lt;/code&gt;进行&lt;code&gt;Android native&lt;/code&gt; 开发&lt;/p&gt;
-&lt;h2 id=&#34;环境&#34;&gt;环境&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;android&lt;/code&gt; 开发环境&lt;/li&gt;
-&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;Android ndk&lt;/code&gt;开发环境&lt;/li&gt;
-&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;golang&lt;/code&gt; 开发环境&lt;/li&gt;
-&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;jna&lt;/code&gt; &lt;a href=&#34;https://github.com/java-native-access/jna&#34;&gt;https://github.com/java-native-access/jna&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;golang-代码&#34;&gt;&lt;code&gt;golang&lt;/code&gt; 代码&lt;/h2&gt;
-&lt;blockquote&gt;
-&lt;p&gt;这里使用的是&lt;code&gt;nps&lt;/code&gt;的客户端&lt;code&gt;sdk&lt;/code&gt;代码 以下是部分函数&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 1
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 2
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 3
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 4
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 5
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 6
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 7
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 8
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 9
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;10
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;11
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;//export GetClientStatus
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;GetClientStatus&lt;/span&gt;() &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;int&lt;/span&gt; {
-	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;return&lt;/span&gt; client.NowStatus
-}
-
-&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;//export CloseClient
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;CloseClient&lt;/span&gt;() {
-	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; cl &lt;span style=&#34;color:#555&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;nil&lt;/span&gt; {
-		cl.&lt;span style=&#34;color:#c0f&#34;&gt;Close&lt;/span&gt;()
-	}
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;编译脚本&#34;&gt;编译脚本&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 1
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 2
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 3
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 4
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 5
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 6
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 7
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 8
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 9
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;10
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;11
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;12
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;13
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;color:#099&#34;&gt;#!/usr/bin/env bash
-&lt;/span&gt;&lt;span style=&#34;color:#099&#34;&gt;&lt;/span&gt;
-&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;# 设置os为Android&lt;/span&gt;
-&lt;span style=&#34;color:#366&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#033&#34;&gt;GOOS&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt;android
-&lt;span style=&#34;color:#366&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#033&#34;&gt;GOARCH&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt;arm
-&lt;span style=&#34;color:#366&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#033&#34;&gt;CGO_ENABLED&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#f60&#34;&gt;1&lt;/span&gt;
-
-&lt;span style=&#34;color:#033&#34;&gt;ndk_tool_path&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#a00&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#033&#34;&gt;ANDROID_NDK_HOME&lt;/span&gt;&lt;span style=&#34;color:#a00&#34;&gt;}&lt;/span&gt;/toolchains/llvm/prebuilt/darwin-x86_64/bin
-
-&lt;span style=&#34;color:#366&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#033&#34;&gt;CC&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#a00&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#033&#34;&gt;ndk_tool_path&lt;/span&gt;&lt;span style=&#34;color:#a00&#34;&gt;}&lt;/span&gt;/armv7a-linux-androideabi28-clang
-&lt;span style=&#34;color:#366&#34;&gt;export&lt;/span&gt; &lt;span style=&#34;color:#033&#34;&gt;CXX&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#a00&#34;&gt;${&lt;/span&gt;&lt;span style=&#34;color:#033&#34;&gt;ndk_tool_path&lt;/span&gt;&lt;span style=&#34;color:#a00&#34;&gt;}&lt;/span&gt;/armv7a-linux-androideabi28-clang++
-
-go build -ldflags &lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;-s -w&amp;#34;&lt;/span&gt;  -buildmode&lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt;c-shared -o libnpc.so cmd/npc/sdk.go
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;这里生成的是&lt;code&gt;arm64&lt;/code&gt;&lt;strong&gt;如果需要其他平台，修改&lt;code&gt;goarch&lt;/code&gt;及对应的&lt;code&gt;cc&lt;/code&gt;和&lt;code&gt;cxx&lt;/code&gt;编译器&lt;/strong&gt;&lt;/p&gt;
-&lt;h2 id=&#34;执行编译&#34;&gt;执行编译&lt;/h2&gt;
-&lt;p&gt;可以看到生成两个文件 &lt;code&gt;libnpc.h&lt;/code&gt; 和 &lt;code&gt;libnpc.so&lt;/code&gt;, 这个库文件有点大 12m&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;file libnpc.so
-libnpc.so: ELF 64-bit LSB shared object, ARM aarch64, version &lt;span style=&#34;color:#f60&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;SYSV&lt;span style=&#34;color:#555&#34;&gt;)&lt;/span&gt;, dynamically linked, Go &lt;span style=&#34;color:#033&#34;&gt;BuildID&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt;MDuIWOynaHxgCjOzC_U5/1ePM-5jyxRPWgmWfSKDo/kSP5ZQo9ATT4Whkh9Cyl/sYvwEF0pawhTir_lw0vB, stripped
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;android-使用&#34;&gt;&lt;code&gt;Android&lt;/code&gt; 使用&lt;/h2&gt;
-&lt;p&gt;创建&lt;code&gt;Android project&lt;/code&gt;&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;更新依赖&lt;/li&gt;
-&lt;/ol&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-groovy&#34; data-lang=&#34;groovy&#34;&gt;    implementation &lt;span style=&#34;color:#99f&#34;&gt;group:&lt;/span&gt; &lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;net.java.dev.jna&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#99f&#34;&gt;name:&lt;/span&gt; &lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;jna-platform&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#99f&#34;&gt;version:&lt;/span&gt; &lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;5.6.0&amp;#39;&lt;/span&gt;
-    implementation &lt;span style=&#34;color:#99f&#34;&gt;group:&lt;/span&gt; &lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;net.java.dev.jna&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#99f&#34;&gt;name:&lt;/span&gt; &lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;jna&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;,&lt;/span&gt; &lt;span style=&#34;color:#99f&#34;&gt;version:&lt;/span&gt; &lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;5.6.0&amp;#39;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;ol start=&#34;2&#34;&gt;
-&lt;li&gt;复制&lt;code&gt;libnpc.so&lt;/code&gt; 到&lt;code&gt;app/libs/arm64-v8a&lt;/code&gt; 目录下&lt;/li&gt;
-&lt;li&gt;编辑&lt;code&gt;build.gradle&lt;/code&gt; 文件，增加&lt;/li&gt;
-&lt;/ol&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;3
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;4
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;5
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-groovy&#34; data-lang=&#34;groovy&#34;&gt;    sourceSets &lt;span style=&#34;color:#555&#34;&gt;{&lt;/span&gt;
-        main &lt;span style=&#34;color:#555&#34;&gt;{&lt;/span&gt;
-            jniLibs&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#309&#34;&gt;srcDirs&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;[&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;&amp;#39;libs&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;]&lt;/span&gt;
-        &lt;span style=&#34;color:#555&#34;&gt;}&lt;/span&gt;
-    &lt;span style=&#34;color:#555&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;ol start=&#34;4&#34;&gt;
-&lt;li&gt;解压&lt;code&gt;jna/dist/android-aarch64.jar&lt;/code&gt; 文件 ，复制&lt;code&gt;libjnidispatch.so &lt;/code&gt; 到 &lt;code&gt;app/libs/arm64-v8a&lt;/code&gt; 目录下&lt;/li&gt;
-&lt;li&gt;编写实现, 正常调用执行即可&lt;/li&gt;
-&lt;/ol&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 1
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 2
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 3
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 4
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 5
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 6
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 7
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 8
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 9
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;10
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;11
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;12
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;13
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;14
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;15
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;16
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;17
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;18
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;19
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;20
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;21
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;22
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;23
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;24
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;25
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;26
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;27
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;28
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;29
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;30
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;31
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;32
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;33
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;34
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;35
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;36
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;37
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;38
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;39
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;40
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;41
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;42
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;43
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;44
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0cf;font-weight:bold&#34;&gt;com.sun.jna.Library&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;;&lt;/span&gt;
-&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;import&lt;/span&gt; &lt;span style=&#34;color:#0cf;font-weight:bold&#34;&gt;com.sun.jna.Native&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;;&lt;/span&gt;
-
-&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;interface&lt;/span&gt; &lt;span style=&#34;color:#0a8;font-weight:bold&#34;&gt;NpcClient&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;extends&lt;/span&gt; Library &lt;span style=&#34;color:#555&#34;&gt;{&lt;/span&gt;
-
-    NpcClient ins &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; Native&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#309&#34;&gt;load&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;npc&amp;#34;&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;,&lt;/span&gt; NpcClient&lt;span style=&#34;color:#555&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#309&#34;&gt;class&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;);&lt;/span&gt;
-
-    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;/**
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;     * 对应golang中的方法
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;     *
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;     * @param serverAddr 服务端地址
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;     * @param verifyKey  校验key
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;     * @param proxyUrl   二层代理的地址
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;     * @return
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;     */&lt;/span&gt;
-    &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;StartClientByVerifyKey&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;(&lt;/span&gt;String serverAddr&lt;span style=&#34;color:#555&#34;&gt;,&lt;/span&gt; String verifyKey&lt;span style=&#34;color:#555&#34;&gt;,&lt;/span&gt; String connType&lt;span style=&#34;color:#555&#34;&gt;,&lt;/span&gt; String proxyUrl&lt;span style=&#34;color:#555&#34;&gt;);&lt;/span&gt;
-
-
-    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;/**
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;     * client 的 status
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;     *
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;     * @return
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;     */&lt;/span&gt;
-    &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;GetClientStatus&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;();&lt;/span&gt;
-
-    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;/**
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;     * 关闭
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;     */&lt;/span&gt;
-    &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;CloseClient&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;();&lt;/span&gt;
-
-    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;/**
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;     * version
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;     *
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;     * @return
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;     */&lt;/span&gt;
-    String &lt;span style=&#34;color:#c0f&#34;&gt;Version&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;();&lt;/span&gt;
-
-    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;/**
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;     * logs
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;     *
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;     * @return
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;     */&lt;/span&gt;
-    String &lt;span style=&#34;color:#c0f&#34;&gt;Logs&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;();&lt;/span&gt;
-&lt;span style=&#34;color:#555&#34;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;ol start=&#34;6&#34;&gt;
-&lt;li&gt;最终的结构&lt;/li&gt;
-&lt;/ol&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 1
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 2
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 3
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 4
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 5
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 6
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 7
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 8
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 9
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;10
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;11
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;12
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;13
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;14
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;15
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;16
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;17
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;18
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;19
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;20
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;21
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;22
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;23
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;24
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;25
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;26
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;27
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;28
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;29
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;30
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;31
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;32
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;33
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;34
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;35
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;36
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;37
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;38
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;39
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;40
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;41
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;42
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;43
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;44
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;45
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;46
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;47
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;48
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;49
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;50
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;51
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;52
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;53
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;54
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;55
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;56
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;57
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;58
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;59
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;60
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;.
-├── build.gradle
-├── libs
-│   └── arm64-v8a
-│       ├── libjnidispatch.so
-│       ├── libnpc.h
-│       └── libnpc.so
-├── proguard-rules.pro
-└── src
-    ├── androidTest
-    │   └── java
-    │       └── com
-    │           └── weixuan
-    │               └── npc
-    │                   └── ExampleInstrumentedTest.java
-    ├── main
-    │   ├── AndroidManifest.xml
-    │   ├── java
-    │   │   └── com
-    │   │       └── weixuan
-    │   │           └── npc
-    │   │               └── SettingsActivity.java
-    │   └── res
-    │       ├── drawable
-    │       │   └── ic_launcher_background.xml
-    │       ├── drawable-v24
-    │       │   └── ic_launcher_foreground.xml
-    │       ├── layout
-    │       │   └── settings_activity.xml
-    │       ├── mipmap-anydpi-v26
-    │       │   ├── ic_launcher.xml
-    │       │   └── ic_launcher_round.xml
-    │       ├── mipmap-hdpi
-    │       │   ├── ic_launcher.png
-    │       │   └── ic_launcher_round.png
-    │       ├── mipmap-mdpi
-    │       │   ├── ic_launcher.png
-    │       │   └── ic_launcher_round.png
-    │       ├── mipmap-xhdpi
-    │       │   ├── ic_launcher.png
-    │       │   └── ic_launcher_round.png
-    │       ├── mipmap-xxhdpi
-    │       │   ├── ic_launcher.png
-    │       │   └── ic_launcher_round.png
-    │       ├── mipmap-xxxhdpi
-    │       │   ├── ic_launcher.png
-    │       │   └── ic_launcher_round.png
-    │       ├── values
-    │       │   ├── arrays.xml
-    │       │   ├── colors.xml
-    │       │   ├── strings.xml
-    │       │   └── styles.xml
-    │       └── xml
-    │           └── root_preferences.xml
-    └── test
-        └── java
-            └── com
-                └── weixuan
-                    └── npc
-                        └── ExampleUnitTest.java
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;</description>
       
     </item>
     
