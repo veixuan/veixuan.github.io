@@ -109,22 +109,28 @@
     <div class="sticky text-sm" style="top:6em;" id="menu-content">
         <nav id="TableOfContents">
   <ul>
-    <li><a href="#最小化实现">最小化实现</a></li>
-    <li><a href="#自定义实现">自定义实现</a></li>
-    <li><a href="#支持https">支持<code>https</code></a></li>
-    <li><a href="#支持-http2">支持 <code>http2</code></a></li>
-    <li><a href="#支持quic">支持<code>quic</code></a></li>
-  </ul>
-
-  <ul>
-    <li><a href="#概念">概念</a></li>
-    <li><a href="#处理流程">处理流程</a></li>
-  </ul>
-
-  <ul>
-    <li><a href="#获取url-query-参数">获取<code>url query</code> 参数</a></li>
-    <li><a href="#获取-url-path-参数">获取 <code>url path</code> 参数</a></li>
-    <li><a href="#获取-post参数">获取 <code>post</code>参数</a></li>
+    <li><a href="#基本姿势">基本姿势</a>
+      <ul>
+        <li><a href="#最小化实现">最小化实现</a></li>
+        <li><a href="#自定义实现">自定义实现</a></li>
+        <li><a href="#支持https">支持<code>https</code></a></li>
+        <li><a href="#支持-http2">支持 <code>http2</code></a></li>
+        <li><a href="#支持quic">支持<code>quic</code></a></li>
+      </ul>
+    </li>
+    <li><a href="#实现原理">实现原理</a>
+      <ul>
+        <li><a href="#概念">概念</a></li>
+        <li><a href="#处理流程">处理流程</a></li>
+      </ul>
+    </li>
+    <li><a href="#常见实现">常见实现</a>
+      <ul>
+        <li><a href="#获取url-query-参数">获取<code>url query</code> 参数</a></li>
+        <li><a href="#获取-url-path-参数">获取 <code>url path</code> 参数</a></li>
+        <li><a href="#获取-post参数">获取 <code>post</code>参数</a></li>
+      </ul>
+    </li>
     <li><a href="#静态文件服务器">静态文件服务器</a></li>
     <li><a href="#cors-"><code>cors </code></a>
       <ul>
@@ -136,12 +142,11 @@
     </li>
     <li><a href="#静态资源bind">静态资源<code>bind</code></a></li>
     <li><a href="#优雅退出">优雅退出</a></li>
-  </ul>
-
-  <ul>
-    <li><a href="#集成-pprof">集成 pprof</a></li>
-    <li><a href="#集成-fgprof">集成 fgprof</a></li>
-  </ul>
+    <li><a href="#性能分析">性能分析</a>
+      <ul>
+        <li><a href="#集成-pprof">集成 pprof</a></li>
+        <li><a href="#集成-fgprof">集成 fgprof</a></li>
+      </ul>
 </nav>
     </div>
 
@@ -149,8 +154,8 @@
 
         <div class="post-content">
             <p><code>golang</code>中标准库<code>http server</code>的使用和实现</p>
-<h1 id="基本姿势">基本姿势</h1>
-<h2 id="最小化实现">最小化实现</h2>
+<h2 id="基本姿势">基本姿势</h2>
+<h3 id="最小化实现">最小化实现</h3>
 <div class="highlight"><div style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -169,7 +174,7 @@
 }
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="自定义实现">自定义实现</h2>
+</div><h3 id="自定义实现">自定义实现</h3>
 <div class="highlight"><div style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -214,7 +219,7 @@
 }
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="支持https">支持<code>https</code></h2>
+</div><h3 id="支持https">支持<code>https</code></h3>
 <div class="highlight"><div style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -243,11 +248,11 @@
 </span><span style="color:#09f;font-style:italic"></span>curl <span style="color:#555">-</span>k https:<span style="color:#09f;font-style:italic">//localhost:8000/hello
 </span></code></pre></td></tr></table>
 </div>
-</div><h2 id="支持-http2">支持 <code>http2</code></h2>
+</div><h3 id="支持-http2">支持 <code>http2</code></h3>
 <blockquote>
 <p><code>GO</code>的<code>http</code>库默认支持<code>HTTP/2</code>协议，只要我们使用TLS则会默认启动HTTP/2特性</p>
 </blockquote>
-<h2 id="支持quic">支持<code>quic</code></h2>
+<h3 id="支持quic">支持<code>quic</code></h3>
 <div class="highlight"><div style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -274,20 +279,20 @@
 }
 </code></pre></td></tr></table>
 </div>
-</div><h1 id="实现原理">实现原理</h1>
-<h2 id="概念">概念</h2>
+</div><h2 id="实现原理">实现原理</h2>
+<h3 id="概念">概念</h3>
 <ul>
 <li><input checked="" disabled="" type="checkbox"> <code>Request</code> http 请求</li>
 <li><input checked="" disabled="" type="checkbox"> <code>Response</code> http 响应，是server端需要返回给客户端的信息</li>
 <li><input checked="" disabled="" type="checkbox"> <code>Handler</code> 处理请求和生成返回信息的处理逻辑</li>
 <li><input checked="" disabled="" type="checkbox"> <code>ServeMux</code> 多路复用器</li>
 </ul>
-<h2 id="处理流程">处理流程</h2>
+<h3 id="处理流程">处理流程</h3>
 <blockquote>
 <p>后面再填坑</p>
 </blockquote>
-<h1 id="常见实现">常见实现</h1>
-<h2 id="获取url-query-参数">获取<code>url query</code> 参数</h2>
+<h2 id="常见实现">常见实现</h2>
+<h3 id="获取url-query-参数">获取<code>url query</code> 参数</h3>
 <div class="highlight"><div style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -300,7 +305,7 @@
 	name <span style="color:#555">:=</span> query.<span style="color:#c0f">Get</span>(<span style="color:#c30">&#34;name&#34;</span>)
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="获取-url-path-参数">获取 <code>url path</code> 参数</h2>
+</div><h3 id="获取-url-path-参数">获取 <code>url path</code> 参数</h3>
 <div class="highlight"><div style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -319,7 +324,7 @@
 <span style="color:#09f;font-style:italic">// 原生库实现起来比较trick 
 </span></code></pre></td></tr></table>
 </div>
-</div><h2 id="获取-post参数">获取 <code>post</code>参数</h2>
+</div><h3 id="获取-post参数">获取 <code>post</code>参数</h3>
 <div class="highlight"><div style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -491,8 +496,8 @@
 }
 </code></pre></td></tr></table>
 </div>
-</div><h1 id="性能分析">性能分析</h1>
-<h2 id="集成-pprof">集成 pprof</h2>
+</div><h2 id="性能分析">性能分析</h2>
+<h3 id="集成-pprof">集成 pprof</h3>
 <div class="highlight"><div style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -501,7 +506,7 @@
 <pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">	_ <span style="color:#c30">&#34;net/http/pprof&#34;</span>
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="集成-fgprof">集成 fgprof</h2>
+</div><h3 id="集成-fgprof">集成 fgprof</h3>
 <p><code>https://github.com/felixge/fgprof</code></p>
 <blockquote>
 <p>默认的pprof只能分析<code>on-cpu</code>，要分析<code>off-cpu</code>可以使用上面的库</p>
@@ -628,7 +633,7 @@
             <div class="flex-1 border-r border-gray-600">
                 <p class="text-center">
                     <span class="text-gray-700 font-bold">
-                        8
+                        9
                     </span>
                     文章
                 </p>
@@ -716,22 +721,28 @@
     <div class="sticky text-sm" style="top:6em;" id="menu-content">
         <nav id="TableOfContents">
   <ul>
-    <li><a href="#最小化实现">最小化实现</a></li>
-    <li><a href="#自定义实现">自定义实现</a></li>
-    <li><a href="#支持https">支持<code>https</code></a></li>
-    <li><a href="#支持-http2">支持 <code>http2</code></a></li>
-    <li><a href="#支持quic">支持<code>quic</code></a></li>
-  </ul>
-
-  <ul>
-    <li><a href="#概念">概念</a></li>
-    <li><a href="#处理流程">处理流程</a></li>
-  </ul>
-
-  <ul>
-    <li><a href="#获取url-query-参数">获取<code>url query</code> 参数</a></li>
-    <li><a href="#获取-url-path-参数">获取 <code>url path</code> 参数</a></li>
-    <li><a href="#获取-post参数">获取 <code>post</code>参数</a></li>
+    <li><a href="#基本姿势">基本姿势</a>
+      <ul>
+        <li><a href="#最小化实现">最小化实现</a></li>
+        <li><a href="#自定义实现">自定义实现</a></li>
+        <li><a href="#支持https">支持<code>https</code></a></li>
+        <li><a href="#支持-http2">支持 <code>http2</code></a></li>
+        <li><a href="#支持quic">支持<code>quic</code></a></li>
+      </ul>
+    </li>
+    <li><a href="#实现原理">实现原理</a>
+      <ul>
+        <li><a href="#概念">概念</a></li>
+        <li><a href="#处理流程">处理流程</a></li>
+      </ul>
+    </li>
+    <li><a href="#常见实现">常见实现</a>
+      <ul>
+        <li><a href="#获取url-query-参数">获取<code>url query</code> 参数</a></li>
+        <li><a href="#获取-url-path-参数">获取 <code>url path</code> 参数</a></li>
+        <li><a href="#获取-post参数">获取 <code>post</code>参数</a></li>
+      </ul>
+    </li>
     <li><a href="#静态文件服务器">静态文件服务器</a></li>
     <li><a href="#cors-"><code>cors </code></a>
       <ul>
@@ -743,12 +754,11 @@
     </li>
     <li><a href="#静态资源bind">静态资源<code>bind</code></a></li>
     <li><a href="#优雅退出">优雅退出</a></li>
-  </ul>
-
-  <ul>
-    <li><a href="#集成-pprof">集成 pprof</a></li>
-    <li><a href="#集成-fgprof">集成 fgprof</a></li>
-  </ul>
+    <li><a href="#性能分析">性能分析</a>
+      <ul>
+        <li><a href="#集成-pprof">集成 pprof</a></li>
+        <li><a href="#集成-fgprof">集成 fgprof</a></li>
+      </ul>
 </nav>
     </div>
 

@@ -109,11 +109,20 @@
     <div class="sticky text-sm" style="top:6em;" id="menu-content">
         <nav id="TableOfContents">
   <ul>
-    <li><a href="#重复检测">重复检测</a></li>
-    <li><a href="#常量大小">常量大小</a></li>
-    <li><a href="#常量索引">常量索引</a></li>
-    <li><a href="#迭代索引">迭代索引</a></li>
-    <li><a href="#递减的索引">递减的索引</a></li>
+    <li><a href="#什么是边界检查">什么是边界检查</a></li>
+    <li><a href="#边界检查消除">边界检查消除</a></li>
+    <li><a href="#定位哪些需要做bce">定位哪些需要做<code>bce</code></a></li>
+    <li><a href="#ssa-是什么"><code>ssa</code> 是什么</a></li>
+    <li><a href="#什么情况下边界检查消除">什么情况下边界检查消除</a>
+      <ul>
+        <li><a href="#重复检测">重复检测</a></li>
+        <li><a href="#常量大小">常量大小</a></li>
+        <li><a href="#常量索引">常量索引</a></li>
+        <li><a href="#迭代索引">迭代索引</a></li>
+        <li><a href="#递减的索引">递减的索引</a></li>
+      </ul>
+    </li>
+    <li><a href="#人肉消除">人肉消除</a></li>
   </ul>
 </nav>
     </div>
@@ -122,16 +131,16 @@
 
         <div class="post-content">
             <p>使用消除边界检查进行性能优化</p>
-<h1 id="什么是边界检查">什么是边界检查</h1>
+<h2 id="什么是边界检查">什么是边界检查</h2>
 <blockquote>
 <p><code>golang</code>运行时会进行使用的下标是否越界，如果越界，就会发生panic，以防止破坏内存安全。</p>
 <p>这样的检查称为边界检查，全称是<code>bounds check</code>。目的是使得代码可以更安全的运行，同时也会导致性能受损。</p>
 </blockquote>
-<h1 id="边界检查消除">边界检查消除</h1>
+<h2 id="边界检查消除">边界检查消除</h2>
 <blockquote>
 <p><code>bounds check elimination</code>，简称 <code>bce</code>,这个是编译器层的优化，同时，我们可以在代码层做一些优化来进行边界消除检查。</p>
 </blockquote>
-<h1 id="定位哪些需要做bce">定位哪些需要做<code>bce</code></h1>
+<h2 id="定位哪些需要做bce">定位哪些需要做<code>bce</code></h2>
 <div class="highlight"><div style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -158,12 +167,12 @@
 .<span style="color:#555">/</span>main.<span style="color:#069;font-weight:bold">go</span>:<span style="color:#f60">19</span>:<span style="color:#f60">7</span>: Found IsInBounds
 </code></pre></td></tr></table>
 </div>
-</div><h1 id="ssa-是什么"><code>ssa</code> 是什么</h1>
+</div><h2 id="ssa-是什么"><code>ssa</code> 是什么</h2>
 <blockquote>
 <p>全称是 <code>static single-assignment</code>  是一种IR中间表示代码，用于保证每个变量只被赋值一次，用于帮助编译器优化的算法</p>
 </blockquote>
-<h1 id="什么情况下边界检查消除">什么情况下边界检查消除</h1>
-<h2 id="重复检测">重复检测</h2>
+<h2 id="什么情况下边界检查消除">什么情况下边界检查消除</h2>
+<h3 id="重复检测">重复检测</h3>
 <div class="highlight"><div style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -190,7 +199,7 @@ _ = s[i:] <span style="color:#09f;font-style:italic">// 插入边界检测
 </span><span style="color:#09f;font-style:italic"></span>_ = s[i:] <span style="color:#09f;font-style:italic">// 不需要
 </span></code></pre></td></tr></table>
 </div>
-</div><h2 id="常量大小">常量大小</h2>
+</div><h3 id="常量大小">常量大小</h3>
 <div class="highlight"><div style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -209,7 +218,7 @@ _ = arr[i<span style="color:#555">&amp;</span><span style="color:#f60">5</span>]
 </span><span style="color:#09f;font-style:italic"></span>_ = arr[i<span style="color:#555">%</span><span style="color:#f60">5</span>] <span style="color:#09f;font-style:italic">// 需要边界检查 
 </span></code></pre></td></tr></table>
 </div>
-</div><h2 id="常量索引">常量索引</h2>
+</div><h3 id="常量索引">常量索引</h3>
 <div class="highlight"><div style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -220,7 +229,7 @@ _ = arr[i<span style="color:#555">&amp;</span><span style="color:#f60">5</span>]
 _ = arr[<span style="color:#f60">5</span>]   <span style="color:#09f;font-style:italic">// 无需边界检查
 </span></code></pre></td></tr></table>
 </div>
-</div><h2 id="迭代索引">迭代索引</h2>
+</div><h3 id="迭代索引">迭代索引</h3>
 <div class="highlight"><div style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -241,7 +250,7 @@ _ = arr[<span style="color:#f60">5</span>]   <span style="color:#09f;font-style:
 </span><span style="color:#09f;font-style:italic"></span>	}
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="递减的索引">递减的索引</h2>
+</div><h3 id="递减的索引">递减的索引</h3>
 <div class="highlight"><div style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -256,7 +265,7 @@ _ = arr[<span style="color:#f60">3</span>] <span style="color:#09f;font-style:it
 </span><span style="color:#09f;font-style:italic"></span>_, _, _ = arr[<span style="color:#f60">3</span>], arr[<span style="color:#f60">2</span>], arr[<span style="color:#f60">1</span>]  <span style="color:#09f;font-style:italic">// 无需边界检查 
 </span></code></pre></td></tr></table>
 </div>
-</div><h1 id="人肉消除">人肉消除</h1>
+</div><h2 id="人肉消除">人肉消除</h2>
 <p>参考  <a href="https://gfw.go101.org/article/tips.html#make-use-of-bce">https://gfw.go101.org/article/tips.html#make-use-of-bce</a></p>
 <div class="highlight"><div style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
@@ -503,7 +512,7 @@ BenchmarkCounterSameByteNew<span style="color:#555">-</span><span style="color:#
             <div class="flex-1 border-r border-gray-600">
                 <p class="text-center">
                     <span class="text-gray-700 font-bold">
-                        8
+                        9
                     </span>
                     文章
                 </p>
@@ -591,11 +600,20 @@ BenchmarkCounterSameByteNew<span style="color:#555">-</span><span style="color:#
     <div class="sticky text-sm" style="top:6em;" id="menu-content">
         <nav id="TableOfContents">
   <ul>
-    <li><a href="#重复检测">重复检测</a></li>
-    <li><a href="#常量大小">常量大小</a></li>
-    <li><a href="#常量索引">常量索引</a></li>
-    <li><a href="#迭代索引">迭代索引</a></li>
-    <li><a href="#递减的索引">递减的索引</a></li>
+    <li><a href="#什么是边界检查">什么是边界检查</a></li>
+    <li><a href="#边界检查消除">边界检查消除</a></li>
+    <li><a href="#定位哪些需要做bce">定位哪些需要做<code>bce</code></a></li>
+    <li><a href="#ssa-是什么"><code>ssa</code> 是什么</a></li>
+    <li><a href="#什么情况下边界检查消除">什么情况下边界检查消除</a>
+      <ul>
+        <li><a href="#重复检测">重复检测</a></li>
+        <li><a href="#常量大小">常量大小</a></li>
+        <li><a href="#常量索引">常量索引</a></li>
+        <li><a href="#迭代索引">迭代索引</a></li>
+        <li><a href="#递减的索引">递减的索引</a></li>
+      </ul>
+    </li>
+    <li><a href="#人肉消除">人肉消除</a></li>
   </ul>
 </nav>
     </div>
