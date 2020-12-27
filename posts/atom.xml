@@ -6,7 +6,16 @@
     <description>Recent content in Posts on 我自倾怀 君且随意</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 27 Dec 2020 20:44:26 +0800</lastBuildDate><atom:link href="https://veixuan.github.io/posts/atom.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 28 Dec 2020 00:01:37 +0800</lastBuildDate><atom:link href="https://veixuan.github.io/posts/atom.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>channle的使用场景</title>
+      <link>https://veixuan.github.io/channel_plus.html</link>
+      <pubDate>Mon, 28 Dec 2020 00:01:37 +0800</pubDate>
+      
+      <guid>https://veixuan.github.io/channel_plus.html</guid>
+      <description>&lt;p&gt;&lt;code&gt;channel&lt;/code&gt;的使用案例&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>channel</title>
       <link>https://veixuan.github.io/channel.html</link>
@@ -23,15 +32,6 @@
       
       <guid>https://veixuan.github.io/%E8%BE%B9%E7%95%8C%E6%A3%80%E6%9F%A5%E6%B6%88%E9%99%A4%E4%BC%98%E5%8C%96.html</guid>
       <description>&lt;p&gt;使用消除边界检查进行性能优化&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>双塔模型</title>
-      <link>https://veixuan.github.io/%E5%8F%8C%E5%A1%94%E6%A8%A1%E5%9E%8B.html</link>
-      <pubDate>Sun, 27 Dec 2020 12:16:01 +0800</pubDate>
-      
-      <guid>https://veixuan.github.io/%E5%8F%8C%E5%A1%94%E6%A8%A1%E5%9E%8B.html</guid>
-      <description>&lt;p&gt;双塔模型的概念。&lt;/p&gt;</description>
     </item>
     
   </channel>

@@ -12,16 +12,16 @@
     <meta name="author" content="Neo" />
     <meta name="keywords" content="广告引擎, golang" />
     <meta name="og:site_name" content="我自倾怀 君且随意" /><meta property="og:type" content="article" />
-    <meta property="title" content="双塔模型 - 我自倾怀 君且随意">
-    <meta property="og:title" content="双塔模型 - 我自倾怀 君且随意">
-    <meta property="twitter:title" content="双塔模型 - 我自倾怀 君且随意">
-    <meta name="description" content="双塔模型的概念。">
-    <meta property="og:description" content="双塔模型的概念。">
-    <meta property="twitter:description" content="双塔模型的概念。">
+    <meta property="title" content="channle的使用场景 - 我自倾怀 君且随意">
+    <meta property="og:title" content="channle的使用场景 - 我自倾怀 君且随意">
+    <meta property="twitter:title" content="channle的使用场景 - 我自倾怀 君且随意">
+    <meta name="description" content="channel的使用案例">
+    <meta property="og:description" content="channel的使用案例">
+    <meta property="twitter:description" content="channel的使用案例">
     <meta property="og:type" content="article">
-    <title>双塔模型 - 我自倾怀 君且随意</title>
+    <title>channle的使用场景 - 我自倾怀 君且随意</title>
 
-    <meta property="og:url" content="https://veixuan.github.io/%E5%8F%8C%E5%A1%94%E6%A8%A1%E5%9E%8B.html" />
+    <meta property="og:url" content="https://veixuan.github.io/channel_plus.html" />
 
     
     <meta property="og:image" content="/head.jpeg">
@@ -81,17 +81,17 @@
         
         <div>
     <h1 class="font-bold break-normal text-gray-800 pt-2 pb-2 text-2xl lg:text-3xl">
-        <a href="https://veixuan.github.io/%E5%8F%8C%E5%A1%94%E6%A8%A1%E5%9E%8B.html" title="双塔模型">双塔模型</a>
+        <a href="https://veixuan.github.io/channel_plus.html" title="channle的使用场景">channle的使用场景</a>
     </h1>
     <p class="mb-1 text-sm text-gray-500">
-        <span title=" 2020-12-27 12:16:01 &#43;0800">
-            <i class="iconfont icon-calendar" aria-hidden="true"></i> 27 Dec 2020
+        <span title=" 2020-12-28 00:01:37 &#43;0800">
+            <i class="iconfont icon-calendar" aria-hidden="true"></i> 28 Dec 2020
         </span>
 
         <span class="hidden xl:inline-block">
             |
             <i class="iconfont icon-book"></i>
-            8 字
+            310 字
         </span>
 
         <span class="hidden xl:inline-block">
@@ -107,13 +107,136 @@
             
 <p class="text-base font-bold py-2 yg:pb-6 text-gray-700">文章目录</p>
     <div class="sticky text-sm" style="top:6em;" id="menu-content">
-        <nav id="TableOfContents"></nav>
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#信号传递">信号传递</a></li>
+    <li><a href="#超时控制">超时控制</a></li>
+    <li><a href="#定时任务">定时任务</a></li>
+    <li><a href="#消息传递">消息传递</a></li>
+    <li><a href="#控制并发">控制并发</a></li>
+  </ul>
+</nav>
     </div>
 
         </div> 
 
         <div class="post-content">
-            <p>双塔模型的概念。</p>
+            <p><code>channel</code>的使用案例</p>
+<h2 id="信号传递">信号传递</h2>
+<div class="highlight"><div style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">	sigs <span style="color:#555">:=</span> <span style="color:#366">make</span>(<span style="color:#069;font-weight:bold">chan</span> os.Signal, <span style="color:#f60">1</span>)
+	signal.<span style="color:#c0f">Notify</span>(sigs, syscall.SIGHUP, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT)
+	<span style="color:#069;font-weight:bold">select</span> {
+	<span style="color:#069;font-weight:bold">case</span> sg <span style="color:#555">:=</span> <span style="color:#555">&lt;-</span>sigs:
+		log.<span style="color:#c0f">Printf</span>(<span style="color:#c30">&#34;shutdown with signal %v&#34;</span>, sg)
+		log.<span style="color:#c0f">Printf</span>(<span style="color:#c30">&#34;will exit in five seconds ...&#34;</span>)
+		time.<span style="color:#c0f">Sleep</span>(time.Second <span style="color:#555">*</span> <span style="color:#f60">5</span>)
+	}
+
+<span style="color:#09f;font-style:italic">// 可以控制进程在退出之前做一些收尾工作 
+</span></code></pre></td></tr></table>
+</div>
+</div><h2 id="超时控制">超时控制</h2>
+<blockquote>
+<p>和timer搭配一起用</p>
+<p>当然有更优雅的实现方式<code>contextwithtimeout</code> 这里只是举例 也可以实现类似功能</p>
+</blockquote>
+<div class="highlight"><div style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#069;font-weight:bold">func</span> <span style="color:#c0f">Get</span>(url <span style="color:#078;font-weight:bold">string</span>, timeout time.Duration) (status <span style="color:#078;font-weight:bold">int</span>) {
+	done <span style="color:#555">:=</span> <span style="color:#366">make</span>(<span style="color:#069;font-weight:bold">chan</span> <span style="color:#069;font-weight:bold">struct</span>{})
+	<span style="color:#069;font-weight:bold">go</span> <span style="color:#069;font-weight:bold">func</span>() {
+		<span style="color:#069;font-weight:bold">defer</span> <span style="color:#366">close</span>(done)
+		resp, err <span style="color:#555">:=</span> http.<span style="color:#c0f">Get</span>(url)
+		<span style="color:#069;font-weight:bold">if</span> err <span style="color:#555">!=</span> <span style="color:#069;font-weight:bold">nil</span> {
+			status = <span style="color:#555">-</span><span style="color:#f60">1</span>
+		}
+		<span style="color:#069;font-weight:bold">if</span> resp <span style="color:#555">!=</span> <span style="color:#069;font-weight:bold">nil</span> {
+			status = resp.StatusCode
+			resp.Body.<span style="color:#c0f">Close</span>()
+		}
+	}()
+
+	<span style="color:#069;font-weight:bold">select</span> {
+	<span style="color:#069;font-weight:bold">case</span> <span style="color:#555">&lt;-</span>done:
+		<span style="color:#069;font-weight:bold">return</span>
+	<span style="color:#069;font-weight:bold">case</span> <span style="color:#555">&lt;-</span>time.<span style="color:#c0f">After</span>(timeout):
+		<span style="color:#069;font-weight:bold">return</span> <span style="color:#555">-</span><span style="color:#f60">100</span>
+	}
+}
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="定时任务">定时任务</h2>
+<div class="highlight"><div style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#069;font-weight:bold">func</span> <span style="color:#c0f">Loop</span>() {
+	ticker <span style="color:#555">:=</span> time.<span style="color:#c0f">Tick</span>(<span style="color:#f60">1</span> <span style="color:#555">*</span> time.Second)
+	<span style="color:#069;font-weight:bold">go</span> <span style="color:#069;font-weight:bold">func</span>() {
+		<span style="color:#069;font-weight:bold">for</span> {
+			<span style="color:#069;font-weight:bold">select</span> {
+			<span style="color:#069;font-weight:bold">case</span> <span style="color:#555">&lt;-</span>ticker:
+				log.<span style="color:#c0f">Printf</span>(<span style="color:#c30">&#34;now is %v&#34;</span>, time.<span style="color:#c0f">Now</span>().<span style="color:#c0f">String</span>())
+			}
+		}
+	}()
+}
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="消息传递">消息传递</h2>
+<blockquote>
+<p>可以实现类似java 中future的功能</p>
+</blockquote>
+<h2 id="控制并发">控制并发</h2>
+<p>用chan控制go routine的数量，当队列处理不过来时，直接丢弃</p>
 
             <hr class="bg-gray-300 mt-8">
 
@@ -141,7 +264,7 @@
             </li>
             <li style="word-break:break-all">
                 <strong>原文链接：</strong>
-                <a href="https://veixuan.github.io/%E5%8F%8C%E5%A1%94%E6%A8%A1%E5%9E%8B.html">https://veixuan.github.io/%E5%8F%8C%E5%A1%94%E6%A8%A1%E5%9E%8B.html</a>
+                <a href="https://veixuan.github.io/channel_plus.html">https://veixuan.github.io/channel_plus.html</a>
             </li>
             <li>
                 <strong>版权声明：</strong>本作品采用
@@ -158,8 +281,8 @@
         
         <div class="text-base md:text-sm text-gray-500 pt-6">
                 <a class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 hover:bg-gray-300"
-                    href="https://veixuan.github.io//tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0.html">
-                    #机器学习
+                    href="https://veixuan.github.io//tags/golang.html">
+                    #golang
                 </a>
                                     
             </div>
@@ -185,23 +308,7 @@
         
         
         <div class="">
-            <div id="disqus_thread"></div>
-    <script type="text/javascript">
-    (function() {
-      
-      
-      if (window.location.hostname === 'localhost') return;
-      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      var disqus_shortname = 'forecho-blog';
-      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-  
-
-  
+            
         </div>
         
 
@@ -211,15 +318,15 @@
 <div class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
     <h2 class="font-sans font-bold break-normal text-gray-700 px-2 pb-3 text-xl">相关文章</h2>
     
+    <li><a href="/channel.html" class="underline text-orange-600">channel</a></li>
+    
+    <li><a href="/%E8%BE%B9%E7%95%8C%E6%A3%80%E6%9F%A5%E6%B6%88%E9%99%A4%E4%BC%98%E5%8C%96.html" class="underline text-orange-600">边界检查消除优化</a></li>
+    
     <li><a href="/websocket.html" class="underline text-orange-600">golang使用websocket</a></li>
     
     <li><a href="/httpserver.html" class="underline text-orange-600">golang http server的基本姿势</a></li>
     
     <li><a href="/golang-native%E5%BC%80%E5%8F%91.html" class="underline text-orange-600">使用Golang进行Android Native开发</a></li>
-    
-    <li><a href="/android_tcpdump%E6%8A%93%E5%8C%85.html" class="underline text-orange-600">android系统中使用tcpdump抓包</a></li>
-    
-    <li><a href="/struct%E6%AF%94%E8%BE%83.html" class="underline text-orange-600">go中struct能否比较么?</a></li>
     
 </div>
 
@@ -329,7 +436,15 @@
             
 <p class="text-base font-bold py-2 yg:pb-6 text-gray-700">文章目录</p>
     <div class="sticky text-sm" style="top:6em;" id="menu-content">
-        <nav id="TableOfContents"></nav>
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#信号传递">信号传递</a></li>
+    <li><a href="#超时控制">超时控制</a></li>
+    <li><a href="#定时任务">定时任务</a></li>
+    <li><a href="#消息传递">消息传递</a></li>
+    <li><a href="#控制并发">控制并发</a></li>
+  </ul>
+</nav>
     </div>
 
         </div>
