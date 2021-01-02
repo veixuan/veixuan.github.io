@@ -6,10 +6,264 @@
     <description>Recent content on 我自倾怀 君且随意</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 28 Dec 2020 00:01:37 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 03 Jan 2021 00:38:19 +0800</lastBuildDate>
     
         <atom:link href="https://veixuan.github.io/atom.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>智能指针</title>
+      <link>https://veixuan.github.io/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88.html</link>
+      <pubDate>Sun, 03 Jan 2021 00:38:19 +0800</pubDate>
+      
+      <guid>https://veixuan.github.io/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88.html</guid>
+      
+        <description>&lt;p&gt;&lt;code&gt;c++&lt;/code&gt;中智能指针的基本使用&lt;/p&gt;
+&lt;h2 id=&#34;raii&#34;&gt;RAII&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;resource acquisition is initialization&lt;/p&gt;
+&lt;p&gt;资源分配的过程中进行资源管理&lt;/p&gt;
+&lt;p&gt;核心思想是 依托栈机制、析构函数来对所有的资源进行管理，包括堆内存&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;比较成熟的代表---智能指针&#34;&gt;比较成熟的代表 -&amp;gt; 智能指针&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;auto_ptr&lt;/code&gt; 已废弃&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;unique_ptr&lt;/code&gt; -&amp;gt; single ownership&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;shared_ptr&lt;/code&gt; -&amp;gt; shared ownership&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; &lt;code&gt;weak_prt&lt;/code&gt; -&amp;gt; temp (no ownership)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;对应的头文件 &lt;code&gt;&amp;lt;memory&amp;gt;&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id=&#34;使用demo-&#34;&gt;使用&lt;code&gt;demo &lt;/code&gt;&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 2
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 3
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 4
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 5
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 6
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 7
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 8
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 9
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;10
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;11
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;12
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;13
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;14
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;15
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;16
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;17
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;bar&lt;/span&gt;(std&lt;span style=&#34;color:#555&#34;&gt;::&lt;/span&gt;unique_ptr&lt;span style=&#34;color:#555&#34;&gt;&amp;lt;&lt;/span&gt;entity&lt;span style=&#34;color:#555&#34;&gt;&amp;gt;&lt;/span&gt; entity) {
+	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// bar 持有entity的所有权
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// entity会被自动释放
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;}
+
+&lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;foo&lt;/span&gt;() {
+	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 创建一个unique指针
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 当前是foo函数拥有entity的所有权
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;auto&lt;/span&gt; entity_ptr &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; std&lt;span style=&#34;color:#555&#34;&gt;::&lt;/span&gt;make_unique&lt;span style=&#34;color:#555&#34;&gt;&amp;lt;&lt;/span&gt;entity&lt;span style=&#34;color:#555&#34;&gt;&amp;gt;&lt;/span&gt;();
+	entity_ptr&lt;span style=&#34;color:#555&#34;&gt;-&amp;gt;&lt;/span&gt;setName(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;张三&amp;#34;&lt;/span&gt;);
+	entity_ptr&lt;span style=&#34;color:#555&#34;&gt;-&amp;gt;&lt;/span&gt;setAge(&lt;span style=&#34;color:#f60&#34;&gt;20&lt;/span&gt;);
+	entity_ptr&lt;span style=&#34;color:#555&#34;&gt;-&amp;gt;&lt;/span&gt;setSex(&lt;span style=&#34;color:#f60&#34;&gt;1&lt;/span&gt;);
+	
+	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// unique_ptr 是智能单个对象持有所有权
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 转移时 需要将对象的所有权转移
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	bar(std&lt;span style=&#34;color:#555&#34;&gt;::&lt;/span&gt;move(entity_ptr));
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;unique_ptr&#34;&gt;&lt;code&gt;unique_ptr&lt;/code&gt;&lt;/h2&gt;
+&lt;h3 id=&#34;如何创建&#34;&gt;如何创建&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;使用裸指针&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 使用裸指针 
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	std&lt;span style=&#34;color:#555&#34;&gt;::&lt;/span&gt;unique_ptr&lt;span style=&#34;color:#555&#34;&gt;&amp;lt;&lt;/span&gt;entity&lt;span style=&#34;color:#555&#34;&gt;&amp;gt;&lt;/span&gt; e1(&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;new&lt;/span&gt; entity());
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;make_unique&lt;/code&gt; 推荐的做法&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;auto&lt;/span&gt; e2 &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; std&lt;span style=&#34;color:#555&#34;&gt;::&lt;/span&gt;make_unique&lt;span style=&#34;color:#555&#34;&gt;&amp;lt;&lt;/span&gt;entity&lt;span style=&#34;color:#555&#34;&gt;&amp;gt;&lt;/span&gt;();
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;无法直接拷贝&#34;&gt;无法直接拷贝&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;由于是独占，无法直接进行拷贝&lt;/p&gt;
+&lt;p&gt;需要拷贝时 使用std::move&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// e2 不在使用
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 转移之后  e2 变成空指针 
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;auto&lt;/span&gt; e3 &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; std&lt;span style=&#34;color:#555&#34;&gt;::&lt;/span&gt;move(e2);
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;shared_ptr&#34;&gt;&lt;code&gt;shared_ptr&lt;/code&gt;&lt;/h2&gt;
+&lt;h3 id=&#34;如何创建-1&#34;&gt;如何创建&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;3
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;4
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;5
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-C++&#34; data-lang=&#34;C++&#34;&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 1. 使用裸指针
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	std&lt;span style=&#34;color:#555&#34;&gt;::&lt;/span&gt;shared_ptr&lt;span style=&#34;color:#555&#34;&gt;&amp;lt;&lt;/span&gt;entity&lt;span style=&#34;color:#555&#34;&gt;&amp;gt;&lt;/span&gt; es0(&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;new&lt;/span&gt; entity());
+&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 2. 使用make_shared
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	std&lt;span style=&#34;color:#555&#34;&gt;::&lt;/span&gt;shared_ptr&lt;span style=&#34;color:#555&#34;&gt;&amp;lt;&lt;/span&gt;entity&lt;span style=&#34;color:#555&#34;&gt;&amp;gt;&lt;/span&gt; es1 &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; std&lt;span style=&#34;color:#555&#34;&gt;::&lt;/span&gt;make_shared&lt;span style=&#34;color:#555&#34;&gt;&amp;lt;&lt;/span&gt;entity&lt;span style=&#34;color:#555&#34;&gt;&amp;gt;&lt;/span&gt;();
+&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 3. 拷贝构造
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;std&lt;span style=&#34;color:#555&#34;&gt;::&lt;/span&gt;shared_ptr&lt;span style=&#34;color:#555&#34;&gt;&amp;lt;&lt;/span&gt;entity&lt;span style=&#34;color:#555&#34;&gt;&amp;gt;&lt;/span&gt; es2 &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; es0;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;所有权&#34;&gt;所有权&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;每次拷贝构造 引用计数+1&lt;/p&gt;
+&lt;p&gt;使用std::move 引用计数不变&lt;/p&gt;
+&lt;p&gt;函数传参 引用计数+1&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;weak_ptr&#34;&gt;&lt;code&gt;weak_ptr&lt;/code&gt;&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;没有所有权的概念&lt;/p&gt;
+&lt;p&gt;必须要转换成 shared_ptr 才能使用&lt;/p&gt;
+&lt;p&gt;使用方法比较特殊&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 2
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 3
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 4
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 5
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 6
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 7
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 8
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 9
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 使用weak_ptr 必须从shared_ptr 构造
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;auto&lt;/span&gt; sp1 &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; std&lt;span style=&#34;color:#555&#34;&gt;::&lt;/span&gt;make_shared&lt;span style=&#34;color:#555&#34;&gt;&amp;lt;&lt;/span&gt;entity&lt;span style=&#34;color:#555&#34;&gt;&amp;gt;&lt;/span&gt;();
+	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 可以从shared_ptr 构造 
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	std&lt;span style=&#34;color:#555&#34;&gt;::&lt;/span&gt;weak_ptr&lt;span style=&#34;color:#555&#34;&gt;&amp;lt;&lt;/span&gt;entity&lt;span style=&#34;color:#555&#34;&gt;&amp;gt;&lt;/span&gt; tp1 &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; sp1;
+
+	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 使用
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; (std&lt;span style=&#34;color:#555&#34;&gt;::&lt;/span&gt;shared_ptr&lt;span style=&#34;color:#555&#34;&gt;&amp;lt;&lt;/span&gt;entity&lt;span style=&#34;color:#555&#34;&gt;&amp;gt;&lt;/span&gt; tp2 &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; tp1.lock()) {
+		&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// todo
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// tp2.do()
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	}
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>slice</title>
+      <link>https://veixuan.github.io/slice.html</link>
+      <pubDate>Wed, 30 Dec 2020 23:19:39 +0800</pubDate>
+      
+      <guid>https://veixuan.github.io/slice.html</guid>
+      
+        <description>&lt;p&gt;&lt;code&gt;slice&lt;/code&gt;的使用和原理&lt;/p&gt;
+&lt;h2 id=&#34;结构&#34;&gt;结构&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;3
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;4
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;5
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;6
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;7
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// /usr/local/go/src/runtime/slice.go:13
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// go version go1.16beta1
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;type&lt;/span&gt; slice &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;struct&lt;/span&gt; {
+	array unsafe.Pointer &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 指向一块连续的内存 存储的是实际的数据 
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	len   &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;int&lt;/span&gt;            &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// slice的长度 
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	cap   &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;int&lt;/span&gt;            &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// slice的容量 
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;}
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;使用&#34;&gt;使用&lt;/h2&gt;
+&lt;h3 id=&#34;创建&#34;&gt;创建&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;	ints &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#366&#34;&gt;make&lt;/span&gt;([]&lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;int&lt;/span&gt;, &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#f60&#34;&gt;2&lt;/span&gt;)
+
+	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;var&lt;/span&gt; strs []&lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;string&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;追加&#34;&gt;追加&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;3
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;4
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;ints &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#366&#34;&gt;make&lt;/span&gt;([]&lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;int&lt;/span&gt;, &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#f60&#34;&gt;2&lt;/span&gt;)
+ints = &lt;span style=&#34;color:#366&#34;&gt;append&lt;/span&gt;(ints, &lt;span style=&#34;color:#f60&#34;&gt;1&lt;/span&gt;)
+ints = &lt;span style=&#34;color:#366&#34;&gt;append&lt;/span&gt;(ints, &lt;span style=&#34;color:#f60&#34;&gt;2&lt;/span&gt;)
+ints = &lt;span style=&#34;color:#366&#34;&gt;append&lt;/span&gt;(ints, &lt;span style=&#34;color:#f60&#34;&gt;3&lt;/span&gt;)
+ints = &lt;span style=&#34;color:#366&#34;&gt;append&lt;/span&gt;(ints, &lt;span style=&#34;color:#f60&#34;&gt;4&lt;/span&gt;, &lt;span style=&#34;color:#f60&#34;&gt;5&lt;/span&gt;, &lt;span style=&#34;color:#f60&#34;&gt;6&lt;/span&gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;遍历&#34;&gt;遍历&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;3
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// for range 
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;
+
+&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;扩容&#34;&gt;扩容&lt;/h3&gt;
+&lt;h3 id=&#34;克隆&#34;&gt;克隆&lt;/h3&gt;
+&lt;h3 id=&#34;元素更新&#34;&gt;元素更新&lt;/h3&gt;
+&lt;h2 id=&#34;reslice&#34;&gt;&lt;code&gt;reslice&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id=&#34;比较&#34;&gt;比较&lt;/h2&gt;
+&lt;h2 id=&#34;nil-slice-vs-empty-slice&#34;&gt;&lt;code&gt;nil slice&lt;/code&gt; vs &lt;code&gt;empty slice&lt;/code&gt;&lt;/h2&gt;
+&lt;h2 id=&#34;是否线程安全&#34;&gt;是否线程安全&lt;/h2&gt;
+&lt;h2 id=&#34;性能优化及陷阱&#34;&gt;性能优化及陷阱&lt;/h2&gt;</description>
+      
+    </item>
     
     <item>
       <title>channle的使用场景</title>
@@ -134,1492 +388,6 @@
 &lt;/blockquote&gt;
 &lt;h2 id=&#34;控制并发&#34;&gt;控制并发&lt;/h2&gt;
 &lt;p&gt;用chan控制go routine的数量，当队列处理不过来时，直接丢弃&lt;/p&gt;</description>
-      
-    </item>
-    
-    <item>
-      <title>channel</title>
-      <link>https://veixuan.github.io/channel.html</link>
-      <pubDate>Sun, 27 Dec 2020 20:44:26 +0800</pubDate>
-      
-      <guid>https://veixuan.github.io/channel.html</guid>
-      
-        <description>&lt;p&gt;&lt;code&gt;golang&lt;/code&gt; 中&lt;code&gt;channel&lt;/code&gt;的基本使用&lt;/p&gt;
-&lt;h2 id=&#34;channel&#34;&gt;channel&lt;/h2&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;code&gt;channel&lt;/code&gt;是golang中的一等公民，和&lt;code&gt;goroutine&lt;/code&gt; 一起搭配使用，大大降低了&lt;code&gt;golang&lt;/code&gt;中并发编程的难度.&lt;/p&gt;
-&lt;p&gt;主要用于&lt;code&gt;goroutine &lt;/code&gt;之间进行消息、事件等传播和通信&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&#34;基本语法&#34;&gt;基本语法&lt;/h2&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;语法&lt;/th&gt;
-&lt;th&gt;说明&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;c1 := make(chan bool)&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;创建一个无缓冲的bool类型&lt;code&gt;channel&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;c2 := make(chan&amp;lt;- string)&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;创建一个单向&lt;code&gt;channel&lt;/code&gt;，只能用于发送数据&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;c3 := make(&amp;lt;-chan string)&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;创建一个单向&lt;code&gt;channel&lt;/code&gt;，只能用于接收数据&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;c4 := make(chan int, 3)&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;创建一个缓冲长度是3的&lt;code&gt;channel&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;说明: 双向的channel 可以隐式转换成单向&lt;code&gt;channel&lt;/code&gt;，反之不行&lt;/p&gt;
-&lt;h2 id=&#34;channel-操作方式&#34;&gt;&lt;code&gt;channel&lt;/code&gt; 操作方式&lt;/h2&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;操作&lt;/th&gt;
-&lt;th&gt;说明&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;close(channel)&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;关闭一个&lt;code&gt;channel&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;channel &amp;lt;- &amp;quot;hello&amp;quot;&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;往channel中写入hello&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;str := &amp;lt;-channel&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;从channel中取出一个值&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;cap(channel)&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;获取channel的容量&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;len(channel)&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;获取channel的长度&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;说明: 这五种操作都是同步的，也就是线程安全的&lt;/p&gt;
-&lt;h2 id=&#34;操作说明&#34;&gt;操作说明&lt;/h2&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;操作&lt;/th&gt;
-&lt;th&gt;关闭&lt;/th&gt;
-&lt;th&gt;发送数据&lt;/th&gt;
-&lt;th&gt;接收数据&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;nil 零值channel&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;panic&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;block&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;block&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;非零值已关闭的&lt;code&gt;channel&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;panic&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;panic&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;永不阻塞&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;非零值未关闭的``channel` | 成功关闭 | 阻塞或者成功 | 阻塞或者成功 |&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;td&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h2 id=&#34;底层结构&#34;&gt;底层结构&lt;/h2&gt;
-&lt;p&gt;我们通过 &lt;code&gt;make(chan string,100)&lt;/code&gt; 这种方式创建一个&lt;code&gt;channel&lt;/code&gt; , 本质是调用&lt;code&gt;makechan&lt;/code&gt; 方法创建一个&lt;code&gt;hchan&lt;/code&gt; 类型的指针&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;3
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;4
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;_ = &lt;span style=&#34;color:#366&#34;&gt;make&lt;/span&gt;(&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;chan&lt;/span&gt; &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;string&lt;/span&gt;)
-&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// go tool compile -S main.go
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;
-&lt;span style=&#34;color:#c0f&#34;&gt;makechan&lt;/span&gt;(t &lt;span style=&#34;color:#555&#34;&gt;*&lt;/span&gt;chantype, size &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;int&lt;/span&gt;) &lt;span style=&#34;color:#555&#34;&gt;*&lt;/span&gt;hchan
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;h3 id=&#34;hchan&#34;&gt;&lt;code&gt;hchan&lt;/code&gt;&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 1
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 2
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 3
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 4
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 5
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 6
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 7
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 8
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 9
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;10
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;11
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;12
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;13
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;14
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;15
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;16
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;17
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;18
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;19
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;20
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;21
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;22
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;23
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;24
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;25
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;26
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;27
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;28
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;29
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;30
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;31
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;32
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;33
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;34
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;35
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;36
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;37
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;38
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;39
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;40
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;41
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// /usr/local/go/src/runtime/chan.go:32 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// go version go1.16beta1
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;
-&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;type&lt;/span&gt; hchan &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;struct&lt;/span&gt; {
-  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// chan 里面的元素数量
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	qcount   &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;uint&lt;/span&gt;           &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// total data in the queue
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// chan 底层的循环队列长度 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 只针对 缓冲类型的channel 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	dataqsiz &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;uint&lt;/span&gt;           &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// size of the circular queue
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 指向底层循环队列的指针 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	buf      unsafe.Pointer &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// points to an array of dataqsiz elements
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// chan 里面的元素大小 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	elemsize &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;uint16&lt;/span&gt;
-  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// chan 是否关闭的状态 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	closed   &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;uint32&lt;/span&gt;
-  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// chan 里面的元素类型 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	elemtype &lt;span style=&#34;color:#555&#34;&gt;*&lt;/span&gt;_type &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// element type
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 已发送的元素在循环队列的索引 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	sendx    &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;uint&lt;/span&gt;   &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// send index
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 已接收的元素在循环队列的索引 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	recvx    &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;uint&lt;/span&gt;   &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// receive index
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 等待接收的goroutine 队列 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	recvq    waitq  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// list of recv waiters
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 等待发送的goroutine 队列 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	sendq    waitq  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// list of send waiters
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;
-	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// lock protects all fields in hchan, as well as several
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// fields in sudogs blocked on this channel.
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;//
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// Do not change another G&amp;#39;s status while holding this lock
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// (in particular, do not ready a G), as this can deadlock
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// with stack shrinking.
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 锁 用于保证channel中的元素读写都是线程安全的 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	lock mutex
-}
-
-&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// waitq 是一个goroutine的双向链表 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;type&lt;/span&gt; waitq &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;struct&lt;/span&gt; {
-	first &lt;span style=&#34;color:#555&#34;&gt;*&lt;/span&gt;sudog  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// sudog 是对一个goroutine的封装 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	last  &lt;span style=&#34;color:#555&#34;&gt;*&lt;/span&gt;sudog
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;结构图示&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://i.loli.net/2020/12/27/v1FdlwXNEDq6Y9I.png&#34; alt=&#34;channel.png&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;创建一个channel的过程&#34;&gt;创建一个&lt;code&gt;channel&lt;/code&gt;的过程&lt;/h2&gt;
-&lt;p&gt;源码&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 1
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 2
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 3
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 4
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 5
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 6
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 7
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 8
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 9
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;10
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;11
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;12
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;13
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;14
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;15
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;16
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;17
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;18
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;19
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;20
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;21
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;22
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;23
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;24
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;25
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;26
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;27
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;28
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;29
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;30
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;31
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;32
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;33
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;34
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;35
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;36
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;37
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;38
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;39
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;40
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;41
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;42
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;43
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;44
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;45
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;46
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;47
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;48
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;49
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;50
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;51
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;52
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;53
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;54
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;55
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;56
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;57
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;58
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;59
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;60
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;61
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;62
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;63
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;64
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;65
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;66
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;67
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;68
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;const&lt;/span&gt; (
-	maxAlign  = &lt;span style=&#34;color:#f60&#34;&gt;8&lt;/span&gt;  
-	hchanSize = unsafe.&lt;span style=&#34;color:#c0f&#34;&gt;Sizeof&lt;/span&gt;(hchan{}) &lt;span style=&#34;color:#555&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#366&#34;&gt;uintptr&lt;/span&gt;(&lt;span style=&#34;color:#555&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#366&#34;&gt;int&lt;/span&gt;(unsafe.&lt;span style=&#34;color:#c0f&#34;&gt;Sizeof&lt;/span&gt;(hchan{}))&lt;span style=&#34;color:#555&#34;&gt;&amp;amp;&lt;/span&gt;(maxAlign&lt;span style=&#34;color:#555&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#f60&#34;&gt;1&lt;/span&gt;))
-	debugChan = &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;false&lt;/span&gt;
-)
-
-&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;makechan&lt;/span&gt;(t &lt;span style=&#34;color:#555&#34;&gt;*&lt;/span&gt;chantype, size &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;int&lt;/span&gt;) &lt;span style=&#34;color:#555&#34;&gt;*&lt;/span&gt;hchan {
-	elem &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; t.elem
-
-	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 省略中间的校验代码
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;
-  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 两个数相乘 返回结果 并且判断是否越界 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 计算要分配的内存大小 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	mem, overflow &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; math.&lt;span style=&#34;color:#c0f&#34;&gt;MulUintptr&lt;/span&gt;(elem.size, &lt;span style=&#34;color:#366&#34;&gt;uintptr&lt;/span&gt;(size))
-	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; overflow &lt;span style=&#34;color:#555&#34;&gt;||&lt;/span&gt; mem &amp;gt; maxAlloc&lt;span style=&#34;color:#555&#34;&gt;-&lt;/span&gt;hchanSize &lt;span style=&#34;color:#555&#34;&gt;||&lt;/span&gt; size &amp;lt; &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt; {
-		&lt;span style=&#34;color:#366&#34;&gt;panic&lt;/span&gt;(&lt;span style=&#34;color:#c0f&#34;&gt;plainError&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;makechan: size out of range&amp;#34;&lt;/span&gt;))
-	}
-	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;var&lt;/span&gt; c &lt;span style=&#34;color:#555&#34;&gt;*&lt;/span&gt;hchan
-	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;switch&lt;/span&gt; {
-	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;case&lt;/span&gt; mem &lt;span style=&#34;color:#555&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt;:
-    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 要分配的内存==0 有两种可能性
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 1. 无缓冲类型的channel  size == 0 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 2. 非缓冲类型的channel 但是 elem.size == 0 那么肯定是 struct{}{} 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 只需要分配 hchansize 的内存大小就可以 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// Queue or element size is zero.
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		c = (&lt;span style=&#34;color:#555&#34;&gt;*&lt;/span&gt;hchan)(&lt;span style=&#34;color:#c0f&#34;&gt;mallocgc&lt;/span&gt;(hchanSize, &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;nil&lt;/span&gt;, &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;true&lt;/span&gt;))
-		&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// Race detector uses this location for synchronization.
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// buf 无用 直接指向channel的起始位置
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		c.buf = c.&lt;span style=&#34;color:#c0f&#34;&gt;raceaddr&lt;/span&gt;()
-	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;case&lt;/span&gt; elem.ptrdata &lt;span style=&#34;color:#555&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt;:
-    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 元素类型不包含指针 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 只做一次内存分配 分配的大小是 hchansize + mem(count * size )
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// Elements do not contain pointers.
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// Allocate hchan and buf in one call.
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		c = (&lt;span style=&#34;color:#555&#34;&gt;*&lt;/span&gt;hchan)(&lt;span style=&#34;color:#c0f&#34;&gt;mallocgc&lt;/span&gt;(hchanSize&lt;span style=&#34;color:#555&#34;&gt;+&lt;/span&gt;mem, &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;nil&lt;/span&gt;, &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;true&lt;/span&gt;))
-    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 计算buf指向的位置 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		c.buf = &lt;span style=&#34;color:#c0f&#34;&gt;add&lt;/span&gt;(unsafe.&lt;span style=&#34;color:#c0f&#34;&gt;Pointer&lt;/span&gt;(c), hchanSize)
-	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;default&lt;/span&gt;:
-		&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// Elements contain pointers.
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 包含指针 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 两次内存分配 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		c = &lt;span style=&#34;color:#366&#34;&gt;new&lt;/span&gt;(hchan)
-		c.buf = &lt;span style=&#34;color:#c0f&#34;&gt;mallocgc&lt;/span&gt;(mem, elem, &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;true&lt;/span&gt;)
-	}
-
-	c.elemsize = &lt;span style=&#34;color:#366&#34;&gt;uint16&lt;/span&gt;(elem.size)
-	c.elemtype = elem
-	c.dataqsiz = &lt;span style=&#34;color:#366&#34;&gt;uint&lt;/span&gt;(size)
-  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 锁初始化 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#c0f&#34;&gt;lockInit&lt;/span&gt;(&lt;span style=&#34;color:#555&#34;&gt;&amp;amp;&lt;/span&gt;c.lock, lockRankHchan)
-
-	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; debugChan {
-		&lt;span style=&#34;color:#366&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;makechan: chan=&amp;#34;&lt;/span&gt;, c, &lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;; elemsize=&amp;#34;&lt;/span&gt;, elem.size, &lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;; dataqsiz=&amp;#34;&lt;/span&gt;, size, &lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;\n&amp;#34;&lt;/span&gt;)
-	}
-  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 返回 指针类型 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;return&lt;/span&gt; c
-}
-
-&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 计算是否越界 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;MulUintptr&lt;/span&gt;(a, b &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;uintptr&lt;/span&gt;) (&lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;uintptr&lt;/span&gt;, &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;bool&lt;/span&gt;) {
-  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 判断 a、b 是否小于 2^32
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; a|b &amp;lt; &lt;span style=&#34;color:#f60&#34;&gt;1&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt;(&lt;span style=&#34;color:#f60&#34;&gt;4&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;*&lt;/span&gt;sys.PtrSize) &lt;span style=&#34;color:#555&#34;&gt;||&lt;/span&gt; a &lt;span style=&#34;color:#555&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt; {
-		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;return&lt;/span&gt; a &lt;span style=&#34;color:#555&#34;&gt;*&lt;/span&gt; b, &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;false&lt;/span&gt;
-	}
-  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 越界兜底 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	overflow &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; b &amp;gt; MaxUintptr&lt;span style=&#34;color:#555&#34;&gt;/&lt;/span&gt;a
-	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;return&lt;/span&gt; a &lt;span style=&#34;color:#555&#34;&gt;*&lt;/span&gt; b, overflow
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;blockquote&gt;
-&lt;p&gt;总结:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;要分配的内存是0，那么做一次内存分配，分配的长度是channel对齐后的长度，这种有两种可能&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;无缓冲性channel&lt;/code&gt;，因为`size == 0``&lt;/li&gt;
-&lt;li&gt;``struct{}类型的有缓冲channel&lt;code&gt;，因为&lt;/code&gt;elem.size == 0`&lt;/li&gt;
-&lt;li&gt;要分配的内存长度不是0，但是存储的元素是非指针类型，那么做一次内存分配&lt;/li&gt;
-&lt;li&gt;要分配的内存长度不是0，存储的原始是指针类型，做两次内存分配&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&#34;发送数据的过程&#34;&gt;发送数据的过程&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;3
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;4
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;5
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;6
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;7
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;
-strChan &lt;span style=&#34;color:#555&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;hello&amp;#34;&lt;/span&gt;
-&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 通过汇编可以发现，调用的是runtime的.chansend1 方法 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;runtime.chansend1 
-&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;chansend1&lt;/span&gt;(c &lt;span style=&#34;color:#555&#34;&gt;*&lt;/span&gt;hchan, elem unsafe.Pointer) {
-	&lt;span style=&#34;color:#c0f&#34;&gt;chansend&lt;/span&gt;(c, elem, &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;true&lt;/span&gt;, &lt;span style=&#34;color:#c0f&#34;&gt;getcallerpc&lt;/span&gt;())
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;send函数逻辑如下&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;  1
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;  2
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;  3
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;  4
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;  5
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;  6
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;  7
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;  8
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;  9
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 10
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 11
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 12
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 13
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 14
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 15
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 16
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 17
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 18
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 19
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 20
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 21
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 22
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 23
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 24
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 25
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 26
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 27
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 28
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 29
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 30
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 31
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 32
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 33
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 34
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 35
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 36
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 37
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 38
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 39
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 40
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 41
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 42
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 43
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 44
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 45
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 46
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 47
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 48
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 49
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 50
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 51
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 52
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 53
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 54
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 55
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 56
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 57
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 58
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 59
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 60
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 61
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 62
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 63
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 64
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 65
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 66
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 67
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 68
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 69
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 70
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 71
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 72
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 73
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 74
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 75
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 76
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 77
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 78
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 79
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 80
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 81
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 82
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 83
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 84
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 85
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 86
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 87
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 88
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 89
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 90
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 91
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 92
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 93
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 94
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 95
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 96
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 97
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 98
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 99
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;100
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;101
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;102
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;103
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;104
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;105
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;106
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;107
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;108
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;109
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;110
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;111
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;112
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;113
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;114
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;115
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;116
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;117
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;118
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;119
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;120
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;121
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;122
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;123
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;124
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;125
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;126
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;127
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;128
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;129
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;130
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;131
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;132
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;133
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;134
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;135
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;136
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;137
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;138
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;139
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;140
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;141
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;142
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;143
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;144
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;145
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;146
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;147
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;148
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;149
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;150
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;151
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;152
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;153
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;154
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;155
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;chansend&lt;/span&gt;(c &lt;span style=&#34;color:#555&#34;&gt;*&lt;/span&gt;hchan, ep unsafe.Pointer, block &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;bool&lt;/span&gt;, callerpc &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;uintptr&lt;/span&gt;) &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;bool&lt;/span&gt; {
-  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// channel 是nil 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; c &lt;span style=&#34;color:#555&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;nil&lt;/span&gt; {
-    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 非block  直接返回false 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; !block {
-			&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;false&lt;/span&gt;
-		}
-    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 挂起当前goroutine 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#c0f&#34;&gt;gopark&lt;/span&gt;(&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;nil&lt;/span&gt;, &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;nil&lt;/span&gt;, waitReasonChanSendNilChan, traceEvGoStop, &lt;span style=&#34;color:#f60&#34;&gt;2&lt;/span&gt;)
-		&lt;span style=&#34;color:#c0f&#34;&gt;throw&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;unreachable&amp;#34;&lt;/span&gt;)
-	}
-
-	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; debugChan {
-		&lt;span style=&#34;color:#366&#34;&gt;print&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;chansend: chan=&amp;#34;&lt;/span&gt;, c, &lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;\n&amp;#34;&lt;/span&gt;)
-	}
-
-	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; raceenabled {
-		&lt;span style=&#34;color:#c0f&#34;&gt;racereadpc&lt;/span&gt;(c.&lt;span style=&#34;color:#c0f&#34;&gt;raceaddr&lt;/span&gt;(), callerpc, &lt;span style=&#34;color:#c0f&#34;&gt;funcPC&lt;/span&gt;(chansend))
-	}
-
-	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// Fast path: check for failed non-blocking operation without acquiring the lock.
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;//
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// After observing that the channel is not closed, we observe that the channel is
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// not ready for sending. Each of these observations is a single word-sized read
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// (first c.closed and second full()).
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// Because a closed channel cannot transition from &amp;#39;ready for sending&amp;#39; to
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// &amp;#39;not ready for sending&amp;#39;, even if the channel is closed between the two observations,
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// they imply a moment between the two when the channel was both not yet closed
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// and not ready for sending. We behave as if we observed the channel at that moment,
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// and report that the send cannot proceed.
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;//
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// It is okay if the reads are reordered here: if we observe that the channel is not
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// ready for sending and then observe that it is not closed, that implies that the
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// channel wasn&amp;#39;t closed during the first observation. However, nothing here
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// guarantees forward progress. We rely on the side effects of lock release in
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// chanrecv() and closechan() to update this thread&amp;#39;s view of c.closed and full().
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;  
-  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 未关闭 并且channel 已经满了  直接返回false 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; !block &lt;span style=&#34;color:#555&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; c.closed &lt;span style=&#34;color:#555&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;full&lt;/span&gt;(c) {
-		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;false&lt;/span&gt;
-	}
-
-	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;var&lt;/span&gt; t0 &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;int64&lt;/span&gt;
-	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; blockprofilerate &amp;gt; &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt; {
-		t0 = &lt;span style=&#34;color:#c0f&#34;&gt;cputicks&lt;/span&gt;()
-	}
-
-  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 加锁 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#c0f&#34;&gt;lock&lt;/span&gt;(&lt;span style=&#34;color:#555&#34;&gt;&amp;amp;&lt;/span&gt;c.lock)
-
-  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 已经关闭了 直接panic 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; c.closed &lt;span style=&#34;color:#555&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt; {
-		&lt;span style=&#34;color:#c0f&#34;&gt;unlock&lt;/span&gt;(&lt;span style=&#34;color:#555&#34;&gt;&amp;amp;&lt;/span&gt;c.lock)
-		&lt;span style=&#34;color:#366&#34;&gt;panic&lt;/span&gt;(&lt;span style=&#34;color:#c0f&#34;&gt;plainError&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;send on closed channel&amp;#34;&lt;/span&gt;))
-	}
-
-  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 从等待接收的go routine 队列中取出一个等待的线程 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; sg &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; c.recvq.&lt;span style=&#34;color:#c0f&#34;&gt;dequeue&lt;/span&gt;(); sg &lt;span style=&#34;color:#555&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;nil&lt;/span&gt; {
-		&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// Found a waiting receiver. We pass the value we want to send
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// directly to the receiver, bypassing the channel buffer (if any).
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 如果存在等待的线程，直接发送 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 1. 拷贝当前的数据buf到等待的线程的buf 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 2. 拉起等待的goroutine 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#c0f&#34;&gt;send&lt;/span&gt;(c, sg, ep, &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;func&lt;/span&gt;() { &lt;span style=&#34;color:#c0f&#34;&gt;unlock&lt;/span&gt;(&lt;span style=&#34;color:#555&#34;&gt;&amp;amp;&lt;/span&gt;c.lock) }, &lt;span style=&#34;color:#f60&#34;&gt;3&lt;/span&gt;)
-		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;true&lt;/span&gt;
-	}
-
-  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 缓冲性队列未满 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; c.qcount &amp;lt; c.dataqsiz {
-		&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// Space is available in the channel buffer. Enqueue the element to send.
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		qp &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;chanbuf&lt;/span&gt;(c, c.sendx)
-		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; raceenabled {
-			&lt;span style=&#34;color:#c0f&#34;&gt;racenotify&lt;/span&gt;(c, c.sendx, &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;nil&lt;/span&gt;)
-		}
-    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// eq: 等待入队的元素的地址 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// qp: 循环队列中下一个可用的index 对应的地址 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 将eq的数据复制到qp 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#c0f&#34;&gt;typedmemmove&lt;/span&gt;(c.elemtype, qp, ep)
-    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// send index ++ 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		c.sendx&lt;span style=&#34;color:#555&#34;&gt;++&lt;/span&gt;
-    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// index 已满，重置(环形)
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; c.sendx &lt;span style=&#34;color:#555&#34;&gt;==&lt;/span&gt; c.dataqsiz {
-			c.sendx = &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt;
-		}
-    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 队列中的元素大小+1
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		c.qcount&lt;span style=&#34;color:#555&#34;&gt;++&lt;/span&gt;
-    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 解锁 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#c0f&#34;&gt;unlock&lt;/span&gt;(&lt;span style=&#34;color:#555&#34;&gt;&amp;amp;&lt;/span&gt;c.lock)
-    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 返回成功 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;true&lt;/span&gt;
-	}
-
-  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 非block的情况  
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 直接解锁 返回失败 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; !block {
-		&lt;span style=&#34;color:#c0f&#34;&gt;unlock&lt;/span&gt;(&lt;span style=&#34;color:#555&#34;&gt;&amp;amp;&lt;/span&gt;c.lock)
-		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;false&lt;/span&gt;
-	}
-
-	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// Block on the channel. Some receiver will complete our operation for us.
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// channel 已经满了  发送方会被block住 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 获取当前线程 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	gp &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;getg&lt;/span&gt;()
-	mysg &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;acquireSudog&lt;/span&gt;()
-	mysg.releasetime = &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt;
-	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; t0 &lt;span style=&#34;color:#555&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt; {
-		mysg.releasetime = &lt;span style=&#34;color:#555&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#f60&#34;&gt;1&lt;/span&gt;
-	}
-	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// No stack splits between assigning elem and enqueuing mysg
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// on gp.waiting where copystack can find it.
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	mysg.elem = ep
-	mysg.waitlink = &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;nil&lt;/span&gt;
-	mysg.g = gp
-	mysg.isSelect = &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;false&lt;/span&gt;
-	mysg.c = c
-	gp.waiting = mysg
-	gp.param = &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;nil&lt;/span&gt;
-  
-  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 当前的线程进入等待发送的队列 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	c.sendq.&lt;span style=&#34;color:#c0f&#34;&gt;enqueue&lt;/span&gt;(mysg)
-	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// Signal to anyone trying to shrink our stack that we&amp;#39;re about
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// to park on a channel. The window between when this G&amp;#39;s status
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// changes and when we set gp.activeStackChans is not safe for
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// stack shrinking.
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	atomic.&lt;span style=&#34;color:#c0f&#34;&gt;Store8&lt;/span&gt;(&lt;span style=&#34;color:#555&#34;&gt;&amp;amp;&lt;/span&gt;gp.parkingOnChan, &lt;span style=&#34;color:#f60&#34;&gt;1&lt;/span&gt;)
-  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 挂起当前线程 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#c0f&#34;&gt;gopark&lt;/span&gt;(chanparkcommit, unsafe.&lt;span style=&#34;color:#c0f&#34;&gt;Pointer&lt;/span&gt;(&lt;span style=&#34;color:#555&#34;&gt;&amp;amp;&lt;/span&gt;c.lock), waitReasonChanSend, traceEvGoBlockSend, &lt;span style=&#34;color:#f60&#34;&gt;2&lt;/span&gt;)
-	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// Ensure the value being sent is kept alive until the
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// receiver copies it out. The sudog has a pointer to the
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// stack object, but sudogs aren&amp;#39;t considered as roots of the
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// stack tracer.
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#c0f&#34;&gt;KeepAlive&lt;/span&gt;(ep)
-
-	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// someone woke us up.
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 队列中空闲 被唤醒 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; mysg &lt;span style=&#34;color:#555&#34;&gt;!=&lt;/span&gt; gp.waiting {
-		&lt;span style=&#34;color:#c0f&#34;&gt;throw&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;G waiting list is corrupted&amp;#34;&lt;/span&gt;)
-	}
-	gp.waiting = &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;nil&lt;/span&gt;
-	gp.activeStackChans = &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;false&lt;/span&gt;
-	closed &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; !mysg.success
-	gp.param = &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;nil&lt;/span&gt;
-	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; mysg.releasetime &amp;gt; &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt; {
-		&lt;span style=&#34;color:#c0f&#34;&gt;blockevent&lt;/span&gt;(mysg.releasetime&lt;span style=&#34;color:#555&#34;&gt;-&lt;/span&gt;t0, &lt;span style=&#34;color:#f60&#34;&gt;2&lt;/span&gt;)
-	}
-	mysg.c = &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;nil&lt;/span&gt;
-	&lt;span style=&#34;color:#c0f&#34;&gt;releaseSudog&lt;/span&gt;(mysg)
-	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; closed {
-		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; c.closed &lt;span style=&#34;color:#555&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt; {
-			&lt;span style=&#34;color:#c0f&#34;&gt;throw&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;chansend: spurious wakeup&amp;#34;&lt;/span&gt;)
-		}
-		&lt;span style=&#34;color:#366&#34;&gt;panic&lt;/span&gt;(&lt;span style=&#34;color:#c0f&#34;&gt;plainError&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;send on closed channel&amp;#34;&lt;/span&gt;))
-	}
-	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;true&lt;/span&gt;
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;blockquote&gt;
-&lt;p&gt;总结：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;channel是nil，非block直接返回失败，block时直接永远挂起&lt;/li&gt;
-&lt;li&gt;非block，但是channel 已经满了，直接返回失败&lt;/li&gt;
-&lt;li&gt;加锁&lt;/li&gt;
-&lt;li&gt;从当前channel的等待队列上 获取一个等待的goroutine，如果存在，直接将当前数据拷贝到等待的线程中，返回true&lt;/li&gt;
-&lt;li&gt;没有等待的线程，队列未满，直接放置在队列的环形数组中&lt;/li&gt;
-&lt;li&gt;block并且队列已满，挂起当前线程，等待被唤醒&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&#34;数据接收&#34;&gt;数据接收&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;  1
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;  2
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;  3
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;  4
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;  5
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;  6
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;  7
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;  8
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;  9
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 10
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 11
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 12
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 13
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 14
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 15
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 16
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 17
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 18
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 19
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 20
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 21
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 22
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 23
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 24
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 25
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 26
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 27
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 28
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 29
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 30
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 31
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 32
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 33
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 34
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 35
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 36
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 37
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 38
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 39
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 40
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 41
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 42
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 43
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 44
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 45
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 46
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 47
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 48
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 49
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 50
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 51
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 52
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 53
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 54
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 55
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 56
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 57
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 58
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 59
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 60
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 61
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 62
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 63
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 64
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 65
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 66
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 67
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 68
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 69
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 70
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 71
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 72
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 73
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 74
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 75
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 76
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 77
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 78
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 79
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 80
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 81
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 82
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 83
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 84
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 85
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 86
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 87
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 88
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 89
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 90
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 91
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 92
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 93
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 94
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 95
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 96
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 97
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 98
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 99
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;100
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;101
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;102
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;103
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;104
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;105
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;106
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;107
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;108
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;109
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;110
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;111
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;112
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;113
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;114
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;115
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;116
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;117
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;118
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;119
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;120
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;121
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;122
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;123
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;124
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;125
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;126
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;127
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;128
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;129
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;130
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;131
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;132
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;133
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;134
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;135
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;136
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;137
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;138
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;139
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;140
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;141
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;142
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;143
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;144
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;145
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;146
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;147
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;148
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;149
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;150
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;151
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;152
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;153
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;154
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;155
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;156
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;157
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;158
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// runtime.chanrecv1
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;chanrecv1&lt;/span&gt;(c &lt;span style=&#34;color:#555&#34;&gt;*&lt;/span&gt;hchan, elem unsafe.Pointer) {
-	&lt;span style=&#34;color:#c0f&#34;&gt;chanrecv&lt;/span&gt;(c, elem, &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;true&lt;/span&gt;)
-}
-
-&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;chanrecv&lt;/span&gt;(c &lt;span style=&#34;color:#555&#34;&gt;*&lt;/span&gt;hchan, ep unsafe.Pointer, block &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;bool&lt;/span&gt;) (selected, received &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;bool&lt;/span&gt;) {
-	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 删除debug的内容 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// channel 是nil 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; c &lt;span style=&#34;color:#555&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;nil&lt;/span&gt; {
-    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 非block 直接return 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; !block {
-			&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;return&lt;/span&gt;
-		}
-    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 永远挂起当前线程 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#c0f&#34;&gt;gopark&lt;/span&gt;(&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;nil&lt;/span&gt;, &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;nil&lt;/span&gt;, waitReasonChanReceiveNilChan, traceEvGoStop, &lt;span style=&#34;color:#f60&#34;&gt;2&lt;/span&gt;)
-		&lt;span style=&#34;color:#c0f&#34;&gt;throw&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;unreachable&amp;#34;&lt;/span&gt;)
-	}
-
-	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// Fast path: check for failed non-blocking operation without acquiring the lock.
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 非block 并且是空 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 1. 可能已经被关闭 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; !block &lt;span style=&#34;color:#555&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;empty&lt;/span&gt;(c) {
-		&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// After observing that the channel is not ready for receiving, we observe whether the
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// channel is closed.
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;//
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// Reordering of these checks could lead to incorrect behavior when racing with a close.
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// For example, if the channel was open and not empty, was closed, and then drained,
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// reordered reads could incorrectly indicate &amp;#34;open and empty&amp;#34;. To prevent reordering,
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// we use atomic loads for both checks, and rely on emptying and closing to happen in
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// separate critical sections under the same lock.  This assumption fails when closing
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// an unbuffered channel with a blocked send, but that is an error condition anyway.
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; atomic.&lt;span style=&#34;color:#c0f&#34;&gt;Load&lt;/span&gt;(&lt;span style=&#34;color:#555&#34;&gt;&amp;amp;&lt;/span&gt;c.closed) &lt;span style=&#34;color:#555&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt; {
-			&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// Because a channel cannot be reopened, the later observation of the channel
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;			&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// being not closed implies that it was also not closed at the moment of the
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;			&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// first observation. We behave as if we observed the channel at that moment
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;			&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// and report that the receive cannot proceed.
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;			&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;return&lt;/span&gt;
-		}
-		&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// The channel is irreversibly closed. Re-check whether the channel has any pending data
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// to receive, which could have arrived between the empty and closed checks above.
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// Sequential consistency is also required here, when racing with such a send.
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;empty&lt;/span&gt;(c) {
-			&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// The channel is irreversibly closed and empty.
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;			&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; raceenabled {
-				&lt;span style=&#34;color:#c0f&#34;&gt;raceacquire&lt;/span&gt;(c.&lt;span style=&#34;color:#c0f&#34;&gt;raceaddr&lt;/span&gt;())
-			}
-			&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; ep &lt;span style=&#34;color:#555&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;nil&lt;/span&gt; {
-				&lt;span style=&#34;color:#c0f&#34;&gt;typedmemclr&lt;/span&gt;(c.elemtype, ep)
-			}
-			&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;true&lt;/span&gt;, &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;false&lt;/span&gt;
-		}
-	}
-
-	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;var&lt;/span&gt; t0 &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;int64&lt;/span&gt;
-	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; blockprofilerate &amp;gt; &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt; {
-		t0 = &lt;span style=&#34;color:#c0f&#34;&gt;cputicks&lt;/span&gt;()
-	}
-
-  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 加锁 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#c0f&#34;&gt;lock&lt;/span&gt;(&lt;span style=&#34;color:#555&#34;&gt;&amp;amp;&lt;/span&gt;c.lock)
-
-  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// channel 已关闭，并且环形队列里没有元素
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; c.closed &lt;span style=&#34;color:#555&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; c.qcount &lt;span style=&#34;color:#555&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt; {
-		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; raceenabled {
-			&lt;span style=&#34;color:#c0f&#34;&gt;raceacquire&lt;/span&gt;(c.&lt;span style=&#34;color:#c0f&#34;&gt;raceaddr&lt;/span&gt;())
-		}
-    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 从一个已关闭的 channel 执行接收操作，且未忽略返回值
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 那么接收的值将是一个该类型的零值
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#c0f&#34;&gt;unlock&lt;/span&gt;(&lt;span style=&#34;color:#555&#34;&gt;&amp;amp;&lt;/span&gt;c.lock)
-		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; ep &lt;span style=&#34;color:#555&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;nil&lt;/span&gt; {
-      &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// typedmemclr 根据类型清理相应地址的内存
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;			&lt;span style=&#34;color:#c0f&#34;&gt;typedmemclr&lt;/span&gt;(c.elemtype, ep)
-		}
-    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 从一个已关闭的 channel 接收，selected 会返回true
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;true&lt;/span&gt;, &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;false&lt;/span&gt;
-	}
-
-  
-  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 等待发送的队列不为空，优先从等待发送的队列上获取 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 1. buf 已经满了 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 2. 无缓冲型
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; sg &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; c.sendq.&lt;span style=&#34;color:#c0f&#34;&gt;dequeue&lt;/span&gt;(); sg &lt;span style=&#34;color:#555&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;nil&lt;/span&gt; {
-		&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// Found a waiting sender. If buffer is size 0, receive value
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// directly from sender. Otherwise, receive from head of queue
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// and add sender&amp;#39;s value to the tail of the queue (both map to
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// the same buffer slot because the queue is full).
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#c0f&#34;&gt;recv&lt;/span&gt;(c, sg, ep, &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;func&lt;/span&gt;() { &lt;span style=&#34;color:#c0f&#34;&gt;unlock&lt;/span&gt;(&lt;span style=&#34;color:#555&#34;&gt;&amp;amp;&lt;/span&gt;c.lock) }, &lt;span style=&#34;color:#f60&#34;&gt;3&lt;/span&gt;)
-		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;true&lt;/span&gt;, &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;true&lt;/span&gt;
-	}
-
-  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 缓冲型队列 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 从队列中获取一个 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; c.qcount &amp;gt; &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt; {
-		&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// Receive directly from queue
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		qp &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;chanbuf&lt;/span&gt;(c, c.recvx)
-		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; raceenabled {
-			&lt;span style=&#34;color:#c0f&#34;&gt;racenotify&lt;/span&gt;(c, c.recvx, &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;nil&lt;/span&gt;)
-		}
-		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; ep &lt;span style=&#34;color:#555&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;nil&lt;/span&gt; {
-			&lt;span style=&#34;color:#c0f&#34;&gt;typedmemmove&lt;/span&gt;(c.elemtype, ep, qp)
-		}
-		&lt;span style=&#34;color:#c0f&#34;&gt;typedmemclr&lt;/span&gt;(c.elemtype, qp)
-		c.recvx&lt;span style=&#34;color:#555&#34;&gt;++&lt;/span&gt;
-		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; c.recvx &lt;span style=&#34;color:#555&#34;&gt;==&lt;/span&gt; c.dataqsiz {
-			c.recvx = &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt;
-		}
-		c.qcount&lt;span style=&#34;color:#555&#34;&gt;--&lt;/span&gt;
-		&lt;span style=&#34;color:#c0f&#34;&gt;unlock&lt;/span&gt;(&lt;span style=&#34;color:#555&#34;&gt;&amp;amp;&lt;/span&gt;c.lock)
-		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;true&lt;/span&gt;, &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;true&lt;/span&gt;
-	}
-
-	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; !block {
-		&lt;span style=&#34;color:#c0f&#34;&gt;unlock&lt;/span&gt;(&lt;span style=&#34;color:#555&#34;&gt;&amp;amp;&lt;/span&gt;c.lock)
-		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;false&lt;/span&gt;, &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;false&lt;/span&gt;
-	}
-
-  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 没有数据 block
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// no sender available: block on this channel.
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	gp &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;getg&lt;/span&gt;()
-	mysg &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;acquireSudog&lt;/span&gt;()
-	mysg.releasetime = &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt;
-	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; t0 &lt;span style=&#34;color:#555&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt; {
-		mysg.releasetime = &lt;span style=&#34;color:#555&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#f60&#34;&gt;1&lt;/span&gt;
-	}
-	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// No stack splits between assigning elem and enqueuing mysg
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// on gp.waiting where copystack can find it.
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	mysg.elem = ep
-	mysg.waitlink = &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;nil&lt;/span&gt;
-	gp.waiting = mysg
-	mysg.g = gp
-	mysg.isSelect = &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;false&lt;/span&gt;
-	mysg.c = c
-	gp.param = &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;nil&lt;/span&gt;
-  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 将当前线程放入带等待接收的队列 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	c.recvq.&lt;span style=&#34;color:#c0f&#34;&gt;enqueue&lt;/span&gt;(mysg)
-	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// Signal to anyone trying to shrink our stack that we&amp;#39;re about
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// to park on a channel. The window between when this G&amp;#39;s status
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// changes and when we set gp.activeStackChans is not safe for
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// stack shrinking.
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	atomic.&lt;span style=&#34;color:#c0f&#34;&gt;Store8&lt;/span&gt;(&lt;span style=&#34;color:#555&#34;&gt;&amp;amp;&lt;/span&gt;gp.parkingOnChan, &lt;span style=&#34;color:#f60&#34;&gt;1&lt;/span&gt;)
-	&lt;span style=&#34;color:#c0f&#34;&gt;gopark&lt;/span&gt;(chanparkcommit, unsafe.&lt;span style=&#34;color:#c0f&#34;&gt;Pointer&lt;/span&gt;(&lt;span style=&#34;color:#555&#34;&gt;&amp;amp;&lt;/span&gt;c.lock), waitReasonChanReceive, traceEvGoBlockRecv, &lt;span style=&#34;color:#f60&#34;&gt;2&lt;/span&gt;)
-
-	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// someone woke us up
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 被唤醒 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; mysg &lt;span style=&#34;color:#555&#34;&gt;!=&lt;/span&gt; gp.waiting {
-		&lt;span style=&#34;color:#c0f&#34;&gt;throw&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;G waiting list is corrupted&amp;#34;&lt;/span&gt;)
-	}
-	gp.waiting = &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;nil&lt;/span&gt;
-	gp.activeStackChans = &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;false&lt;/span&gt;
-	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; mysg.releasetime &amp;gt; &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt; {
-		&lt;span style=&#34;color:#c0f&#34;&gt;blockevent&lt;/span&gt;(mysg.releasetime&lt;span style=&#34;color:#555&#34;&gt;-&lt;/span&gt;t0, &lt;span style=&#34;color:#f60&#34;&gt;2&lt;/span&gt;)
-	}
-	success &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; mysg.success
-	gp.param = &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;nil&lt;/span&gt;
-	mysg.c = &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;nil&lt;/span&gt;
-	&lt;span style=&#34;color:#c0f&#34;&gt;releaseSudog&lt;/span&gt;(mysg)
-	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;true&lt;/span&gt;, success
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;blockquote&gt;
-&lt;p&gt;总结：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;channel是nil，非block直接返回失败，block时会永远挂起当前线程&lt;/li&gt;
-&lt;li&gt;channel 已关闭，并且度列中没有元素 返回失败&lt;/li&gt;
-&lt;li&gt;等待发送队列不为空，从等待队列上获取一个等待的线程，直接进行数据copy&lt;/li&gt;
-&lt;li&gt;buf未满，直接放置buf中&lt;/li&gt;
-&lt;li&gt;buf已满，挂起当前线程，等待被唤醒&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&#34;close-chan&#34;&gt;close chan&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 1
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 2
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 3
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 4
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 5
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 6
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 7
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 8
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 9
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;10
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;11
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;12
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;13
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;14
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;15
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;16
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;17
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;18
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;19
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;20
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;21
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;22
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;23
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;24
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;25
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;26
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;27
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;28
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;29
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;30
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;31
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;32
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;33
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;34
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;35
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;36
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;37
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;38
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;39
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;40
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;41
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;42
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;43
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;44
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;45
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;46
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;47
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;48
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;49
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;50
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;51
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;52
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;53
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;54
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;55
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;56
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;57
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;58
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;59
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;60
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;61
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;62
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;63
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;64
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;65
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;66
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;67
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;68
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;69
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;70
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;71
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;72
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;73
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;74
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;75
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;76
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;77
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;78
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;closechan&lt;/span&gt;(c &lt;span style=&#34;color:#555&#34;&gt;*&lt;/span&gt;hchan) {
-  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// nil 直接panic 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; c &lt;span style=&#34;color:#555&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;nil&lt;/span&gt; {
-		&lt;span style=&#34;color:#366&#34;&gt;panic&lt;/span&gt;(&lt;span style=&#34;color:#c0f&#34;&gt;plainError&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;close of nil channel&amp;#34;&lt;/span&gt;))
-	}
-
-  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 加锁 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#c0f&#34;&gt;lock&lt;/span&gt;(&lt;span style=&#34;color:#555&#34;&gt;&amp;amp;&lt;/span&gt;c.lock)
-  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 已经被关闭 直接panic 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; c.closed &lt;span style=&#34;color:#555&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt; {
-		&lt;span style=&#34;color:#c0f&#34;&gt;unlock&lt;/span&gt;(&lt;span style=&#34;color:#555&#34;&gt;&amp;amp;&lt;/span&gt;c.lock)
-		&lt;span style=&#34;color:#366&#34;&gt;panic&lt;/span&gt;(&lt;span style=&#34;color:#c0f&#34;&gt;plainError&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;close of closed channel&amp;#34;&lt;/span&gt;))
-	}
-
-	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; raceenabled {
-		callerpc &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;getcallerpc&lt;/span&gt;()
-		&lt;span style=&#34;color:#c0f&#34;&gt;racewritepc&lt;/span&gt;(c.&lt;span style=&#34;color:#c0f&#34;&gt;raceaddr&lt;/span&gt;(), callerpc, &lt;span style=&#34;color:#c0f&#34;&gt;funcPC&lt;/span&gt;(closechan))
-		&lt;span style=&#34;color:#c0f&#34;&gt;racerelease&lt;/span&gt;(c.&lt;span style=&#34;color:#c0f&#34;&gt;raceaddr&lt;/span&gt;())
-	}
-
-  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 标记已经close 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	c.closed = &lt;span style=&#34;color:#f60&#34;&gt;1&lt;/span&gt;
-
-	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;var&lt;/span&gt; glist gList
-
-	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// release all readers
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 释放所有的等待消费的线程 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;for&lt;/span&gt; {
-		sg &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; c.recvq.&lt;span style=&#34;color:#c0f&#34;&gt;dequeue&lt;/span&gt;()
-		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; sg &lt;span style=&#34;color:#555&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;nil&lt;/span&gt; {
-			&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;break&lt;/span&gt;
-		}
-		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; sg.elem &lt;span style=&#34;color:#555&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;nil&lt;/span&gt; {
-			&lt;span style=&#34;color:#c0f&#34;&gt;typedmemclr&lt;/span&gt;(c.elemtype, sg.elem)
-			sg.elem = &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;nil&lt;/span&gt;
-		}
-		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; sg.releasetime &lt;span style=&#34;color:#555&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt; {
-			sg.releasetime = &lt;span style=&#34;color:#c0f&#34;&gt;cputicks&lt;/span&gt;()
-		}
-		gp &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; sg.g
-		gp.param = unsafe.&lt;span style=&#34;color:#c0f&#34;&gt;Pointer&lt;/span&gt;(sg)
-		sg.success = &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;false&lt;/span&gt;
-		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; raceenabled {
-			&lt;span style=&#34;color:#c0f&#34;&gt;raceacquireg&lt;/span&gt;(gp, c.&lt;span style=&#34;color:#c0f&#34;&gt;raceaddr&lt;/span&gt;())
-		}
-		glist.&lt;span style=&#34;color:#c0f&#34;&gt;push&lt;/span&gt;(gp)
-	}
-
-	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// release all writers (they will panic)
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 释放所有的等待发送的线程 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;for&lt;/span&gt; {
-		sg &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; c.sendq.&lt;span style=&#34;color:#c0f&#34;&gt;dequeue&lt;/span&gt;()
-		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; sg &lt;span style=&#34;color:#555&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;nil&lt;/span&gt; {
-			&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;break&lt;/span&gt;
-		}
-    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 会panic 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		sg.elem = &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;nil&lt;/span&gt;
-		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; sg.releasetime &lt;span style=&#34;color:#555&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt; {
-			sg.releasetime = &lt;span style=&#34;color:#c0f&#34;&gt;cputicks&lt;/span&gt;()
-		}
-		gp &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; sg.g
-		gp.param = unsafe.&lt;span style=&#34;color:#c0f&#34;&gt;Pointer&lt;/span&gt;(sg)
-		sg.success = &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;false&lt;/span&gt;
-		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; raceenabled {
-			&lt;span style=&#34;color:#c0f&#34;&gt;raceacquireg&lt;/span&gt;(gp, c.&lt;span style=&#34;color:#c0f&#34;&gt;raceaddr&lt;/span&gt;())
-		}
-		glist.&lt;span style=&#34;color:#c0f&#34;&gt;push&lt;/span&gt;(gp)
-	}
-  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 解锁 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#c0f&#34;&gt;unlock&lt;/span&gt;(&lt;span style=&#34;color:#555&#34;&gt;&amp;amp;&lt;/span&gt;c.lock)
-
-	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// Ready all Gs now that we&amp;#39;ve dropped the channel lock.
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;for&lt;/span&gt; !glist.&lt;span style=&#34;color:#c0f&#34;&gt;empty&lt;/span&gt;() {
-		gp &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; glist.&lt;span style=&#34;color:#c0f&#34;&gt;pop&lt;/span&gt;()
-		gp.schedlink = &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt;
-		&lt;span style=&#34;color:#c0f&#34;&gt;goready&lt;/span&gt;(gp, &lt;span style=&#34;color:#f60&#34;&gt;3&lt;/span&gt;)
-	}
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;blockquote&gt;
-&lt;p&gt;总结:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;关闭一个nil channel 会panic&lt;/li&gt;
-&lt;li&gt;关闭一个已经关闭的channel 会panic&lt;/li&gt;
-&lt;li&gt;所有等待消费的线程不会panic&lt;/li&gt;
-&lt;li&gt;所有等待发送的线程会panic&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;从一个有缓冲的 channel 里读数据，当 channel 被关闭，依然能读出有效值。只有当返回的 ok 为 false 时，读出的数据才是无效的&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;</description>
-      
-    </item>
-    
-    <item>
-      <title>边界检查消除优化</title>
-      <link>https://veixuan.github.io/%E8%BE%B9%E7%95%8C%E6%A3%80%E6%9F%A5%E6%B6%88%E9%99%A4%E4%BC%98%E5%8C%96.html</link>
-      <pubDate>Sun, 27 Dec 2020 15:36:55 +0800</pubDate>
-      
-      <guid>https://veixuan.github.io/%E8%BE%B9%E7%95%8C%E6%A3%80%E6%9F%A5%E6%B6%88%E9%99%A4%E4%BC%98%E5%8C%96.html</guid>
-      
-        <description>&lt;p&gt;使用消除边界检查进行性能优化&lt;/p&gt;
-&lt;h2 id=&#34;什么是边界检查&#34;&gt;什么是边界检查&lt;/h2&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;code&gt;golang&lt;/code&gt;运行时会进行使用的下标是否越界，如果越界，就会发生panic，以防止破坏内存安全。&lt;/p&gt;
-&lt;p&gt;这样的检查称为边界检查，全称是&lt;code&gt;bounds check&lt;/code&gt;。目的是使得代码可以更安全的运行，同时也会导致性能受损。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&#34;边界检查消除&#34;&gt;边界检查消除&lt;/h2&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;code&gt;bounds check elimination&lt;/code&gt;，简称 &lt;code&gt;bce&lt;/code&gt;,这个是编译器层的优化，同时，我们可以在代码层做一些优化来进行边界消除检查。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&#34;定位哪些需要做bce&#34;&gt;定位哪些需要做&lt;code&gt;bce&lt;/code&gt;&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 1
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 2
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 3
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 4
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 5
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 6
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 7
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 8
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 9
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;10
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;f2&lt;/span&gt;(s []&lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;int&lt;/span&gt;) {
-	_ = s[&lt;span style=&#34;color:#f60&#34;&gt;2&lt;/span&gt;]  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 需要边界检查 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	_ = s[&lt;span style=&#34;color:#f60&#34;&gt;1&lt;/span&gt;]  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 不需要  因为上一行的下标大于当前 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	_ = s[&lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt;]  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 不需要  同理
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	_ = s[&lt;span style=&#34;color:#f60&#34;&gt;100&lt;/span&gt;] &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 需要边界检查 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;}
-&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 编译 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// go build -gcflags=&amp;#34;-d=ssa/check_bce/debug=1&amp;#34;
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;.&lt;span style=&#34;color:#555&#34;&gt;/&lt;/span&gt;main.&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;go&lt;/span&gt;:&lt;span style=&#34;color:#f60&#34;&gt;16&lt;/span&gt;:&lt;span style=&#34;color:#f60&#34;&gt;7&lt;/span&gt;: Found IsInBounds
-.&lt;span style=&#34;color:#555&#34;&gt;/&lt;/span&gt;main.&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;go&lt;/span&gt;:&lt;span style=&#34;color:#f60&#34;&gt;19&lt;/span&gt;:&lt;span style=&#34;color:#f60&#34;&gt;7&lt;/span&gt;: Found IsInBounds
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;ssa-是什么&#34;&gt;&lt;code&gt;ssa&lt;/code&gt; 是什么&lt;/h2&gt;
-&lt;blockquote&gt;
-&lt;p&gt;全称是 &lt;code&gt;static single-assignment&lt;/code&gt;  是一种IR中间表示代码，用于保证每个变量只被赋值一次，用于帮助编译器优化的算法&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&#34;什么情况下边界检查消除&#34;&gt;什么情况下边界检查消除&lt;/h2&gt;
-&lt;h3 id=&#34;重复检测&#34;&gt;重复检测&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 1
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 2
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 3
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 4
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 5
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 6
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 7
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 8
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 9
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;10
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;var&lt;/span&gt; s[]&lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;int&lt;/span&gt;
-
-_ = s[i] &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 插入边界检测
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;_ = s[i] &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 相同索引，不需要
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;
-_ = s[:i] &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 插入边界检测
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;_ = s[:i] &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 不需要
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;
-_ = s[i:] &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 插入边界检测
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;_ = s[i:] &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 不需要
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;h3 id=&#34;常量大小&#34;&gt;常量大小&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;3
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;4
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;5
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;6
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 访问常量大小的数组 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 计算索引的结果是一个固定常亮时 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;
-&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;var&lt;/span&gt; arr[&lt;span style=&#34;color:#f60&#34;&gt;10&lt;/span&gt;]&lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;int&lt;/span&gt;
-_ = arr[i&lt;span style=&#34;color:#555&#34;&gt;&amp;amp;&lt;/span&gt;&lt;span style=&#34;color:#f60&#34;&gt;5&lt;/span&gt;] &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 因为i&amp;amp;5 &amp;lt;= 5 &amp;lt; 17，边界检测消除
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;_ = arr[i&lt;span style=&#34;color:#555&#34;&gt;%&lt;/span&gt;&lt;span style=&#34;color:#f60&#34;&gt;5&lt;/span&gt;] &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 需要边界检查 
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;h3 id=&#34;常量索引&#34;&gt;常量索引&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;var&lt;/span&gt; arr[&lt;span style=&#34;color:#f60&#34;&gt;10&lt;/span&gt;]&lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;int&lt;/span&gt;
-_ = arr[&lt;span style=&#34;color:#f60&#34;&gt;5&lt;/span&gt;]   &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 无需边界检查
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;h3 id=&#34;迭代索引&#34;&gt;迭代索引&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;3
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;4
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;5
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;6
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;7
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-GO&#34; data-lang=&#34;GO&#34;&gt;	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt;; i &amp;lt; &lt;span style=&#34;color:#366&#34;&gt;len&lt;/span&gt;(s); i&lt;span style=&#34;color:#555&#34;&gt;++&lt;/span&gt; {
-		_ = s[i]   &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 无需边界检查 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	}
-
-	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;range&lt;/span&gt; s {
-		_ = s[i] &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 无需边界检查
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	}
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;h3 id=&#34;递减的索引&#34;&gt;递减的索引&lt;/h3&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;3
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;4
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;_, _, _ = arr[&lt;span style=&#34;color:#f60&#34;&gt;3&lt;/span&gt;], arr[&lt;span style=&#34;color:#f60&#34;&gt;2&lt;/span&gt;], arr[&lt;span style=&#34;color:#f60&#34;&gt;1&lt;/span&gt;] &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 一个边界检测
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;
-_ = arr[&lt;span style=&#34;color:#f60&#34;&gt;3&lt;/span&gt;] &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 边界检查 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;_, _, _ = arr[&lt;span style=&#34;color:#f60&#34;&gt;3&lt;/span&gt;], arr[&lt;span style=&#34;color:#f60&#34;&gt;2&lt;/span&gt;], arr[&lt;span style=&#34;color:#f60&#34;&gt;1&lt;/span&gt;]  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 无需边界检查 
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;人肉消除&#34;&gt;人肉消除&lt;/h2&gt;
-&lt;p&gt;参考  &lt;a href=&#34;https://gfw.go101.org/article/tips.html#make-use-of-bce&#34;&gt;https://gfw.go101.org/article/tips.html#make-use-of-bce&lt;/a&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 1
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 2
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 3
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 4
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 5
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 6
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 7
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 8
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 9
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;10
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;11
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;12
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;13
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;14
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;15
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;16
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;17
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;18
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;19
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;20
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;21
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;22
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;23
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;24
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;25
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;CounterSameByteOld&lt;/span&gt;(x, y &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;string&lt;/span&gt;) &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;int&lt;/span&gt; {
-	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#366&#34;&gt;len&lt;/span&gt;(x) &amp;gt; &lt;span style=&#34;color:#366&#34;&gt;len&lt;/span&gt;(y) {
-		x, y = y, x
-	}
-	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt;; i &amp;lt; &lt;span style=&#34;color:#366&#34;&gt;len&lt;/span&gt;(x); i&lt;span style=&#34;color:#555&#34;&gt;++&lt;/span&gt; {
-		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; x[i] &lt;span style=&#34;color:#555&#34;&gt;!=&lt;/span&gt; y[i] {
-			&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;return&lt;/span&gt; i
-		}
-	}
-	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#366&#34;&gt;len&lt;/span&gt;(x)
-}
-
-&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;CounterSameByteNew&lt;/span&gt;(x, y &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;string&lt;/span&gt;) &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;int&lt;/span&gt; {
-	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#366&#34;&gt;len&lt;/span&gt;(x) &amp;gt; &lt;span style=&#34;color:#366&#34;&gt;len&lt;/span&gt;(y) {
-		x, y = y, x
-	}
-	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; &lt;span style=&#34;color:#366&#34;&gt;len&lt;/span&gt;(x) &lt;span style=&#34;color:#555&#34;&gt;&amp;lt;=&lt;/span&gt; &lt;span style=&#34;color:#366&#34;&gt;len&lt;/span&gt;(y) { &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 插入判断
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt;; i &amp;lt; &lt;span style=&#34;color:#366&#34;&gt;len&lt;/span&gt;(x); i&lt;span style=&#34;color:#555&#34;&gt;++&lt;/span&gt; {
-			&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; x[i] &lt;span style=&#34;color:#555&#34;&gt;!=&lt;/span&gt; y[i] { &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 边界检查消除 这个编译器不够智能啊 。。
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;				&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;return&lt;/span&gt; i
-			}
-		}
-	}
-	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#366&#34;&gt;len&lt;/span&gt;(x)
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;实际&lt;code&gt;benchmark&lt;/code&gt;结果优化&lt;strong&gt;不明显&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 1
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 2
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 3
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 4
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 5
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 6
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 7
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 8
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 9
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;10
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;11
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;12
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;13
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;14
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;15
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;16
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;17
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;18
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;19
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;20
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;21
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;22
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;23
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;24
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;25
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;26
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;var&lt;/span&gt; (
-	x = strings.&lt;span style=&#34;color:#c0f&#34;&gt;Repeat&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;ancdefgklshjafklhjfhwksfalkjlkdjlkdfshal&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#f60&#34;&gt;100&lt;/span&gt;)
-	y = strings.&lt;span style=&#34;color:#c0f&#34;&gt;Repeat&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;ancdefgklshjafklhjfhwksfalkjlkdjlkdfshal&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#f60&#34;&gt;99&lt;/span&gt;)
-)
-
-&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;BenchmarkCounterSameByteOld&lt;/span&gt;(b &lt;span style=&#34;color:#555&#34;&gt;*&lt;/span&gt;testing.B) {
-	b.&lt;span style=&#34;color:#c0f&#34;&gt;ResetTimer&lt;/span&gt;()
-	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt;; i &amp;lt; b.N; i&lt;span style=&#34;color:#555&#34;&gt;++&lt;/span&gt; {
-		&lt;span style=&#34;color:#c0f&#34;&gt;CounterSameByteOld&lt;/span&gt;(x, y)
-	}
-}
-
-&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;BenchmarkCounterSameByteNew&lt;/span&gt;(b &lt;span style=&#34;color:#555&#34;&gt;*&lt;/span&gt;testing.B) {
-	b.&lt;span style=&#34;color:#c0f&#34;&gt;ResetTimer&lt;/span&gt;()
-	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;for&lt;/span&gt; i &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt;; i &amp;lt; b.N; i&lt;span style=&#34;color:#555&#34;&gt;++&lt;/span&gt; {
-		&lt;span style=&#34;color:#c0f&#34;&gt;CounterSameByteNew&lt;/span&gt;(x, y)
-	}
-}
-
-&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// go test -bench . -benchmem  -benchtime=15s -run=none
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;goos: darwin
-goarch: amd64
-pkg: http_with_pprof
-cpu: &lt;span style=&#34;color:#c0f&#34;&gt;Intel&lt;/span&gt;(R) &lt;span style=&#34;color:#c0f&#34;&gt;Core&lt;/span&gt;(TM) i9&lt;span style=&#34;color:#555&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#f60&#34;&gt;9880&lt;/span&gt;H CPU &lt;span style=&#34;color:#a00;background-color:#faa&#34;&gt;@&lt;/span&gt; &lt;span style=&#34;color:#f60&#34;&gt;2.30&lt;/span&gt;GHz
-BenchmarkCounterSameByteOld&lt;span style=&#34;color:#555&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#f60&#34;&gt;16&lt;/span&gt;    	&lt;span style=&#34;color:#f60&#34;&gt;10079185&lt;/span&gt;	      &lt;span style=&#34;color:#f60&#34;&gt;1808&lt;/span&gt; ns&lt;span style=&#34;color:#555&#34;&gt;/&lt;/span&gt;op	       &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt; B&lt;span style=&#34;color:#555&#34;&gt;/&lt;/span&gt;op	       &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt; allocs&lt;span style=&#34;color:#555&#34;&gt;/&lt;/span&gt;op
-BenchmarkCounterSameByteNew&lt;span style=&#34;color:#555&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#f60&#34;&gt;16&lt;/span&gt;    	&lt;span style=&#34;color:#f60&#34;&gt;10117064&lt;/span&gt;	      &lt;span style=&#34;color:#f60&#34;&gt;1765&lt;/span&gt; ns&lt;span style=&#34;color:#555&#34;&gt;/&lt;/span&gt;op	       &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt; B&lt;span style=&#34;color:#555&#34;&gt;/&lt;/span&gt;op	       &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt; allocs&lt;span style=&#34;color:#555&#34;&gt;/&lt;/span&gt;op
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;</description>
       
     </item>
     

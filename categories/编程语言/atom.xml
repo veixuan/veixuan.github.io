@@ -6,7 +6,16 @@
     <description>Recent content in 编程语言 on 我自倾怀 君且随意</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 27 Dec 2020 15:36:55 +0800</lastBuildDate><atom:link href="https://veixuan.github.io/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/atom.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 03 Jan 2021 00:38:19 +0800</lastBuildDate><atom:link href="https://veixuan.github.io/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/atom.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>智能指针</title>
+      <link>https://veixuan.github.io/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88.html</link>
+      <pubDate>Sun, 03 Jan 2021 00:38:19 +0800</pubDate>
+      
+      <guid>https://veixuan.github.io/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88.html</guid>
+      <description>&lt;p&gt;&lt;code&gt;c++&lt;/code&gt;中智能指针的基本使用&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>边界检查消除优化</title>
       <link>https://veixuan.github.io/%E8%BE%B9%E7%95%8C%E6%A3%80%E6%9F%A5%E6%B6%88%E9%99%A4%E4%BC%98%E5%8C%96.html</link>
@@ -23,15 +32,6 @@
       
       <guid>https://veixuan.github.io/websocket.html</guid>
       <description>&lt;p&gt;&lt;code&gt;golang&lt;/code&gt;中&lt;code&gt;websocket&lt;/code&gt;的基本使用&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>golang http server的基本姿势</title>
-      <link>https://veixuan.github.io/httpserver.html</link>
-      <pubDate>Sat, 26 Dec 2020 11:13:11 +0800</pubDate>
-      
-      <guid>https://veixuan.github.io/httpserver.html</guid>
-      <description>&lt;p&gt;&lt;code&gt;golang&lt;/code&gt;中标准库&lt;code&gt;http server&lt;/code&gt;的使用和实现&lt;/p&gt;</description>
     </item>
     
   </channel>
