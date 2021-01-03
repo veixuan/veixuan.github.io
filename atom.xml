@@ -248,20 +248,338 @@ ints = &lt;span style=&#34;color:#366&#34;&gt;append&lt;/span&gt;(ints, &lt;span
 &lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;4
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// for range 
-&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;
-
-&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// for range 
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;for&lt;/span&gt; index, value &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;range&lt;/span&gt; ints {
+		
+	}
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;h3 id=&#34;扩容&#34;&gt;扩容&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;  1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;  2
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;  3
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;  4
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;  5
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;  6
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;  7
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;  8
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;  9
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 10
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 11
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 12
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 13
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 14
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 15
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 16
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 17
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 18
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 19
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 20
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 21
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 22
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 23
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 24
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 25
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 26
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 27
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 28
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 29
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 30
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 31
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 32
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 33
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 34
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 35
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 36
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 37
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 38
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 39
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 40
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 41
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 42
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 43
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 44
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 45
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 46
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 47
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 48
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 49
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 50
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 51
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 52
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 53
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 54
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 55
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 56
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 57
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 58
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 59
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 60
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 61
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 62
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 63
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 64
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 65
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 66
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 67
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 68
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 69
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 70
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 71
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 72
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 73
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 74
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 75
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 76
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 77
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 78
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 79
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 80
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 81
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 82
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 83
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 84
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 85
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 86
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 87
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 88
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 89
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 90
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 91
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 92
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 93
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 94
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 95
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 96
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 97
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 98
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 99
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;100
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;101
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;102
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;103
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;104
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;105
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;106
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;107
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;108
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;109
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;110
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;111
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;112
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;113
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;114
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;115
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;116
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;117
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;118
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;119
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;120
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;121
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;122
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;123
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;124
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;125
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;126
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;127
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;128
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;129
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;130
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;131
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;132
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;133
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;134
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;135
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;136
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;137
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;138
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;139
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// runtime.growslice
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// et slice中元素的类型
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// old 旧的slice 
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// cap 扩容需要的最小容量
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;growslice&lt;/span&gt;(et &lt;span style=&#34;color:#555&#34;&gt;*&lt;/span&gt;_type, old slice, cap &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;int&lt;/span&gt;) slice {
+	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; raceenabled {
+		callerpc &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;getcallerpc&lt;/span&gt;()
+		&lt;span style=&#34;color:#c0f&#34;&gt;racereadrangepc&lt;/span&gt;(old.array, &lt;span style=&#34;color:#366&#34;&gt;uintptr&lt;/span&gt;(old.len&lt;span style=&#34;color:#555&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#366&#34;&gt;int&lt;/span&gt;(et.size)), callerpc, &lt;span style=&#34;color:#c0f&#34;&gt;funcPC&lt;/span&gt;(growslice))
+	}
+	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; msanenabled {
+		&lt;span style=&#34;color:#c0f&#34;&gt;msanread&lt;/span&gt;(old.array, &lt;span style=&#34;color:#366&#34;&gt;uintptr&lt;/span&gt;(old.len&lt;span style=&#34;color:#555&#34;&gt;*&lt;/span&gt;&lt;span style=&#34;color:#366&#34;&gt;int&lt;/span&gt;(et.size)))
+	}
+
+	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; cap &amp;lt; old.cap {
+		&lt;span style=&#34;color:#366&#34;&gt;panic&lt;/span&gt;(&lt;span style=&#34;color:#c0f&#34;&gt;errorString&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;growslice: cap out of range&amp;#34;&lt;/span&gt;))
+	}
+
+	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; et.size &lt;span style=&#34;color:#555&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt; {
+		&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// append should not create a slice with nil pointer but non-zero len.
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// We assume that append doesn&amp;#39;t need to preserve old.array in this case.
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;return&lt;/span&gt; slice{unsafe.&lt;span style=&#34;color:#c0f&#34;&gt;Pointer&lt;/span&gt;(&lt;span style=&#34;color:#555&#34;&gt;&amp;amp;&lt;/span&gt;zerobase), old.len, cap}
+	}
+
+	newcap &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; old.cap
+	doublecap &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; newcap &lt;span style=&#34;color:#555&#34;&gt;+&lt;/span&gt; newcap
+	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; cap &amp;gt; doublecap {
+		newcap = cap
+	} &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;else&lt;/span&gt; {
+		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; old.cap &amp;lt; &lt;span style=&#34;color:#f60&#34;&gt;1024&lt;/span&gt; {
+			newcap = doublecap
+		} &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;else&lt;/span&gt; {
+			&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// Check 0 &amp;lt; newcap to detect overflow
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;			&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// and prevent an infinite loop.
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;			&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;for&lt;/span&gt; &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt; &amp;lt; newcap &lt;span style=&#34;color:#555&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; newcap &amp;lt; cap {
+				newcap &lt;span style=&#34;color:#555&#34;&gt;+=&lt;/span&gt; newcap &lt;span style=&#34;color:#555&#34;&gt;/&lt;/span&gt; &lt;span style=&#34;color:#f60&#34;&gt;4&lt;/span&gt;
+			}
+			&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// Set newcap to the requested cap when
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;			&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// the newcap calculation overflowed.
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;			&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; newcap &lt;span style=&#34;color:#555&#34;&gt;&amp;lt;=&lt;/span&gt; &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt; {
+				newcap = cap
+			}
+		}
+	}
+
+  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 如果旧的cap &amp;lt; 1024 则新的cap = old.cap * 2 
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 如果旧的cap &amp;gt;= 1024 则新的cap =  old.cap * 1.25 
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;  
+  &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 计算内存对齐
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;var&lt;/span&gt; overflow &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;bool&lt;/span&gt;
+	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;var&lt;/span&gt; lenmem, newlenmem, capmem &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;uintptr&lt;/span&gt;
+	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// Specialize for common values of et.size.
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// For 1 we don&amp;#39;t need any division/multiplication.
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// For sys.PtrSize, compiler will optimize division/multiplication into a shift by a constant.
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// For powers of 2, use a variable shift.
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;switch&lt;/span&gt; {
+	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;case&lt;/span&gt; et.size &lt;span style=&#34;color:#555&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#f60&#34;&gt;1&lt;/span&gt;:
+		lenmem = &lt;span style=&#34;color:#366&#34;&gt;uintptr&lt;/span&gt;(old.len)
+		newlenmem = &lt;span style=&#34;color:#366&#34;&gt;uintptr&lt;/span&gt;(cap)
+		capmem = &lt;span style=&#34;color:#c0f&#34;&gt;roundupsize&lt;/span&gt;(&lt;span style=&#34;color:#366&#34;&gt;uintptr&lt;/span&gt;(newcap))
+		overflow = &lt;span style=&#34;color:#366&#34;&gt;uintptr&lt;/span&gt;(newcap) &amp;gt; maxAlloc
+		newcap = &lt;span style=&#34;color:#366&#34;&gt;int&lt;/span&gt;(capmem)
+    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// et中的元素大小是1，
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;case&lt;/span&gt; et.size &lt;span style=&#34;color:#555&#34;&gt;==&lt;/span&gt; sys.PtrSize:
+    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// lenmem = 6 * 8 = 48 
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		lenmem = &lt;span style=&#34;color:#366&#34;&gt;uintptr&lt;/span&gt;(old.len) &lt;span style=&#34;color:#555&#34;&gt;*&lt;/span&gt; sys.PtrSize
+    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// bewlenmem = 6 * 2 * 8 = 96 
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		newlenmem = &lt;span style=&#34;color:#366&#34;&gt;uintptr&lt;/span&gt;(cap) &lt;span style=&#34;color:#555&#34;&gt;*&lt;/span&gt; sys.PtrSize
+    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// capmem = roundupsize(96) = 96 （两次从数组中计算出来 ）
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		capmem = &lt;span style=&#34;color:#c0f&#34;&gt;roundupsize&lt;/span&gt;(&lt;span style=&#34;color:#366&#34;&gt;uintptr&lt;/span&gt;(newcap) &lt;span style=&#34;color:#555&#34;&gt;*&lt;/span&gt; sys.PtrSize)
+    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// false 
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		overflow = &lt;span style=&#34;color:#366&#34;&gt;uintptr&lt;/span&gt;(newcap) &amp;gt; maxAlloc&lt;span style=&#34;color:#555&#34;&gt;/&lt;/span&gt;sys.PtrSize
+    &lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// newcap = 96 / 8 = 12
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		newcap = &lt;span style=&#34;color:#366&#34;&gt;int&lt;/span&gt;(capmem &lt;span style=&#34;color:#555&#34;&gt;/&lt;/span&gt; sys.PtrSize)
+	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;isPowerOfTwo&lt;/span&gt;(et.size):
+		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;var&lt;/span&gt; shift &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;uintptr&lt;/span&gt;
+		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; sys.PtrSize &lt;span style=&#34;color:#555&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#f60&#34;&gt;8&lt;/span&gt; {
+			&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// Mask shift for better code generation.
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;			shift = &lt;span style=&#34;color:#366&#34;&gt;uintptr&lt;/span&gt;(sys.&lt;span style=&#34;color:#c0f&#34;&gt;Ctz64&lt;/span&gt;(&lt;span style=&#34;color:#366&#34;&gt;uint64&lt;/span&gt;(et.size))) &lt;span style=&#34;color:#555&#34;&gt;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#f60&#34;&gt;63&lt;/span&gt;
+		} &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;else&lt;/span&gt; {
+			shift = &lt;span style=&#34;color:#366&#34;&gt;uintptr&lt;/span&gt;(sys.&lt;span style=&#34;color:#c0f&#34;&gt;Ctz32&lt;/span&gt;(&lt;span style=&#34;color:#366&#34;&gt;uint32&lt;/span&gt;(et.size))) &lt;span style=&#34;color:#555&#34;&gt;&amp;amp;&lt;/span&gt; &lt;span style=&#34;color:#f60&#34;&gt;31&lt;/span&gt;
+		}
+		lenmem = &lt;span style=&#34;color:#366&#34;&gt;uintptr&lt;/span&gt;(old.len) &lt;span style=&#34;color:#555&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; shift
+		newlenmem = &lt;span style=&#34;color:#366&#34;&gt;uintptr&lt;/span&gt;(cap) &lt;span style=&#34;color:#555&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; shift
+		capmem = &lt;span style=&#34;color:#c0f&#34;&gt;roundupsize&lt;/span&gt;(&lt;span style=&#34;color:#366&#34;&gt;uintptr&lt;/span&gt;(newcap) &lt;span style=&#34;color:#555&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; shift)
+		overflow = &lt;span style=&#34;color:#366&#34;&gt;uintptr&lt;/span&gt;(newcap) &amp;gt; (maxAlloc &lt;span style=&#34;color:#555&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt; shift)
+		newcap = &lt;span style=&#34;color:#366&#34;&gt;int&lt;/span&gt;(capmem &lt;span style=&#34;color:#555&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt; shift)
+	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;default&lt;/span&gt;:
+		lenmem = &lt;span style=&#34;color:#366&#34;&gt;uintptr&lt;/span&gt;(old.len) &lt;span style=&#34;color:#555&#34;&gt;*&lt;/span&gt; et.size
+		newlenmem = &lt;span style=&#34;color:#366&#34;&gt;uintptr&lt;/span&gt;(cap) &lt;span style=&#34;color:#555&#34;&gt;*&lt;/span&gt; et.size
+		capmem, overflow = math.&lt;span style=&#34;color:#c0f&#34;&gt;MulUintptr&lt;/span&gt;(et.size, &lt;span style=&#34;color:#366&#34;&gt;uintptr&lt;/span&gt;(newcap))
+		capmem = &lt;span style=&#34;color:#c0f&#34;&gt;roundupsize&lt;/span&gt;(capmem)
+		newcap = &lt;span style=&#34;color:#366&#34;&gt;int&lt;/span&gt;(capmem &lt;span style=&#34;color:#555&#34;&gt;/&lt;/span&gt; et.size)
+	}
+
+	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// The check of overflow in addition to capmem &amp;gt; maxAlloc is needed
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// to prevent an overflow which can be used to trigger a segfault
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// on 32bit architectures with this example program:
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;//
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// type T [1&amp;lt;&amp;lt;27 + 1]int64
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;//
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// var d T
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// var s []T
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;//
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// func main() {
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;//   s = append(s, d, d, d, d)
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;//   print(len(s), &amp;#34;\n&amp;#34;)
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// }
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; overflow &lt;span style=&#34;color:#555&#34;&gt;||&lt;/span&gt; capmem &amp;gt; maxAlloc {
+		&lt;span style=&#34;color:#366&#34;&gt;panic&lt;/span&gt;(&lt;span style=&#34;color:#c0f&#34;&gt;errorString&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;growslice: cap out of range&amp;#34;&lt;/span&gt;))
+	}
+
+	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;var&lt;/span&gt; p unsafe.Pointer
+	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; et.ptrdata &lt;span style=&#34;color:#555&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt; {
+		p = &lt;span style=&#34;color:#c0f&#34;&gt;mallocgc&lt;/span&gt;(capmem, &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;nil&lt;/span&gt;, &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;false&lt;/span&gt;)
+		&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// The append() that calls growslice is going to overwrite from old.len to cap (which will be the new length).
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// Only clear the part that will not be overwritten.
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		&lt;span style=&#34;color:#c0f&#34;&gt;memclrNoHeapPointers&lt;/span&gt;(&lt;span style=&#34;color:#c0f&#34;&gt;add&lt;/span&gt;(p, newlenmem), capmem&lt;span style=&#34;color:#555&#34;&gt;-&lt;/span&gt;newlenmem)
+	} &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;else&lt;/span&gt; {
+		&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// Note: can&amp;#39;t use rawmem (which avoids zeroing of memory), because then GC can scan uninitialized memory.
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;		p = &lt;span style=&#34;color:#c0f&#34;&gt;mallocgc&lt;/span&gt;(capmem, et, &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;true&lt;/span&gt;)
+		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; lenmem &amp;gt; &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; writeBarrier.enabled {
+			&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// Only shade the pointers in old.array since we know the destination slice p
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;			&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// only contains nil pointers because it has been cleared during alloc.
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;			&lt;span style=&#34;color:#c0f&#34;&gt;bulkBarrierPreWriteSrcOnly&lt;/span&gt;(&lt;span style=&#34;color:#366&#34;&gt;uintptr&lt;/span&gt;(p), &lt;span style=&#34;color:#366&#34;&gt;uintptr&lt;/span&gt;(old.array), lenmem&lt;span style=&#34;color:#555&#34;&gt;-&lt;/span&gt;et.size&lt;span style=&#34;color:#555&#34;&gt;+&lt;/span&gt;et.ptrdata)
+		}
+	}
+	&lt;span style=&#34;color:#c0f&#34;&gt;memmove&lt;/span&gt;(p, old.array, lenmem)
+
+	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;return&lt;/span&gt; slice{p, old.len, newcap}
+}
+
+&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 测试代码 
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;
+	ints &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#366&#34;&gt;make&lt;/span&gt;([]&lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;int&lt;/span&gt;, &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt;, &lt;span style=&#34;color:#f60&#34;&gt;6&lt;/span&gt;)
+	ints = &lt;span style=&#34;color:#366&#34;&gt;append&lt;/span&gt;(ints, &lt;span style=&#34;color:#f60&#34;&gt;1&lt;/span&gt;, &lt;span style=&#34;color:#f60&#34;&gt;2&lt;/span&gt;, &lt;span style=&#34;color:#f60&#34;&gt;3&lt;/span&gt;, &lt;span style=&#34;color:#f60&#34;&gt;4&lt;/span&gt;, &lt;span style=&#34;color:#f60&#34;&gt;5&lt;/span&gt;, &lt;span style=&#34;color:#f60&#34;&gt;6&lt;/span&gt;)
+	log.&lt;span style=&#34;color:#c0f&#34;&gt;Printf&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;ints len %d cap %d&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#366&#34;&gt;len&lt;/span&gt;(ints), &lt;span style=&#34;color:#366&#34;&gt;cap&lt;/span&gt;(ints))
+&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 触发扩容 
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	ints = &lt;span style=&#34;color:#366&#34;&gt;append&lt;/span&gt;(ints, &lt;span style=&#34;color:#f60&#34;&gt;7&lt;/span&gt;)
+	log.&lt;span style=&#34;color:#c0f&#34;&gt;Printf&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;ints len %d cap %d&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#366&#34;&gt;len&lt;/span&gt;(ints), &lt;span style=&#34;color:#366&#34;&gt;cap&lt;/span&gt;(ints))
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;说明:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;参数分别是slice的类型、slice、扩容需要的最小容量，当前cap=2、len=2，再append 一个元素，那么扩容需要的最小容量是5&lt;/li&gt;
+&lt;li&gt;如果旧的cap &amp;lt; 1024 则新的cap = old.cap * 2&lt;/li&gt;
+&lt;li&gt;如果旧的cap &amp;gt;= 1024 则新的cap =  old.cap * 1.25&lt;/li&gt;
+&lt;li&gt;最终新的cap大小还需要做一次内存对齐之后确定&lt;/li&gt;
+&lt;li&gt;参考上述的测试代码 计算过程&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;如果扩容之后，还没有触及原数组的容量，那么，切片中的指针指向的位置，就还是原数组，如果扩容之后，超过了原数组的容量，那么，Go就会开辟一块新的内存，把原来的值拷贝过来，这种情况丝毫不会影响到原数组&lt;/strong&gt;&lt;/p&gt;
 &lt;h3 id=&#34;克隆&#34;&gt;克隆&lt;/h3&gt;
-&lt;h3 id=&#34;元素更新&#34;&gt;元素更新&lt;/h3&gt;
-&lt;h2 id=&#34;reslice&#34;&gt;&lt;code&gt;reslice&lt;/code&gt;&lt;/h2&gt;
-&lt;h2 id=&#34;比较&#34;&gt;比较&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;	newInts &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#366&#34;&gt;make&lt;/span&gt;([]&lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;int&lt;/span&gt;, &lt;span style=&#34;color:#366&#34;&gt;len&lt;/span&gt;(ints))
+	&lt;span style=&#34;color:#366&#34;&gt;copy&lt;/span&gt;(newInts, ints)
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;元素更新&#34;&gt;元素更新&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 删除 第三个元素 
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;ints = &lt;span style=&#34;color:#366&#34;&gt;append&lt;/span&gt;(ints[&lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt;:&lt;span style=&#34;color:#f60&#34;&gt;2&lt;/span&gt;], ints[&lt;span style=&#34;color:#f60&#34;&gt;3&lt;/span&gt;:]&lt;span style=&#34;color:#555&#34;&gt;...&lt;/span&gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;比较&#34;&gt;比较&lt;/h2&gt;
+&lt;p&gt;不能比较  &lt;code&gt;golang&lt;/code&gt;中包含 &lt;code&gt;slice&lt;/code&gt;、&lt;code&gt;func&lt;/code&gt;、&lt;code&gt;map&lt;/code&gt; 等类型 不支持&lt;code&gt;comare&lt;/code&gt;&lt;/p&gt;
 &lt;h2 id=&#34;nil-slice-vs-empty-slice&#34;&gt;&lt;code&gt;nil slice&lt;/code&gt; vs &lt;code&gt;empty slice&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;nil slice中的底层指针也是nil，empty slice 中的底层指针不为nil。使用时没有区别，都可以在append时初始化。&lt;/p&gt;
 &lt;h2 id=&#34;是否线程安全&#34;&gt;是否线程安全&lt;/h2&gt;
-&lt;h2 id=&#34;性能优化及陷阱&#34;&gt;性能优化及陷阱&lt;/h2&gt;</description>
+&lt;p&gt;非线程安全，但是不会像map一样直接panic。在多线程环境中，使用加锁保证线程安全&lt;/p&gt;
+&lt;h2 id=&#34;性能优化&#34;&gt;性能优化&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;提前预分配长度&lt;/strong&gt;&lt;/p&gt;</description>
       
     </item>
     
