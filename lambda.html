@@ -12,16 +12,16 @@
     <meta name="author" content="Neo" />
     <meta name="keywords" content="广告引擎, golang" />
     <meta name="og:site_name" content="我自倾怀 君且随意" /><meta property="og:type" content="article" />
-    <meta property="title" content="智能指针 - 我自倾怀 君且随意">
-    <meta property="og:title" content="智能指针 - 我自倾怀 君且随意">
-    <meta property="twitter:title" content="智能指针 - 我自倾怀 君且随意">
-    <meta name="description" content="c&#43;&#43;中智能指针的基本使用">
-    <meta property="og:description" content="c&#43;&#43;中智能指针的基本使用">
-    <meta property="twitter:description" content="c&#43;&#43;中智能指针的基本使用">
+    <meta property="title" content="Lambda表达式 - 我自倾怀 君且随意">
+    <meta property="og:title" content="Lambda表达式 - 我自倾怀 君且随意">
+    <meta property="twitter:title" content="Lambda表达式 - 我自倾怀 君且随意">
+    <meta name="description" content="c&#43;&#43; 11的新特性，支持函数式编程。">
+    <meta property="og:description" content="c&#43;&#43; 11的新特性，支持函数式编程。">
+    <meta property="twitter:description" content="c&#43;&#43; 11的新特性，支持函数式编程。">
     <meta property="og:type" content="article">
-    <title>智能指针 - 我自倾怀 君且随意</title>
+    <title>Lambda表达式 - 我自倾怀 君且随意</title>
 
-    <meta property="og:url" content="https://veixuan.github.io/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88.html" />
+    <meta property="og:url" content="https://veixuan.github.io/lambda.html" />
 
     
     <meta property="og:image" content="/head.jpeg">
@@ -81,17 +81,17 @@
         
         <div>
     <h1 class="font-bold break-normal text-gray-800 pt-2 pb-2 text-2xl lg:text-3xl">
-        <a href="https://veixuan.github.io/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88.html" title="智能指针">智能指针</a>
+        <a href="https://veixuan.github.io/lambda.html" title="Lambda表达式">Lambda表达式</a>
     </h1>
     <p class="mb-1 text-sm text-gray-500">
-        <span title=" 2021-01-03 00:38:19 &#43;0800">
-            <i class="iconfont icon-calendar" aria-hidden="true"></i> 03 Jan 2021
+        <span title=" 2021-02-23 23:19:30 &#43;0800">
+            <i class="iconfont icon-calendar" aria-hidden="true"></i> 23 Feb 2021
         </span>
 
         <span class="hidden xl:inline-block">
             |
             <i class="iconfont icon-book"></i>
-            552 字
+            680 字
         </span>
 
         <span class="hidden xl:inline-block">
@@ -109,22 +109,13 @@
     <div class="sticky text-sm" style="top:6em;" id="menu-content">
         <nav id="TableOfContents">
   <ul>
-    <li><a href="#raii">RAII</a></li>
-    <li><a href="#比较成熟的代表---智能指针">比较成熟的代表 -&gt; 智能指针</a></li>
-    <li><a href="#使用demo-">使用<code>demo </code></a></li>
-    <li><a href="#unique_ptr"><code>unique_ptr</code></a>
-      <ul>
-        <li><a href="#如何创建">如何创建</a></li>
-        <li><a href="#无法直接拷贝">无法直接拷贝</a></li>
-      </ul>
-    </li>
-    <li><a href="#shared_ptr"><code>shared_ptr</code></a>
-      <ul>
-        <li><a href="#如何创建-1">如何创建</a></li>
-        <li><a href="#所有权">所有权</a></li>
-      </ul>
-    </li>
-    <li><a href="#weak_ptr"><code>weak_ptr</code></a></li>
+    <li><a href="#说明">说明</a></li>
+    <li><a href="#定义格式">定义格式</a></li>
+    <li><a href="#实际的案例">实际的案例</a></li>
+    <li><a href="#变量捕获">变量捕获</a></li>
+    <li><a href="#修改捕获变量">修改捕获变量</a></li>
+    <li><a href="#参数说明">参数说明</a></li>
+    <li><a href="#lambda-表达式作为函数参数">lambda 表达式作为函数参数</a></li>
   </ul>
 </nav>
     </div>
@@ -132,22 +123,111 @@
         </div> 
 
         <div class="post-content">
-            <p><code>c++</code>中智能指针的基本使用</p>
-<h2 id="raii">RAII</h2>
+            <p>c++ 11的新特性，支持函数式编程。</p>
+<h2 id="说明">说明</h2>
 <blockquote>
-<p>resource acquisition is initialization</p>
-<p>资源分配的过程中进行资源管理</p>
-<p>核心思想是 依托栈机制、析构函数来对所有的资源进行管理，包括堆内存</p>
+<div class="highlight"><div style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">匿名函数。可以像对象一样使用，也可以和函数一样进行求值运算
+</code></pre></td></tr></table>
+</div>
+</div></blockquote>
+<h2 id="定义格式">定义格式</h2>
+<div class="highlight"><div style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">[capture list] (params list) <span style="color:#069;font-weight:bold">mutable</span> exception<span style="color:#555">-&gt;</span> <span style="color:#069;font-weight:bold">return</span> type { 
+  function body 
+}
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>说明</p>
 </blockquote>
-<h2 id="比较成熟的代表---智能指针">比较成熟的代表 -&gt; 智能指针</h2>
 <ul>
-<li><input checked="" disabled="" type="checkbox"> <code>auto_ptr</code> 已废弃</li>
-<li><input checked="" disabled="" type="checkbox"> <code>unique_ptr</code> -&gt; single ownership</li>
-<li><input checked="" disabled="" type="checkbox"> <code>shared_ptr</code> -&gt; shared ownership</li>
-<li><input checked="" disabled="" type="checkbox"> <code>weak_prt</code> -&gt; temp (no ownership)</li>
+<li><code>capture list</code> 捕获的外部变量列表</li>
+<li><code>params list</code> 形参列表</li>
+<li><code>mutable</code> 指示符，用来标识是否可以修改外部的变量</li>
+<li><code>exception</code> 异常设定</li>
+<li><code>return type</code> 返回值类型</li>
+<li><code>function body </code> 函数体</li>
 </ul>
-<p>对应的头文件 <code>&lt;memory&gt;</code></p>
-<h2 id="使用demo-">使用<code>demo </code></h2>
+<p>其中<code>mutable</code>、<code>exception</code>、<code>return type</code> 可以按照实际的情况写，不是必须的。即便省略了return type，编译器可以根据函数体重是否有return语句来推断会lambda表达式的返回值。</p>
+<h2 id="实际的案例">实际的案例</h2>
+<div class="highlight"><div style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#09f;font-style:italic">// 排序 
+</span><span style="color:#09f;font-style:italic"></span><span style="color:#078;font-weight:bold">void</span> <span style="color:#c0f">sort_vec</span>(std<span style="color:#555">::</span>vector<span style="color:#555">&lt;</span><span style="color:#078;font-weight:bold">int</span><span style="color:#555">&gt;</span> <span style="color:#555">&amp;</span>input) {
+	std<span style="color:#555">::</span>sort(input.begin(), input.end(), [](<span style="color:#078;font-weight:bold">int</span> a, <span style="color:#078;font-weight:bold">int</span> b) <span style="color:#555">-&gt;</span> <span style="color:#078;font-weight:bold">bool</span> {
+		<span style="color:#069;font-weight:bold">return</span> a <span style="color:#555">&lt;</span> b;
+	});
+}
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="变量捕获">变量捕获</h2>
+<table>
+<thead>
+<tr>
+<th>格式</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>[]</code></td>
+<td>不捕获任何外部变量</td>
+</tr>
+<tr>
+<td><code>[&amp;]</code></td>
+<td>以引用的方式 捕获所有的外部变量</td>
+</tr>
+<tr>
+<td><code>[=]</code></td>
+<td>以值的方式，铺货所有的外部变量</td>
+</tr>
+<tr>
+<td><code>[this]</code></td>
+<td>以值的方式，捕获this指针</td>
+</tr>
+<tr>
+<td><code>[p1,p2,...]</code></td>
+<td>以值的方式，捕获p1/p2等后续的其它参数</td>
+</tr>
+<tr>
+<td><code>[&amp;p1,&amp;p2]</code></td>
+<td>以引用的方式，捕获p1/p2变量</td>
+</tr>
+<tr>
+<td><code>[=, &amp;x]</code></td>
+<td>变量x以引用形式捕获，其余变量以传值形式捕获</td>
+</tr>
+<tr>
+<td><code>[&amp;, x]</code></td>
+<td>变量x以值的形式捕获，其余变量以引用形式捕获</td>
+</tr>
+<tr>
+<td><code>[&amp;p1,p2]</code></td>
+<td>P1以引用的方式捕获，p2以值的方式捕获</td>
+</tr>
+</tbody>
+</table>
+<h2 id="修改捕获变量">修改捕获变量</h2>
+<p>如果以值传递参数，默认是不能修改传递的参数的。但是可以加上<code>mutable</code>关键字，来修改捕获的外部值参数</p>
 <div class="highlight"><div style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -167,102 +247,38 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#078;font-weight:bold">void</span> <span style="color:#c0f">bar</span>(std<span style="color:#555">::</span>unique_ptr<span style="color:#555">&lt;</span>entity<span style="color:#555">&gt;</span> entity) {
-	<span style="color:#09f;font-style:italic">// bar 持有entity的所有权
-</span><span style="color:#09f;font-style:italic"></span>	<span style="color:#09f;font-style:italic">// entity会被自动释放
-</span><span style="color:#09f;font-style:italic"></span>}
-
-<span style="color:#078;font-weight:bold">void</span> <span style="color:#c0f">foo</span>() {
-	<span style="color:#09f;font-style:italic">// 创建一个unique指针
-</span><span style="color:#09f;font-style:italic"></span>	<span style="color:#09f;font-style:italic">// 当前是foo函数拥有entity的所有权
-</span><span style="color:#09f;font-style:italic"></span>	<span style="color:#069;font-weight:bold">auto</span> entity_ptr <span style="color:#555">=</span> std<span style="color:#555">::</span>make_unique<span style="color:#555">&lt;</span>entity<span style="color:#555">&gt;</span>();
-	entity_ptr<span style="color:#555">-&gt;</span>setName(<span style="color:#c30">&#34;张三&#34;</span>);
-	entity_ptr<span style="color:#555">-&gt;</span>setAge(<span style="color:#f60">20</span>);
-	entity_ptr<span style="color:#555">-&gt;</span>setSex(<span style="color:#f60">1</span>);
+<pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">	<span style="color:#078;font-weight:bold">int</span> sum <span style="color:#555">=</span> <span style="color:#f60">0</span>;
 	
-	<span style="color:#09f;font-style:italic">// unique_ptr 是智能单个对象持有所有权
-</span><span style="color:#09f;font-style:italic"></span>	<span style="color:#09f;font-style:italic">// 转移时 需要将对象的所有权转移
-</span><span style="color:#09f;font-style:italic"></span>	bar(std<span style="color:#555">::</span>move(entity_ptr));
-}
+	<span style="color:#09f;font-style:italic">// sum是引用传递 可以修改
+</span><span style="color:#09f;font-style:italic"></span>	<span style="color:#069;font-weight:bold">auto</span> sumer <span style="color:#555">=</span> [<span style="color:#555">&amp;</span>sum](<span style="color:#078;font-weight:bold">int</span> x) {
+		sum <span style="color:#555">+=</span> x;
+	};
+	
+	std<span style="color:#555">::</span>for_each(src.begin(), src.end(), sumer);
+	std<span style="color:#555">::</span>cout <span style="color:#555">&lt;&lt;</span> <span style="color:#c30">&#34;sum = &#34;</span> <span style="color:#555">&lt;&lt;</span> sum <span style="color:#555">&lt;&lt;</span> std<span style="color:#555">::</span>endl;
+	
+
+	<span style="color:#09f;font-style:italic">// 引用所有外部变量
+</span><span style="color:#09f;font-style:italic"></span>	<span style="color:#069;font-weight:bold">auto</span> to_str <span style="color:#555">=</span> [<span style="color:#555">&amp;</span>]() <span style="color:#555">-&gt;</span> std<span style="color:#555">::</span>string {
+		<span style="color:#069;font-weight:bold">return</span> std<span style="color:#555">::</span>to_string(sum);
+	};
+	
+	std<span style="color:#555">::</span>cout <span style="color:#555">&lt;&lt;</span> to_str();
+
+
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="unique_ptr"><code>unique_ptr</code></h2>
-<h3 id="如何创建">如何创建</h3>
-<ul>
-<li>使用裸指针</li>
-</ul>
-<div class="highlight"><div style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">	<span style="color:#09f;font-style:italic">// 使用裸指针 
-</span><span style="color:#09f;font-style:italic"></span>	std<span style="color:#555">::</span>unique_ptr<span style="color:#555">&lt;</span>entity<span style="color:#555">&gt;</span> e1(<span style="color:#069;font-weight:bold">new</span> entity());
-</code></pre></td></tr></table>
-</div>
-</div><ul>
-<li><code>make_unique</code> 推荐的做法</li>
-</ul>
-<div class="highlight"><div style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#069;font-weight:bold">auto</span> e2 <span style="color:#555">=</span> std<span style="color:#555">::</span>make_unique<span style="color:#555">&lt;</span>entity<span style="color:#555">&gt;</span>();
-</code></pre></td></tr></table>
-</div>
-</div><h3 id="无法直接拷贝">无法直接拷贝</h3>
-<blockquote>
-<p>由于是独占，无法直接进行拷贝</p>
-<p>需要拷贝时 使用std::move</p>
-</blockquote>
-<div class="highlight"><div style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">	<span style="color:#09f;font-style:italic">// e2 不在使用
-</span><span style="color:#09f;font-style:italic"></span>	<span style="color:#09f;font-style:italic">// 转移之后  e2 变成空指针 
-</span><span style="color:#09f;font-style:italic"></span>	<span style="color:#069;font-weight:bold">auto</span> e3 <span style="color:#555">=</span> std<span style="color:#555">::</span>move(e2);
-</code></pre></td></tr></table>
-</div>
-</div><h2 id="shared_ptr"><code>shared_ptr</code></h2>
-<h3 id="如何创建-1">如何创建</h3>
-<div class="highlight"><div style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#09f;font-style:italic">// 1. 使用裸指针
-</span><span style="color:#09f;font-style:italic"></span>	std<span style="color:#555">::</span>shared_ptr<span style="color:#555">&lt;</span>entity<span style="color:#555">&gt;</span> es0(<span style="color:#069;font-weight:bold">new</span> entity());
-<span style="color:#09f;font-style:italic">// 2. 使用make_shared
-</span><span style="color:#09f;font-style:italic"></span>	std<span style="color:#555">::</span>shared_ptr<span style="color:#555">&lt;</span>entity<span style="color:#555">&gt;</span> es1 <span style="color:#555">=</span> std<span style="color:#555">::</span>make_shared<span style="color:#555">&lt;</span>entity<span style="color:#555">&gt;</span>();
-<span style="color:#09f;font-style:italic">// 3. 拷贝构造
-</span><span style="color:#09f;font-style:italic"></span>std<span style="color:#555">::</span>shared_ptr<span style="color:#555">&lt;</span>entity<span style="color:#555">&gt;</span> es2 <span style="color:#555">=</span> es0;
-</code></pre></td></tr></table>
-</div>
-</div><h3 id="所有权">所有权</h3>
-<blockquote>
-<p>每次拷贝构造 引用计数+1</p>
-<p>使用std::move 引用计数不变</p>
-<p>函数传参 引用计数+1</p>
-</blockquote>
-<h2 id="weak_ptr"><code>weak_ptr</code></h2>
-<blockquote>
-<p>没有所有权的概念</p>
-<p>必须要转换成 shared_ptr 才能使用</p>
-<p>使用方法比较特殊</p>
-</blockquote>
+</div><h2 id="参数说明">参数说明</h2>
+<ol>
+<li>参数列表不支持默认参数</li>
+<li>不支持可变参数</li>
+<li>所有参数要有参数名</li>
+</ol>
+<h2 id="lambda-表达式作为函数参数">lambda 表达式作为函数参数</h2>
 <div class="highlight"><div style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -275,18 +291,22 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">	<span style="color:#09f;font-style:italic">// 使用weak_ptr 必须从shared_ptr 构造
-</span><span style="color:#09f;font-style:italic"></span>	<span style="color:#069;font-weight:bold">auto</span> sp1 <span style="color:#555">=</span> std<span style="color:#555">::</span>make_shared<span style="color:#555">&lt;</span>entity<span style="color:#555">&gt;</span>();
-	<span style="color:#09f;font-style:italic">// 可以从shared_ptr 构造 
-</span><span style="color:#09f;font-style:italic"></span>	std<span style="color:#555">::</span>weak_ptr<span style="color:#555">&lt;</span>entity<span style="color:#555">&gt;</span> tp1 <span style="color:#555">=</span> sp1;
+<pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#09f;font-style:italic">// std::function&lt;std::string ()&gt;
+</span><span style="color:#09f;font-style:italic">// 代表一个 返回值是 string，无参数列表的函数
+</span><span style="color:#09f;font-style:italic"></span><span style="color:#078;font-weight:bold">void</span> <span style="color:#c0f">exec_lambda_func</span>(std<span style="color:#555">::</span>function<span style="color:#555">&lt;</span>std<span style="color:#555">::</span>string()<span style="color:#555">&gt;</span> <span style="color:#069;font-weight:bold">const</span> <span style="color:#555">&amp;</span>f) {
+	std<span style="color:#555">::</span>cout <span style="color:#555">&lt;&lt;</span> <span style="color:#c30">&#34;exec &#34;</span> <span style="color:#555">&lt;&lt;</span> f() <span style="color:#555">&lt;&lt;</span> std<span style="color:#555">::</span>endl;
+}
 
-	<span style="color:#09f;font-style:italic">// 使用
-</span><span style="color:#09f;font-style:italic"></span>	<span style="color:#069;font-weight:bold">if</span> (std<span style="color:#555">::</span>shared_ptr<span style="color:#555">&lt;</span>entity<span style="color:#555">&gt;</span> tp2 <span style="color:#555">=</span> tp1.lock()) {
-		<span style="color:#09f;font-style:italic">// todo
-</span><span style="color:#09f;font-style:italic"></span>		<span style="color:#09f;font-style:italic">// tp2.do()
-</span><span style="color:#09f;font-style:italic"></span>	}
+	<span style="color:#09f;font-style:italic">// 引用所有外部变量
+</span><span style="color:#09f;font-style:italic"></span>	<span style="color:#069;font-weight:bold">auto</span> to_str <span style="color:#555">=</span> [<span style="color:#555">&amp;</span>]() <span style="color:#555">-&gt;</span> std<span style="color:#555">::</span>string {
+		<span style="color:#069;font-weight:bold">return</span> std<span style="color:#555">::</span>to_string(sum);
+	};
+	
+	exec_lambda_func(to_str);
 </code></pre></td></tr></table>
 </div>
 </div>
@@ -317,7 +337,7 @@
             </li>
             <li style="word-break:break-all">
                 <strong>原文链接：</strong>
-                <a href="https://veixuan.github.io/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88.html">https://veixuan.github.io/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88.html</a>
+                <a href="https://veixuan.github.io/lambda.html">https://veixuan.github.io/lambda.html</a>
             </li>
             <li>
                 <strong>版权声明：</strong>本作品采用
@@ -334,8 +354,12 @@
         
         <div class="text-base md:text-sm text-gray-500 pt-6">
                 <a class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 hover:bg-gray-300"
-                    href="https://veixuan.github.io//tags/c&#43;&#43;.html">
-                    #c&#43;&#43;
+                    href="https://veixuan.github.io//tags/cpp.html">
+                    #cpp
+                </a>
+                <a class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 hover:bg-gray-300"
+                    href="https://veixuan.github.io//tags/popular.html">
+                    #popular
                 </a>
                                     
             </div>
@@ -371,6 +395,8 @@
 <div class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
     <h2 class="font-sans font-bold break-normal text-gray-700 px-2 pb-3 text-xl">相关文章</h2>
     
+    <li><a href="/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88.html" class="underline text-orange-600">智能指针</a></li>
+    
     <li><a href="/slice.html" class="underline text-orange-600">slice</a></li>
     
     <li><a href="/channel_plus.html" class="underline text-orange-600">channle的使用场景</a></li>
@@ -378,8 +404,6 @@
     <li><a href="/channel.html" class="underline text-orange-600">channel</a></li>
     
     <li><a href="/%E8%BE%B9%E7%95%8C%E6%A3%80%E6%9F%A5%E6%B6%88%E9%99%A4%E4%BC%98%E5%8C%96.html" class="underline text-orange-600">边界检查消除优化</a></li>
-    
-    <li><a href="/%E5%8F%8C%E5%A1%94%E6%A8%A1%E5%9E%8B.html" class="underline text-orange-600">双塔模型</a></li>
     
 </div>
 
@@ -498,22 +522,13 @@
     <div class="sticky text-sm" style="top:6em;" id="menu-content">
         <nav id="TableOfContents">
   <ul>
-    <li><a href="#raii">RAII</a></li>
-    <li><a href="#比较成熟的代表---智能指针">比较成熟的代表 -&gt; 智能指针</a></li>
-    <li><a href="#使用demo-">使用<code>demo </code></a></li>
-    <li><a href="#unique_ptr"><code>unique_ptr</code></a>
-      <ul>
-        <li><a href="#如何创建">如何创建</a></li>
-        <li><a href="#无法直接拷贝">无法直接拷贝</a></li>
-      </ul>
-    </li>
-    <li><a href="#shared_ptr"><code>shared_ptr</code></a>
-      <ul>
-        <li><a href="#如何创建-1">如何创建</a></li>
-        <li><a href="#所有权">所有权</a></li>
-      </ul>
-    </li>
-    <li><a href="#weak_ptr"><code>weak_ptr</code></a></li>
+    <li><a href="#说明">说明</a></li>
+    <li><a href="#定义格式">定义格式</a></li>
+    <li><a href="#实际的案例">实际的案例</a></li>
+    <li><a href="#变量捕获">变量捕获</a></li>
+    <li><a href="#修改捕获变量">修改捕获变量</a></li>
+    <li><a href="#参数说明">参数说明</a></li>
+    <li><a href="#lambda-表达式作为函数参数">lambda 表达式作为函数参数</a></li>
   </ul>
 </nav>
     </div>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>cpp on 我自倾怀 君且随意</title>
+    <link>https://veixuan.github.io/categories/cpp.html</link>
+    <description>Recent content in cpp on 我自倾怀 君且随意</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 23 Feb 2021 23:19:30 +0800</lastBuildDate><atom:link href="https://veixuan.github.io/categories/cpp/atom.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Lambda表达式</title>
+      <link>https://veixuan.github.io/lambda.html</link>
+      <pubDate>Tue, 23 Feb 2021 23:19:30 +0800</pubDate>
+      
+      <guid>https://veixuan.github.io/lambda.html</guid>
+      <description>&lt;p&gt;c++ 11的新特性，支持函数式编程。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

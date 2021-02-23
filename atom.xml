@@ -6,10 +6,207 @@
     <description>Recent content on 我自倾怀 君且随意</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 03 Jan 2021 00:38:19 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 23 Feb 2021 23:19:30 +0800</lastBuildDate>
     
         <atom:link href="https://veixuan.github.io/atom.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Lambda表达式</title>
+      <link>https://veixuan.github.io/lambda.html</link>
+      <pubDate>Tue, 23 Feb 2021 23:19:30 +0800</pubDate>
+      
+      <guid>https://veixuan.github.io/lambda.html</guid>
+      
+        <description>&lt;p&gt;c++ 11的新特性，支持函数式编程。&lt;/p&gt;
+&lt;h2 id=&#34;说明&#34;&gt;说明&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;匿名函数。可以像对象一样使用，也可以和函数一样进行求值运算
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/blockquote&gt;
+&lt;h2 id=&#34;定义格式&#34;&gt;定义格式&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;[capture list] (params list) &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;mutable&lt;/span&gt; exception&lt;span style=&#34;color:#555&#34;&gt;-&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;return&lt;/span&gt; type { 
+  function body 
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;说明&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;capture list&lt;/code&gt; 捕获的外部变量列表&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;params list&lt;/code&gt; 形参列表&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;mutable&lt;/code&gt; 指示符，用来标识是否可以修改外部的变量&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;exception&lt;/code&gt; 异常设定&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;return type&lt;/code&gt; 返回值类型&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;function body &lt;/code&gt; 函数体&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;其中&lt;code&gt;mutable&lt;/code&gt;、&lt;code&gt;exception&lt;/code&gt;、&lt;code&gt;return type&lt;/code&gt; 可以按照实际的情况写，不是必须的。即便省略了return type，编译器可以根据函数体重是否有return语句来推断会lambda表达式的返回值。&lt;/p&gt;
+&lt;h2 id=&#34;实际的案例&#34;&gt;实际的案例&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;2
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;3
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;4
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;5
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 排序 
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;sort_vec&lt;/span&gt;(std&lt;span style=&#34;color:#555&#34;&gt;::&lt;/span&gt;vector&lt;span style=&#34;color:#555&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;int&lt;/span&gt;&lt;span style=&#34;color:#555&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;&amp;amp;&lt;/span&gt;input) {
+	std&lt;span style=&#34;color:#555&#34;&gt;::&lt;/span&gt;sort(input.begin(), input.end(), [](&lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;int&lt;/span&gt; a, &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;int&lt;/span&gt; b) &lt;span style=&#34;color:#555&#34;&gt;-&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;bool&lt;/span&gt; {
+		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;return&lt;/span&gt; a &lt;span style=&#34;color:#555&#34;&gt;&amp;lt;&lt;/span&gt; b;
+	});
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;变量捕获&#34;&gt;变量捕获&lt;/h2&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;格式&lt;/th&gt;
+&lt;th&gt;说明&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;[]&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;不捕获任何外部变量&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;[&amp;amp;]&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;以引用的方式 捕获所有的外部变量&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;[=]&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;以值的方式，铺货所有的外部变量&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;[this]&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;以值的方式，捕获this指针&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;[p1,p2,...]&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;以值的方式，捕获p1/p2等后续的其它参数&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;[&amp;amp;p1,&amp;amp;p2]&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;以引用的方式，捕获p1/p2变量&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;[=, &amp;amp;x]&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;变量x以引用形式捕获，其余变量以传值形式捕获&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;[&amp;amp;, x]&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;变量x以值的形式捕获，其余变量以引用形式捕获&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;[&amp;amp;p1,p2]&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;P1以引用的方式捕获，p2以值的方式捕获&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;修改捕获变量&#34;&gt;修改捕获变量&lt;/h2&gt;
+&lt;p&gt;如果以值传递参数，默认是不能修改传递的参数的。但是可以加上&lt;code&gt;mutable&lt;/code&gt;关键字，来修改捕获的外部值参数&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 2
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 3
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 4
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 5
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 6
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 7
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 8
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 9
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;10
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;11
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;12
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;13
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;14
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;15
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;16
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;17
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;18
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;19
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;	&lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;int&lt;/span&gt; sum &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#f60&#34;&gt;0&lt;/span&gt;;
+	
+	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// sum是引用传递 可以修改
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;auto&lt;/span&gt; sumer &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; [&lt;span style=&#34;color:#555&#34;&gt;&amp;amp;&lt;/span&gt;sum](&lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;int&lt;/span&gt; x) {
+		sum &lt;span style=&#34;color:#555&#34;&gt;+=&lt;/span&gt; x;
+	};
+	
+	std&lt;span style=&#34;color:#555&#34;&gt;::&lt;/span&gt;for_each(src.begin(), src.end(), sumer);
+	std&lt;span style=&#34;color:#555&#34;&gt;::&lt;/span&gt;cout &lt;span style=&#34;color:#555&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;sum = &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; sum &lt;span style=&#34;color:#555&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; std&lt;span style=&#34;color:#555&#34;&gt;::&lt;/span&gt;endl;
+	
+
+	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 引用所有外部变量
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;auto&lt;/span&gt; to_str &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; [&lt;span style=&#34;color:#555&#34;&gt;&amp;amp;&lt;/span&gt;]() &lt;span style=&#34;color:#555&#34;&gt;-&amp;gt;&lt;/span&gt; std&lt;span style=&#34;color:#555&#34;&gt;::&lt;/span&gt;string {
+		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;return&lt;/span&gt; std&lt;span style=&#34;color:#555&#34;&gt;::&lt;/span&gt;to_string(sum);
+	};
+	
+	std&lt;span style=&#34;color:#555&#34;&gt;::&lt;/span&gt;cout &lt;span style=&#34;color:#555&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; to_str();
+
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;参数说明&#34;&gt;参数说明&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;参数列表不支持默认参数&lt;/li&gt;
+&lt;li&gt;不支持可变参数&lt;/li&gt;
+&lt;li&gt;所有参数要有参数名&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;lambda-表达式作为函数参数&#34;&gt;lambda 表达式作为函数参数&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
+&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 1
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 2
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 3
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 4
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 5
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 6
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 7
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 8
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 9
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;10
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;11
+&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;12
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
+&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-c++&#34; data-lang=&#34;c++&#34;&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// std::function&amp;lt;std::string ()&amp;gt;
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 代表一个 返回值是 string，无参数列表的函数
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;exec_lambda_func&lt;/span&gt;(std&lt;span style=&#34;color:#555&#34;&gt;::&lt;/span&gt;function&lt;span style=&#34;color:#555&#34;&gt;&amp;lt;&lt;/span&gt;std&lt;span style=&#34;color:#555&#34;&gt;::&lt;/span&gt;string()&lt;span style=&#34;color:#555&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;&amp;amp;&lt;/span&gt;f) {
+	std&lt;span style=&#34;color:#555&#34;&gt;::&lt;/span&gt;cout &lt;span style=&#34;color:#555&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;exec &amp;#34;&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; f() &lt;span style=&#34;color:#555&#34;&gt;&amp;lt;&amp;lt;&lt;/span&gt; std&lt;span style=&#34;color:#555&#34;&gt;::&lt;/span&gt;endl;
+}
+
+	&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 引用所有外部变量
+&lt;/span&gt;&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;&lt;/span&gt;	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;auto&lt;/span&gt; to_str &lt;span style=&#34;color:#555&#34;&gt;=&lt;/span&gt; [&lt;span style=&#34;color:#555&#34;&gt;&amp;amp;&lt;/span&gt;]() &lt;span style=&#34;color:#555&#34;&gt;-&amp;gt;&lt;/span&gt; std&lt;span style=&#34;color:#555&#34;&gt;::&lt;/span&gt;string {
+		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;return&lt;/span&gt; std&lt;span style=&#34;color:#555&#34;&gt;::&lt;/span&gt;to_string(sum);
+	};
+	
+	exec_lambda_func(to_str);
+&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
+      
+    </item>
     
     <item>
       <title>智能指针</title>
@@ -580,132 +777,6 @@ ints = &lt;span style=&#34;color:#366&#34;&gt;append&lt;/span&gt;(ints, &lt;span
 &lt;p&gt;非线程安全，但是不会像map一样直接panic。在多线程环境中，使用加锁保证线程安全&lt;/p&gt;
 &lt;h2 id=&#34;性能优化&#34;&gt;性能优化&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;提前预分配长度&lt;/strong&gt;&lt;/p&gt;</description>
-      
-    </item>
-    
-    <item>
-      <title>channle的使用场景</title>
-      <link>https://veixuan.github.io/channel_plus.html</link>
-      <pubDate>Mon, 28 Dec 2020 00:01:37 +0800</pubDate>
-      
-      <guid>https://veixuan.github.io/channel_plus.html</guid>
-      
-        <description>&lt;p&gt;&lt;code&gt;channel&lt;/code&gt;的使用案例&lt;/p&gt;
-&lt;h2 id=&#34;信号传递&#34;&gt;信号传递&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 1
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 2
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 3
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 4
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 5
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 6
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 7
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 8
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 9
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;10
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;	sigs &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#366&#34;&gt;make&lt;/span&gt;(&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;chan&lt;/span&gt; os.Signal, &lt;span style=&#34;color:#f60&#34;&gt;1&lt;/span&gt;)
-	signal.&lt;span style=&#34;color:#c0f&#34;&gt;Notify&lt;/span&gt;(sigs, syscall.SIGHUP, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT)
-	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;select&lt;/span&gt; {
-	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;case&lt;/span&gt; sg &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;&amp;lt;-&lt;/span&gt;sigs:
-		log.&lt;span style=&#34;color:#c0f&#34;&gt;Printf&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;shutdown with signal %v&amp;#34;&lt;/span&gt;, sg)
-		log.&lt;span style=&#34;color:#c0f&#34;&gt;Printf&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;will exit in five seconds ...&amp;#34;&lt;/span&gt;)
-		time.&lt;span style=&#34;color:#c0f&#34;&gt;Sleep&lt;/span&gt;(time.Second &lt;span style=&#34;color:#555&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#f60&#34;&gt;5&lt;/span&gt;)
-	}
-
-&lt;span style=&#34;color:#09f;font-style:italic&#34;&gt;// 可以控制进程在退出之前做一些收尾工作 
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;超时控制&#34;&gt;超时控制&lt;/h2&gt;
-&lt;blockquote&gt;
-&lt;p&gt;和timer搭配一起用&lt;/p&gt;
-&lt;p&gt;当然有更优雅的实现方式&lt;code&gt;contextwithtimeout&lt;/code&gt; 这里只是举例 也可以实现类似功能&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 1
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 2
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 3
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 4
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 5
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 6
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 7
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 8
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 9
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;10
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;11
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;12
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;13
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;14
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;15
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;16
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;17
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;18
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;19
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;20
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;21
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;Get&lt;/span&gt;(url &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;string&lt;/span&gt;, timeout time.Duration) (status &lt;span style=&#34;color:#078;font-weight:bold&#34;&gt;int&lt;/span&gt;) {
-	done &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; &lt;span style=&#34;color:#366&#34;&gt;make&lt;/span&gt;(&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;chan&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;struct&lt;/span&gt;{})
-	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;go&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;func&lt;/span&gt;() {
-		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;defer&lt;/span&gt; &lt;span style=&#34;color:#366&#34;&gt;close&lt;/span&gt;(done)
-		resp, err &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; http.&lt;span style=&#34;color:#c0f&#34;&gt;Get&lt;/span&gt;(url)
-		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; err &lt;span style=&#34;color:#555&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;nil&lt;/span&gt; {
-			status = &lt;span style=&#34;color:#555&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#f60&#34;&gt;1&lt;/span&gt;
-		}
-		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;if&lt;/span&gt; resp &lt;span style=&#34;color:#555&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;nil&lt;/span&gt; {
-			status = resp.StatusCode
-			resp.Body.&lt;span style=&#34;color:#c0f&#34;&gt;Close&lt;/span&gt;()
-		}
-	}()
-
-	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;select&lt;/span&gt; {
-	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;&amp;lt;-&lt;/span&gt;done:
-		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;return&lt;/span&gt;
-	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;&amp;lt;-&lt;/span&gt;time.&lt;span style=&#34;color:#c0f&#34;&gt;After&lt;/span&gt;(timeout):
-		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;return&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#f60&#34;&gt;100&lt;/span&gt;
-	}
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;定时任务&#34;&gt;定时任务&lt;/h2&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;
-&lt;table style=&#34;border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;&#34;&gt;&lt;tr&gt;&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 1
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 2
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 3
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 4
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 5
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 6
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 7
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 8
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt; 9
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;10
-&lt;/span&gt;&lt;span style=&#34;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f&#34;&gt;11
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td style=&#34;vertical-align:top;padding:0;margin:0;border:0;;width:100%&#34;&gt;
-&lt;pre style=&#34;background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;func&lt;/span&gt; &lt;span style=&#34;color:#c0f&#34;&gt;Loop&lt;/span&gt;() {
-	ticker &lt;span style=&#34;color:#555&#34;&gt;:=&lt;/span&gt; time.&lt;span style=&#34;color:#c0f&#34;&gt;Tick&lt;/span&gt;(&lt;span style=&#34;color:#f60&#34;&gt;1&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;*&lt;/span&gt; time.Second)
-	&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;go&lt;/span&gt; &lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;func&lt;/span&gt;() {
-		&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;for&lt;/span&gt; {
-			&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;select&lt;/span&gt; {
-			&lt;span style=&#34;color:#069;font-weight:bold&#34;&gt;case&lt;/span&gt; &lt;span style=&#34;color:#555&#34;&gt;&amp;lt;-&lt;/span&gt;ticker:
-				log.&lt;span style=&#34;color:#c0f&#34;&gt;Printf&lt;/span&gt;(&lt;span style=&#34;color:#c30&#34;&gt;&amp;#34;now is %v&amp;#34;&lt;/span&gt;, time.&lt;span style=&#34;color:#c0f&#34;&gt;Now&lt;/span&gt;().&lt;span style=&#34;color:#c0f&#34;&gt;String&lt;/span&gt;())
-			}
-		}
-	}()
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;消息传递&#34;&gt;消息传递&lt;/h2&gt;
-&lt;blockquote&gt;
-&lt;p&gt;可以实现类似java 中future的功能&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&#34;控制并发&#34;&gt;控制并发&lt;/h2&gt;
-&lt;p&gt;用chan控制go routine的数量，当队列处理不过来时，直接丢弃&lt;/p&gt;</description>
       
     </item>
     

@@ -6,7 +6,16 @@
     <description>Recent content in Posts on 我自倾怀 君且随意</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 03 Jan 2021 00:38:19 +0800</lastBuildDate><atom:link href="https://veixuan.github.io/posts/atom.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 23 Feb 2021 23:19:30 +0800</lastBuildDate><atom:link href="https://veixuan.github.io/posts/atom.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Lambda表达式</title>
+      <link>https://veixuan.github.io/lambda.html</link>
+      <pubDate>Tue, 23 Feb 2021 23:19:30 +0800</pubDate>
+      
+      <guid>https://veixuan.github.io/lambda.html</guid>
+      <description>&lt;p&gt;c++ 11的新特性，支持函数式编程。&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>智能指针</title>
       <link>https://veixuan.github.io/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88.html</link>
@@ -23,15 +32,6 @@
       
       <guid>https://veixuan.github.io/slice.html</guid>
       <description>&lt;p&gt;&lt;code&gt;slice&lt;/code&gt;的使用和原理&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>channle的使用场景</title>
-      <link>https://veixuan.github.io/channel_plus.html</link>
-      <pubDate>Mon, 28 Dec 2020 00:01:37 +0800</pubDate>
-      
-      <guid>https://veixuan.github.io/channel_plus.html</guid>
-      <description>&lt;p&gt;&lt;code&gt;channel&lt;/code&gt;的使用案例&lt;/p&gt;</description>
     </item>
     
   </channel>
