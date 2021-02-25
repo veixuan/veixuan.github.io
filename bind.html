@@ -12,16 +12,16 @@
     <meta name="author" content="Neo" />
     <meta name="keywords" content="广告引擎, golang" />
     <meta name="og:site_name" content="我自倾怀 君且随意" /><meta property="og:type" content="article" />
-    <meta property="title" content="golang plugin 基本使用 - 我自倾怀 君且随意">
-    <meta property="og:title" content="golang plugin 基本使用 - 我自倾怀 君且随意">
-    <meta property="twitter:title" content="golang plugin 基本使用 - 我自倾怀 君且随意">
-    <meta name="description" content="golang plugin	基本使用">
-    <meta property="og:description" content="golang plugin	基本使用">
-    <meta property="twitter:description" content="golang plugin	基本使用">
+    <meta property="title" content="Bind - 我自倾怀 君且随意">
+    <meta property="og:title" content="Bind - 我自倾怀 君且随意">
+    <meta property="twitter:title" content="Bind - 我自倾怀 君且随意">
+    <meta name="description" content="std::bind的基本使用">
+    <meta property="og:description" content="std::bind的基本使用">
+    <meta property="twitter:description" content="std::bind的基本使用">
     <meta property="og:type" content="article">
-    <title>golang plugin 基本使用 - 我自倾怀 君且随意</title>
+    <title>Bind - 我自倾怀 君且随意</title>
 
-    <meta property="og:url" content="https://veixuan.github.io/plugin.html" />
+    <meta property="og:url" content="https://veixuan.github.io/bind.html" />
 
     
     <meta property="og:image" content="/head.jpeg">
@@ -81,17 +81,17 @@
         
         <div>
     <h1 class="font-bold break-normal text-gray-800 pt-2 pb-2 text-2xl lg:text-3xl">
-        <a href="https://veixuan.github.io/plugin.html" title="golang plugin 基本使用">golang plugin 基本使用</a>
+        <a href="https://veixuan.github.io/bind.html" title="Bind">Bind</a>
     </h1>
     <p class="mb-1 text-sm text-gray-500">
-        <span title=" 2020-08-22 17:05:51 UTC">
-            <i class="iconfont icon-calendar" aria-hidden="true"></i> 22 Aug 2020
+        <span title=" 2021-02-25 23:19:18 &#43;0800">
+            <i class="iconfont icon-calendar" aria-hidden="true"></i> 25 Feb 2021
         </span>
 
         <span class="hidden xl:inline-block">
             |
             <i class="iconfont icon-book"></i>
-            284 字
+            293 字
         </span>
 
         <span class="hidden xl:inline-block">
@@ -109,21 +109,24 @@
     <div class="sticky text-sm" style="top:6em;" id="menu-content">
         <nav id="TableOfContents">
   <ul>
-    <li><a href="#基本用法">基本用法</a>
-      <ul>
-        <li><a href="#定义">定义</a></li>
-        <li><a href="#编译">编译</a></li>
-        <li><a href="#使用">使用</a></li>
-      </ul>
+    <li><a href="#使用说明">使用说明</a></li>
+    <li><a href="#静态函数">静态函数</a></li>
+    <li><a href="#类成员函数">类成员函数</a></li>
+    <li><a href="#可调用对象">可调用对象</a></li>
+  </ul>
 </nav>
     </div>
 
         </div> 
 
         <div class="post-content">
-            <p><code>golang plugin</code>	基本使用</p>
-<h2 id="基本用法">基本用法</h2>
-<h3 id="定义">定义</h3>
+            <p><code>std::bind</code>的基本使用</p>
+<h2 id="使用说明">使用说明</h2>
+<blockquote>
+<p>根据已有的<code>可调用对象</code>，<code>构造出新的可调用对象</code></p>
+</blockquote>
+<p>核心功能: 动态生成可调用函数</p>
+<h2 id="静态函数">静态函数</h2>
 <div class="highlight"><div style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -145,140 +148,60 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#069;font-weight:bold">package</span> main
-
-<span style="color:#069;font-weight:bold">import</span> (
-	<span style="color:#c30">&#34;errors&#34;</span>
-)
-
-<span style="color:#069;font-weight:bold">func</span> <span style="color:#c0f">Add</span>(a, b <span style="color:#078;font-weight:bold">int</span>) <span style="color:#078;font-weight:bold">int</span> {
-	<span style="color:#069;font-weight:bold">return</span> a <span style="color:#555">+</span> b
-}
-
-<span style="color:#069;font-weight:bold">func</span> <span style="color:#c0f">Subtract</span>(a, b <span style="color:#078;font-weight:bold">int</span>) <span style="color:#078;font-weight:bold">int</span> {
-	<span style="color:#069;font-weight:bold">return</span> a <span style="color:#555">-</span> b
-}
-
-<span style="color:#069;font-weight:bold">func</span> <span style="color:#c0f">Multiply</span>(a, b <span style="color:#078;font-weight:bold">int</span>) <span style="color:#078;font-weight:bold">int</span> {
-	<span style="color:#069;font-weight:bold">return</span> a <span style="color:#555">*</span> b
-}
-
-<span style="color:#069;font-weight:bold">func</span> <span style="color:#c0f">Divide</span>(a, b <span style="color:#078;font-weight:bold">int</span>) (<span style="color:#078;font-weight:bold">float64</span>, <span style="color:#078;font-weight:bold">error</span>) {
-	<span style="color:#069;font-weight:bold">if</span> b <span style="color:#555">==</span> <span style="color:#f60">0</span> {
-		<span style="color:#069;font-weight:bold">return</span> <span style="color:#f60">0</span>, errors.<span style="color:#c0f">New</span>(<span style="color:#c30">&#34;can not divide zero&#34;</span>)
+<pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#09f;font-style:italic">// vector -&gt; str
+</span><span style="color:#09f;font-style:italic"></span>std<span style="color:#555">::</span>string vec_to_str(<span style="color:#069;font-weight:bold">const</span> std<span style="color:#555">::</span>string <span style="color:#555">&amp;</span>delim, <span style="color:#069;font-weight:bold">const</span> std<span style="color:#555">::</span>vector<span style="color:#555">&lt;</span>std<span style="color:#555">::</span>string<span style="color:#555">&gt;</span> <span style="color:#555">&amp;</span>vec) {
+	std<span style="color:#555">::</span>string res(<span style="color:#c30">&#34;[&#34;</span>);
+	
+	<span style="color:#069;font-weight:bold">for</span> (<span style="color:#078;font-weight:bold">int</span> i <span style="color:#555">=</span> <span style="color:#f60">0</span>; i <span style="color:#555">&lt;</span> vec.size(); <span style="color:#555">++</span>i) {
+		res.append(vec[i]);
+		<span style="color:#069;font-weight:bold">if</span> (i <span style="color:#555">!=</span> vec.size() <span style="color:#555">-</span> <span style="color:#f60">1</span>) {
+			res.append(delim);
+		}
 	}
-	<span style="color:#069;font-weight:bold">return</span> <span style="color:#366">float64</span>(a) <span style="color:#555">/</span> <span style="color:#366">float64</span>(b), <span style="color:#069;font-weight:bold">nil</span>
+	res.append(<span style="color:#c30">&#34;]&#34;</span>);
+	<span style="color:#069;font-weight:bold">return</span> res;
 }
+
+<span style="color:#09f;font-style:italic">// std::bind 
+</span><span style="color:#09f;font-style:italic">// 第一个参数是当前函数 
+</span><span style="color:#09f;font-style:italic">// 后面是参数，可以直接传参 也可以使用占位符
+</span><span style="color:#09f;font-style:italic"></span><span style="color:#069;font-weight:bold">auto</span> ff <span style="color:#555">=</span> std<span style="color:#555">::</span>bind(vec_to_str, <span style="color:#c30">&#34;,&#34;</span>, std<span style="color:#555">::</span>placeholders<span style="color:#555">::</span>_1);
+std<span style="color:#555">::</span>cout <span style="color:#555">&lt;&lt;</span> ff(demo) <span style="color:#555">&lt;&lt;</span> std<span style="color:#555">::</span>endl;
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="编译">编译</h3>
-<p><strong>不支持windows</strong>，必须包含<code>main</code>包</p>
+</div><h2 id="类成员函数">类成员函数</h2>
 <div class="highlight"><div style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-GO" data-lang="GO"><span style="color:#069;font-weight:bold">go</span> build <span style="color:#555">--</span>buildmode=plugin tools<span style="color:#555">/</span>calc.<span style="color:#069;font-weight:bold">go</span>
+<pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">	<span style="color:#09f;font-style:italic">// 绑定类成员函数
+</span><span style="color:#09f;font-style:italic"></span>	<span style="color:#09f;font-style:italic">// 第一个参数必须是当前对象指针或者this指针
+</span><span style="color:#09f;font-style:italic"></span>	entity ent;
+	<span style="color:#069;font-weight:bold">auto</span> set_func <span style="color:#555">=</span> std<span style="color:#555">::</span>bind(<span style="color:#555">&amp;</span>entity<span style="color:#555">::</span>setAge, <span style="color:#555">&amp;</span>ent, std<span style="color:#555">::</span>placeholders<span style="color:#555">::</span>_1);
+	set_func(<span style="color:#f60">100</span>);
+	std<span style="color:#555">::</span>cout <span style="color:#555">&lt;&lt;</span> <span style="color:#c30">&#34;age = &#34;</span> <span style="color:#555">&lt;&lt;</span> ent.getAge() <span style="color:#555">&lt;&lt;</span> std<span style="color:#555">::</span>endl;
 </code></pre></td></tr></table>
 </div>
-</div><p>会在当前目录下生成 <code>calc.so</code></p>
-<h3 id="使用">使用</h3>
-<div class="highlight"><div style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
-<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
-<pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41
-</span></code></pre></td>
-<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-GO" data-lang="GO"><span style="color:#069;font-weight:bold">package</span> main
-
-<span style="color:#069;font-weight:bold">import</span> (
-	<span style="color:#c30">&#34;log&#34;</span>
-	<span style="color:#c30">&#34;plugin&#34;</span>
-)
-
-<span style="color:#09f;font-style:italic">// 使用的api很简答 只有两个
-</span><span style="color:#09f;font-style:italic">// 1. open
-</span><span style="color:#09f;font-style:italic">// 2. lookup
-</span><span style="color:#09f;font-style:italic"></span><span style="color:#069;font-weight:bold">func</span> <span style="color:#c0f">main</span>() {
-	<span style="color:#09f;font-style:italic">// open
-</span><span style="color:#09f;font-style:italic"></span>	p, err <span style="color:#555">:=</span> plugin.<span style="color:#c0f">Open</span>(<span style="color:#c30">&#34;calc.so&#34;</span>)
-
-	<span style="color:#069;font-weight:bold">if</span> err <span style="color:#555">!=</span> <span style="color:#069;font-weight:bold">nil</span> {
-		<span style="color:#366">panic</span>(err)
-	}
-
-	<span style="color:#09f;font-style:italic">// 寻找函数
-</span><span style="color:#09f;font-style:italic"></span>	addf, err <span style="color:#555">:=</span> p.<span style="color:#c0f">Lookup</span>(<span style="color:#c30">&#34;Add&#34;</span>)
-	<span style="color:#069;font-weight:bold">if</span> err <span style="color:#555">!=</span> <span style="color:#069;font-weight:bold">nil</span> {
-		<span style="color:#366">panic</span>(err)
-	}
-	<span style="color:#09f;font-style:italic">// 转换
-</span><span style="color:#09f;font-style:italic"></span>	add <span style="color:#555">:=</span> addf.(<span style="color:#069;font-weight:bold">func</span>(<span style="color:#078;font-weight:bold">int</span>, <span style="color:#078;font-weight:bold">int</span>) <span style="color:#078;font-weight:bold">int</span>)
-
-	log.<span style="color:#c0f">Printf</span>(<span style="color:#c30">&#34;add\t%d\n&#34;</span>, <span style="color:#c0f">add</span>(<span style="color:#f60">100</span>, <span style="color:#f60">200</span>))
-
-	devidef, err <span style="color:#555">:=</span> p.<span style="color:#c0f">Lookup</span>(<span style="color:#c30">&#34;Divide&#34;</span>)
-	<span style="color:#069;font-weight:bold">if</span> err <span style="color:#555">!=</span> <span style="color:#069;font-weight:bold">nil</span> {
-		<span style="color:#366">panic</span>(err)
-	}
-
-	devide <span style="color:#555">:=</span> devidef.(<span style="color:#069;font-weight:bold">func</span>(<span style="color:#078;font-weight:bold">int</span>, <span style="color:#078;font-weight:bold">int</span>) (<span style="color:#078;font-weight:bold">float64</span>, <span style="color:#078;font-weight:bold">error</span>))
-
-	f1, err <span style="color:#555">:=</span> <span style="color:#c0f">devide</span>(<span style="color:#f60">200</span>, <span style="color:#f60">100</span>)
-	log.<span style="color:#c0f">Printf</span>(<span style="color:#c30">&#34;devide\t%f\terr:%v\n&#34;</span>, f1, err)
-
-	f2, err <span style="color:#555">:=</span> <span style="color:#c0f">devide</span>(<span style="color:#f60">200</span>, <span style="color:#f60">0</span>)
-	log.<span style="color:#c0f">Printf</span>(<span style="color:#c30">&#34;devide\t%f\terr:%v\n&#34;</span>, f2, err)
-}
-</code></pre></td></tr></table>
-</div>
-</div>
+</div><h2 id="可调用对象">可调用对象</h2>
+<p>简单来说就是支持<code>()</code>方式调用的,有以下几种类型</p>
+<ul>
+<li><input disabled="" type="checkbox"> 普通函数</li>
+<li><input disabled="" type="checkbox"> 类成员函数</li>
+<li><input disabled="" type="checkbox"> 类静态函数</li>
+<li><input disabled="" type="checkbox"> 仿函数 (类重载了 <code>operator()</code> 操作符)</li>
+<li><input disabled="" type="checkbox"> 函数指针</li>
+<li><input disabled="" type="checkbox"> lambda表达式</li>
+<li><input disabled="" type="checkbox"> std::function</li>
+<li><input disabled="" type="checkbox"> std::bind 表达式</li>
+</ul>
 
             <hr class="bg-gray-300 mt-8">
 
@@ -306,7 +229,7 @@
             </li>
             <li style="word-break:break-all">
                 <strong>原文链接：</strong>
-                <a href="https://veixuan.github.io/plugin.html">https://veixuan.github.io/plugin.html</a>
+                <a href="https://veixuan.github.io/bind.html">https://veixuan.github.io/bind.html</a>
             </li>
             <li>
                 <strong>版权声明：</strong>本作品采用
@@ -323,8 +246,12 @@
         
         <div class="text-base md:text-sm text-gray-500 pt-6">
                 <a class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 hover:bg-gray-300"
-                    href="https://veixuan.github.io//tags/golang.html">
-                    #golang
+                    href="https://veixuan.github.io//tags/cpp.html">
+                    #cpp
+                </a>
+                <a class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 hover:bg-gray-300"
+                    href="https://veixuan.github.io//tags/popular.html">
+                    #popular
                 </a>
                                     
             </div>
@@ -350,27 +277,27 @@
         
         
         <div class="">
-            <div id="disqus_thread"></div>
-    <script type="text/javascript">
-    (function() {
-      
-      
-      if (window.location.hostname === 'localhost') return;
-      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      var disqus_shortname = 'forecho-blog';
-      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-  
-
-  
+            
         </div>
         
 
         
+
+
+<div class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
+    <h2 class="font-sans font-bold break-normal text-gray-700 px-2 pb-3 text-xl">相关文章</h2>
+    
+    <li><a href="/lambda.html" class="underline text-orange-600">Lambda表达式</a></li>
+    
+    <li><a href="/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88.html" class="underline text-orange-600">智能指针</a></li>
+    
+    <li><a href="/slice.html" class="underline text-orange-600">slice</a></li>
+    
+    <li><a href="/channel_plus.html" class="underline text-orange-600">channle的使用场景</a></li>
+    
+    <li><a href="/channel.html" class="underline text-orange-600">channel</a></li>
+    
+</div>
 
 
     
@@ -489,12 +416,11 @@
     <div class="sticky text-sm" style="top:6em;" id="menu-content">
         <nav id="TableOfContents">
   <ul>
-    <li><a href="#基本用法">基本用法</a>
-      <ul>
-        <li><a href="#定义">定义</a></li>
-        <li><a href="#编译">编译</a></li>
-        <li><a href="#使用">使用</a></li>
-      </ul>
+    <li><a href="#使用说明">使用说明</a></li>
+    <li><a href="#静态函数">静态函数</a></li>
+    <li><a href="#类成员函数">类成员函数</a></li>
+    <li><a href="#可调用对象">可调用对象</a></li>
+  </ul>
 </nav>
     </div>
 
