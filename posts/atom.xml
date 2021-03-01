@@ -6,7 +6,16 @@
     <description>Recent content in Posts on 我自倾怀 君且随意</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 25 Feb 2021 23:19:18 +0800</lastBuildDate><atom:link href="https://veixuan.github.io/posts/atom.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 01 Mar 2021 22:48:57 +0800</lastBuildDate><atom:link href="https://veixuan.github.io/posts/atom.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Constructor</title>
+      <link>https://veixuan.github.io/constructor.html</link>
+      <pubDate>Mon, 01 Mar 2021 22:48:57 +0800</pubDate>
+      
+      <guid>https://veixuan.github.io/constructor.html</guid>
+      <description>&lt;p&gt;&lt;code&gt;c++ 2.0&lt;/code&gt; 中的类六大函数&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>Bind</title>
       <link>https://veixuan.github.io/bind.html</link>
@@ -23,15 +32,6 @@
       
       <guid>https://veixuan.github.io/lambda.html</guid>
       <description>&lt;p&gt;c++ 11的新特性，支持函数式编程。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>智能指针</title>
-      <link>https://veixuan.github.io/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88.html</link>
-      <pubDate>Sun, 03 Jan 2021 00:38:19 +0800</pubDate>
-      
-      <guid>https://veixuan.github.io/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88.html</guid>
-      <description>&lt;p&gt;&lt;code&gt;c++&lt;/code&gt;中智能指针的基本使用&lt;/p&gt;</description>
     </item>
     
   </channel>
