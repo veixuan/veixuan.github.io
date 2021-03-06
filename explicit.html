@@ -12,16 +12,16 @@
     <meta name="author" content="Neo" />
     <meta name="keywords" content="广告引擎, golang" />
     <meta name="og:site_name" content="我自倾怀 君且随意" /><meta property="og:type" content="article" />
-    <meta property="title" content="Bind - 我自倾怀 君且随意">
-    <meta property="og:title" content="Bind - 我自倾怀 君且随意">
-    <meta property="twitter:title" content="Bind - 我自倾怀 君且随意">
-    <meta name="description" content="std::bind的基本使用">
-    <meta property="og:description" content="std::bind的基本使用">
-    <meta property="twitter:description" content="std::bind的基本使用">
+    <meta property="title" content="explicit - 我自倾怀 君且随意">
+    <meta property="og:title" content="explicit - 我自倾怀 君且随意">
+    <meta property="twitter:title" content="explicit - 我自倾怀 君且随意">
+    <meta name="description" content="explicit关键字的使用">
+    <meta property="og:description" content="explicit关键字的使用">
+    <meta property="twitter:description" content="explicit关键字的使用">
     <meta property="og:type" content="article">
-    <title>Bind - 我自倾怀 君且随意</title>
+    <title>explicit - 我自倾怀 君且随意</title>
 
-    <meta property="og:url" content="https://veixuan.github.io/bind.html" />
+    <meta property="og:url" content="https://veixuan.github.io/explicit.html" />
 
     
     <meta property="og:image" content="/head.jpeg">
@@ -81,17 +81,17 @@
         
         <div>
     <h1 class="font-bold break-normal text-gray-800 pt-2 pb-2 text-2xl lg:text-3xl">
-        <a href="https://veixuan.github.io/bind.html" title="Bind">Bind</a>
+        <a href="https://veixuan.github.io/explicit.html" title="explicit">explicit</a>
     </h1>
     <p class="mb-1 text-sm text-gray-500">
-        <span title=" 2021-02-25 23:19:18 &#43;0800">
-            <i class="iconfont icon-calendar" aria-hidden="true"></i> 25 Feb 2021
+        <span title=" 2021-03-06 14:15:29 &#43;0800">
+            <i class="iconfont icon-calendar" aria-hidden="true"></i> 06 Mar 2021
         </span>
 
         <span class="hidden xl:inline-block">
             |
             <i class="iconfont icon-book"></i>
-            293 字
+            224 字
         </span>
 
         <span class="hidden xl:inline-block">
@@ -109,10 +109,10 @@
     <div class="sticky text-sm" style="top:6em;" id="menu-content">
         <nav id="TableOfContents">
   <ul>
-    <li><a href="#使用说明">使用说明</a></li>
-    <li><a href="#静态函数">静态函数</a></li>
-    <li><a href="#类成员函数">类成员函数</a></li>
-    <li><a href="#可调用对象">可调用对象</a></li>
+    <li><a href="#作用">作用</a></li>
+    <li><a href="#隐式转换">隐式转换</a></li>
+    <li><a href="#explicit">explicit</a></li>
+    <li><a href="#优点">优点</a></li>
   </ul>
 </nav>
     </div>
@@ -120,13 +120,14 @@
         </div> 
 
         <div class="post-content">
-            <p><code>std::bind</code>的基本使用</p>
-<h2 id="使用说明">使用说明</h2>
-<blockquote>
-<p>根据已有的<code>可调用对象</code>，<code>构造出新的可调用对象</code></p>
-</blockquote>
-<p>核心功能: 动态生成可调用函数</p>
-<h2 id="静态函数">静态函数</h2>
+            <p><code>explicit</code>关键字的使用</p>
+<h2 id="作用">作用</h2>
+<ol>
+<li>只能用来修饰构造函数</li>
+<li>禁止隐式调用拷贝构造函数</li>
+<li>禁止对象间的隐式转换</li>
+</ol>
+<h2 id="隐式转换">隐式转换</h2>
 <div class="highlight"><div style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
@@ -144,34 +145,38 @@
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#09f;font-style:italic">// vector -&gt; str
-</span><span style="color:#09f;font-style:italic"></span>std<span style="color:#555">::</span>string vec_to_str(<span style="color:#069;font-weight:bold">const</span> std<span style="color:#555">::</span>string <span style="color:#555">&amp;</span>delim, <span style="color:#069;font-weight:bold">const</span> std<span style="color:#555">::</span>vector<span style="color:#555">&lt;</span>std<span style="color:#555">::</span>string<span style="color:#555">&gt;</span> <span style="color:#555">&amp;</span>vec) {
-	std<span style="color:#555">::</span>string res(<span style="color:#c30">&#34;[&#34;</span>);
-	
-	<span style="color:#069;font-weight:bold">for</span> (<span style="color:#078;font-weight:bold">int</span> i <span style="color:#555">=</span> <span style="color:#f60">0</span>; i <span style="color:#555">&lt;</span> vec.size(); <span style="color:#555">++</span>i) {
-		res.append(vec[i]);
-		<span style="color:#069;font-weight:bold">if</span> (i <span style="color:#555">!=</span> vec.size() <span style="color:#555">-</span> <span style="color:#f60">1</span>) {
-			res.append(delim);
-		}
-	}
-	res.append(<span style="color:#c30">&#34;]&#34;</span>);
-	<span style="color:#069;font-weight:bold">return</span> res;
-}
+<pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#069;font-weight:bold">class</span> <span style="color:#0a8;font-weight:bold">Score</span> {
 
-<span style="color:#09f;font-style:italic">// std::bind 
-</span><span style="color:#09f;font-style:italic">// 第一个参数是当前函数 
-</span><span style="color:#09f;font-style:italic">// 后面是参数，可以直接传参 也可以使用占位符
-</span><span style="color:#09f;font-style:italic"></span><span style="color:#069;font-weight:bold">auto</span> ff <span style="color:#555">=</span> std<span style="color:#555">::</span>bind(vec_to_str, <span style="color:#c30">&#34;,&#34;</span>, std<span style="color:#555">::</span>placeholders<span style="color:#555">::</span>_1);
-std<span style="color:#555">::</span>cout <span style="color:#555">&lt;&lt;</span> ff(demo) <span style="color:#555">&lt;&lt;</span> std<span style="color:#555">::</span>endl;
+<span style="color:#069;font-weight:bold">public</span><span style="color:#555">:</span>
+	<span style="color:#069;font-weight:bold">explicit</span> Score(<span style="color:#078;font-weight:bold">double</span> score) <span style="color:#555">:</span> _score(score) {
+		std<span style="color:#555">::</span>cout <span style="color:#555">&lt;&lt;</span> <span style="color:#c30">&#34;init with &#34;</span> <span style="color:#555">&lt;&lt;</span> score <span style="color:#555">&lt;&lt;</span> std<span style="color:#555">::</span>endl;
+	}
+	
+	
+	<span style="color:#069;font-weight:bold">static</span> <span style="color:#078;font-weight:bold">void</span> <span style="color:#c0f">info</span>(Score score) {
+		std<span style="color:#555">::</span>cout <span style="color:#555">&lt;&lt;</span> <span style="color:#c30">&#34;info-&gt; &#34;</span> <span style="color:#555">&lt;&lt;</span> score._score <span style="color:#555">&lt;&lt;</span> std<span style="color:#555">::</span>endl;
+	}
+
+<span style="color:#069;font-weight:bold">private</span><span style="color:#555">:</span>
+	<span style="color:#078;font-weight:bold">double</span> _score;
+};
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="类成员函数">类成员函数</h2>
+</div><p>然后这样调用</p>
+<div class="highlight"><div style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">Score<span style="color:#555">::</span>info(<span style="color:#f60">2.0</span>);
+<span style="color:#09f;font-style:italic">// 会先将2.0 调用构造函数 转换成 score 对象，然后再执行对应的方法 
+</span></code></pre></td></tr></table>
+</div>
+</div><h2 id="explicit">explicit</h2>
+<p>增加<code>explicit</code>修饰之后，再次这样调用，就会编译失败</p>
 <div class="highlight"><div style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
@@ -179,29 +184,17 @@ std<span style="color:#555">::</span>cout <span style="color:#555">&lt;&lt;</spa
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
-</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">	<span style="color:#09f;font-style:italic">// 绑定类成员函数
-</span><span style="color:#09f;font-style:italic"></span>	<span style="color:#09f;font-style:italic">// 第一个参数必须是当前对象指针或者this指针
-</span><span style="color:#09f;font-style:italic"></span>	entity ent;
-	<span style="color:#069;font-weight:bold">auto</span> set_func <span style="color:#555">=</span> std<span style="color:#555">::</span>bind(<span style="color:#555">&amp;</span>entity<span style="color:#555">::</span>setAge, <span style="color:#555">&amp;</span>ent, std<span style="color:#555">::</span>placeholders<span style="color:#555">::</span>_1);
-	set_func(<span style="color:#f60">100</span>);
-	std<span style="color:#555">::</span>cout <span style="color:#555">&lt;&lt;</span> <span style="color:#c30">&#34;age = &#34;</span> <span style="color:#555">&lt;&lt;</span> ent.getAge() <span style="color:#555">&lt;&lt;</span> std<span style="color:#555">::</span>endl;
-</code></pre></td></tr></table>
+<pre style="background-color:#f0f3f3;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">	<span style="color:#069;font-weight:bold">explicit</span> <span style="color:#c0f">Score</span>(<span style="color:#078;font-weight:bold">double</span> score) <span style="color:#555">:</span> _score(score) {
+		std<span style="color:#555">::</span>cout <span style="color:#555">&lt;&lt;</span> <span style="color:#c30">&#34;init with &#34;</span> <span style="color:#555">&lt;&lt;</span> score <span style="color:#555">&lt;&lt;</span> std<span style="color:#555">::</span>endl;
+	}
+<span style="color:#09f;font-style:italic">// Score::info(2.0);
+</span><span style="color:#09f;font-style:italic">// error: no viable conversion from &#39;double&#39; to &#39;Score&#39;
+</span></code></pre></td></tr></table>
 </div>
-</div><h2 id="可调用对象">可调用对象</h2>
-<p>简单来说就是支持<code>()</code>方式调用的,有以下几种类型</p>
-<ul>
-<li><input disabled="" type="checkbox"> 普通函数</li>
-<li><input disabled="" type="checkbox"> 类成员函数</li>
-<li><input disabled="" type="checkbox"> 类静态函数</li>
-<li><input disabled="" type="checkbox"> 仿函数 (类重载了 <code>operator()</code> 操作符)</li>
-<li><input disabled="" type="checkbox"> 函数指针</li>
-<li><input disabled="" type="checkbox"> lambda表达式</li>
-<li><input disabled="" type="checkbox"> std::function</li>
-<li><input disabled="" type="checkbox"> std::bind 表达式</li>
-</ul>
+</div><h2 id="优点">优点</h2>
+<p>可以避免 编译器执行 非预期的类型转换</p>
 
             <hr class="bg-gray-300 mt-8">
 
@@ -229,7 +222,7 @@ std<span style="color:#555">::</span>cout <span style="color:#555">&lt;&lt;</spa
             </li>
             <li style="word-break:break-all">
                 <strong>原文链接：</strong>
-                <a href="https://veixuan.github.io/bind.html">https://veixuan.github.io/bind.html</a>
+                <a href="https://veixuan.github.io/explicit.html">https://veixuan.github.io/explicit.html</a>
             </li>
             <li>
                 <strong>版权声明：</strong>本作品采用
@@ -287,15 +280,15 @@ std<span style="color:#555">::</span>cout <span style="color:#555">&lt;&lt;</spa
 <div class="p-8 mt-6 lg:mt-0 rounded shadow bg-white">
     <h2 class="font-sans font-bold break-normal text-gray-700 px-2 pb-3 text-xl">相关文章</h2>
     
+    <li><a href="/constructor.html" class="underline text-orange-600">Constructor</a></li>
+    
+    <li><a href="/bind.html" class="underline text-orange-600">Bind</a></li>
+    
     <li><a href="/lambda.html" class="underline text-orange-600">Lambda表达式</a></li>
     
     <li><a href="/%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88.html" class="underline text-orange-600">智能指针</a></li>
     
     <li><a href="/slice.html" class="underline text-orange-600">slice</a></li>
-    
-    <li><a href="/channel_plus.html" class="underline text-orange-600">channle的使用场景</a></li>
-    
-    <li><a href="/channel.html" class="underline text-orange-600">channel</a></li>
     
 </div>
 
@@ -420,10 +413,10 @@ std<span style="color:#555">::</span>cout <span style="color:#555">&lt;&lt;</spa
     <div class="sticky text-sm" style="top:6em;" id="menu-content">
         <nav id="TableOfContents">
   <ul>
-    <li><a href="#使用说明">使用说明</a></li>
-    <li><a href="#静态函数">静态函数</a></li>
-    <li><a href="#类成员函数">类成员函数</a></li>
-    <li><a href="#可调用对象">可调用对象</a></li>
+    <li><a href="#作用">作用</a></li>
+    <li><a href="#隐式转换">隐式转换</a></li>
+    <li><a href="#explicit">explicit</a></li>
+    <li><a href="#优点">优点</a></li>
   </ul>
 </nav>
     </div>

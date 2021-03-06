@@ -6,7 +6,16 @@
     <description>Recent content in popular on 我自倾怀 君且随意</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 01 Mar 2021 22:48:57 +0800</lastBuildDate><atom:link href="https://veixuan.github.io/tags/popular/atom.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 06 Mar 2021 14:15:29 +0800</lastBuildDate><atom:link href="https://veixuan.github.io/tags/popular/atom.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>explicit</title>
+      <link>https://veixuan.github.io/explicit.html</link>
+      <pubDate>Sat, 06 Mar 2021 14:15:29 +0800</pubDate>
+      
+      <guid>https://veixuan.github.io/explicit.html</guid>
+      <description>&lt;p&gt;&lt;code&gt;explicit&lt;/code&gt;关键字的使用&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>Constructor</title>
       <link>https://veixuan.github.io/constructor.html</link>
@@ -23,15 +32,6 @@
       
       <guid>https://veixuan.github.io/bind.html</guid>
       <description>&lt;p&gt;&lt;code&gt;std::bind&lt;/code&gt;的基本使用&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Lambda表达式</title>
-      <link>https://veixuan.github.io/lambda.html</link>
-      <pubDate>Tue, 23 Feb 2021 23:19:30 +0800</pubDate>
-      
-      <guid>https://veixuan.github.io/lambda.html</guid>
-      <description>&lt;p&gt;c++ 11的新特性，支持函数式编程。&lt;/p&gt;</description>
     </item>
     
   </channel>
